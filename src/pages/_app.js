@@ -42,6 +42,7 @@ export default function App({ Component, pageProps }) {
                 <Head>
                     <style>{dom.css()}</style>
                     <title>khunie</title>
+                    <link rel="icon" href="/img/khunie-icon-letter-3.png" />
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
                     <link
                         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap"

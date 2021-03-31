@@ -11,6 +11,7 @@ export const NavItem = css`
     text-decoration: none;
     color: #444;
     padding: 0px 16px;
+    margin: 0px 8px;
     cursor: pointer;
 
     &:hover {
@@ -43,7 +44,24 @@ const Anchor = styled.a`
     }
 `;
 
-export default function Navbar({ href, as, onClick, children }) {
+const Button = styled.a`
+    background-color: #613af0;
+    color: white;
+    padding: 12px 32px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+`;
+
+export function NavButton({ href, as, onClick, children }) {
+    return (
+        <Link href={href} as={as} onClick={onClick}>
+            <Button>{children}</Button>
+        </Link>
+    );
+}
+
+export default function NavLink({ href, as, onClick, children }) {
     return (
         <Link href={href} as={as} onClick={onClick}>
             <Anchor>{children}</Anchor>
