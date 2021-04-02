@@ -27,6 +27,7 @@ const NavContent = styled.div`
     margin: 0 auto;
     height: 54px;
     line-height: 58px;
+    padding: 0 16px;
     position: relative;
     z-index: 999;
 `;
@@ -61,7 +62,7 @@ export default function Navbar() {
                 </LeftSection>
                 <RightSection>
                     <NavLink href="/">Login</NavLink>
-                    <NavButton href="/">Get Started</NavButton>
+                    <NavButton href="/signup">Get Started</NavButton>
                 </RightSection>
             </NavContent>
         </NavbarContainer>

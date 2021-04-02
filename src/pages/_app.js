@@ -1,12 +1,14 @@
 /** @prettier */
 /* eslint-disable react/jsx-props-no-spreading */
 
+import { ApolloProvider } from '@apollo/client';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Head from 'next/head';
 import { Reset } from 'styled-reset';
 import { library, config, dom } from '@fortawesome/fontawesome-svg-core';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import Layout from 'components/common/Layout';
+import { useApollo } from 'shared/client';
 
 config.autoAddCss = false;
 
@@ -34,8 +36,10 @@ const theme = {
 };
 
 export default function App({ Component, pageProps }) {
+    const apolloClient = useApollo(pageProps);
+
     return (
-        <>
+        <ApolloProvider client={apolloClient}>
             <Reset />
             <GlobalStyle />
             <ThemeProvider theme={theme}>
@@ -57,6 +61,6 @@ export default function App({ Component, pageProps }) {
                     <Component {...pageProps} />
                 </Layout>
             </ThemeProvider>
-        </>
+        </ApolloProvider>
     );
 }
