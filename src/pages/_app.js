@@ -7,7 +7,8 @@ import Head from 'next/head';
 import { Reset } from 'styled-reset';
 import { library, config, dom } from '@fortawesome/fontawesome-svg-core';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import Layout from 'components/common/Layout';
+import Layout from 'components/layout/Layout';
+import DefaultLayout from 'components/layout/DefaultLayout';
 import { useApollo } from 'shared/client';
 
 config.autoAddCss = false;
@@ -19,13 +20,13 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: 'Roboto';
+        font-family: Roboto;
         background-color: white;
         color: #333;
     }
 
     h1,h2,h3 {
-        font-family: 'Montserrat';
+        font-family: Montserrat;
     }
 `;
 
@@ -37,6 +38,8 @@ const theme = {
 
 export default function App({ Component, pageProps }) {
     const apolloClient = useApollo(pageProps);
+    const PageLayout = Component.layout || DefaultLayout;
+    const showMainLayout = PageLayout.showMainLayout ?? true;
 
     return (
         <ApolloProvider client={apolloClient}>
@@ -57,8 +60,10 @@ export default function App({ Component, pageProps }) {
                         rel="stylesheet"
                     />
                 </Head>
-                <Layout>
-                    <Component {...pageProps} />
+                <Layout show={showMainLayout}>
+                    <PageLayout>
+                        <Component {...pageProps} />
+                    </PageLayout>
                 </Layout>
             </ThemeProvider>
         </ApolloProvider>

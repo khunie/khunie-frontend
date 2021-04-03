@@ -8,12 +8,12 @@ const Body = styled.div`
     min-height: 100vh;
 `;
 
-export default function Layout({ children }) {
+export default function Layout({ show, children }) {
     return (
         <>
-            <Navbar />
+            {show && <Navbar />}
             <Body>{children}</Body>
-            <Footer />
+            {show && <Footer />}
         </>
     );
 }

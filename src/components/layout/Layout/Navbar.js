@@ -53,15 +53,17 @@ export default function Navbar() {
         <NavbarContainer>
             <NavContent>
                 <LeftSection>
-                    <Link href="/">
-                        <Logo src="/img/khunie-logo-1.svg" />
+                    <Link href="/" passHref>
+                        <a>
+                            <Logo src="/img/khunie-logo-1.svg" />
+                        </a>
                     </Link>
                     <NavLink href="/">Why khunie?</NavLink>
                     <NavLink href="/">Resources</NavLink>
                     <NavLink href="/">Pricing</NavLink>
                 </LeftSection>
                 <RightSection>
-                    <NavLink href="/">Login</NavLink>
+                    <NavLink href="/login">Login</NavLink>
                     <NavButton href="/signup">Get Started</NavButton>
                 </RightSection>
             </NavContent>

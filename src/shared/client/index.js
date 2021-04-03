@@ -13,7 +13,7 @@ export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 let apolloClient;
 
 const httpLink = new HttpLink({
-    uri: `http://${process.env.GQL_ENDPOINT_URL}`,
+    uri: `http://${process.env.NEXT_PUBLIC_API_URL}`,
     credentials: 'same-origin',
 });
 

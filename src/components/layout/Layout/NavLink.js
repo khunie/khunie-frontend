@@ -9,7 +9,7 @@ export const NavItem = css`
     min-width: 30px;
     display: block;
     text-decoration: none;
-    color: #444;
+    color: #222;
     padding: 0px 16px;
     margin: 0px 8px;
     cursor: pointer;
@@ -26,12 +26,12 @@ export const NavItem = css`
 
         &:hover {
             background-color: transparent;
-            color: #fdc835;
+            color: #888;
         }
     }
 
     &.active {
-        color: #f06000;
+        color: #888;
     }
 `;
 
@@ -51,11 +51,16 @@ const Button = styled.a`
     border-radius: 10px;
     font-weight: bold;
     cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+        background-color: #502adb;
+    }
 `;
 
 export function NavButton({ href, as, onClick, children }) {
     return (
-        <Link href={href} as={as} onClick={onClick}>
+        <Link href={href} as={as} onClick={onClick} passHref>
             <Button>{children}</Button>
         </Link>
     );
@@ -63,7 +68,7 @@ export function NavButton({ href, as, onClick, children }) {
 
 export default function NavLink({ href, as, onClick, children }) {
     return (
-        <Link href={href} as={as} onClick={onClick}>
+        <Link href={href} as={as} onClick={onClick} passHref>
             <Anchor>{children}</Anchor>
         </Link>
     );
