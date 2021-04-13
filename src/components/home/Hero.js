@@ -1,5 +1,3 @@
-/** @prettier */
-
 import styled, { keyframes, css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';

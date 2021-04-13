@@ -1,5 +1,3 @@
-/** @prettier */
-
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import Link from 'next/link';
@@ -7,30 +5,7 @@ import styled from 'styled-components';
 import Head from 'next/head';
 import { SIGNUP_MUTATION } from 'gql/user/mutations';
 import AuthLayout from 'components/layout/AuthLayout';
-
-const Container = styled.div`
-    padding: 128px 0;
-    display: flex;
-    justify-content: center;
-`;
-
-const FormContainer = styled.div`
-    max-width: 450px;
-    min-height: 500px;
-    background-color: #fff;
-    padding: 48px 64px 64px 64px;
-    border-radius: 10px;
-    /*     box-shadow: 4px 4px 16px #ccc;
-    box-shadow: 1px 2px 6px #ccc; */
-    box-sizing: border-box;
-`;
-
-const FormTitle = styled.h1`
-    font-size: 20px;
-    font-weight: bold;
-    font-family: Roboto;
-    text-align: center;
-`;
+import { useSignup } from 'shared/hooks/auth';
 
 const SignupForm = styled.form`
     max-width: 360px;
@@ -77,26 +52,8 @@ const SubmitButton = styled.button`
     font-family: Roboto;
     cursor: pointer;
 `;
-
-const Logo = styled.img`
-    width: 92px;
-    height: auto;
-    object-fit: contain;
-    padding: 8px;
-    margin: 0 auto;
-    cursor: pointer;
-`;
-
-const FormHeader = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`;
-
 export default function Signup() {
-    const [signUp, { loading: mLoading, data: mData, error: mError }] = useMutation(
-        SIGNUP_MUTATION
-    );
+    const { signup, loading, error } = useSignup();
 
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -116,15 +73,7 @@ export default function Signup() {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        console.log(email);
-        console.log(username);
-        await signUp({
-            variables: {
-                email,
-                username,
-                password,
-            },
-        });
+        signup({ email, username, password });
     };
 
     return (
@@ -161,8 +110,7 @@ export default function Signup() {
             <ButtonWrapper>
                 <SubmitButton type="submit">Sign up!</SubmitButton>
             </ButtonWrapper>
-            <pre>{mData && JSON.stringify(mData, null, 4)}</pre>
-            <pre>{mError && JSON.stringify(mError, null, 4)}</pre>
+            <div>{error && error}</div>
         </SignupForm>
     );
 }

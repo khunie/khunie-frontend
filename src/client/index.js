@@ -1,12 +1,12 @@
-/** @prettier */
 import { useMemo } from 'react';
-import { ApolloClient, HttpLink, ApolloLink, InMemoryCache, split } from '@apollo/client';
+import { ApolloClient, HttpLink, ApolloLink, split } from '@apollo/client';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { onError } from '@apollo/client/link/error';
 import merge from 'deepmerge';
 import isEqual from 'lodash/isEqual';
 import { AUTH_TOKEN } from 'shared/constants';
+import { cache } from './cache';
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 
@@ -18,7 +18,10 @@ const httpLink = new HttpLink({
 });
 
 const authLink = new ApolloLink((operation, forward) => {
-    const token = localStorage.getItem(AUTH_TOKEN);
+    let token;
+    if (typeof window !== 'undefined') {
+        token = localStorage?.getItem(AUTH_TOKEN);
+    }
     operation.setContext(() => ({
         headers: {
             authorization: token ? `Bearer ${token}` : '',
@@ -50,7 +53,7 @@ const createApolloClient = () => {
     return new ApolloClient({
         ssrMode: typeof window === 'undefined',
         link,
-        cache: new InMemoryCache(),
+        cache,
     });
 };
 

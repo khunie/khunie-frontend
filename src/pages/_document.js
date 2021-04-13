@@ -1,5 +1,3 @@
-/** @prettier */
-/* eslint-disable react/jsx-props-no-spreading */
 import Document from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 

@@ -1,10 +1,7 @@
-/** @prettier */
-
 import { useState } from 'react';
-import { useMutation } from '@apollo/client';
 import styled from 'styled-components';
-import { LOGIN_MUTATION } from 'gql/user/mutations';
 import AuthLayout from 'components/layout/AuthLayout';
+import { useLogin } from 'shared/hooks/auth';
 
 const LoginForm = styled.form`
     max-width: 360px;
@@ -52,7 +49,7 @@ const SubmitButton = styled.button`
     cursor: pointer;
 `;
 export default function Login() {
-    const [login, { loading: mLoading, data: mData, error: mError }] = useMutation(LOGIN_MUTATION);
+    const { login, loading, error } = useLogin();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -68,12 +65,19 @@ export default function Login() {
     const handleSubmit = async e => {
         e.preventDefault();
 
-        await login({
-            variables: {
-                email,
-                password,
-            },
-        });
+        /*         try {
+            login({
+                variables: {
+                    email,
+                    password,
+                },
+            });
+        } catch (err) {
+            setDisplayedError('You have entered incorrect login information');
+            console.log(err);
+        } */
+
+        login({ email, password });
     };
 
     return (
@@ -94,16 +98,37 @@ export default function Login() {
                 onChange={handleChangePassword}
                 placeholder="Password"
                 minLength={8}
-                maxLength={32}
                 required
             />
             <ButtonWrapper>
-                <SubmitButton type="submit">Log in</SubmitButton>
+                <SubmitButton type="submit">{loading ? 'LOADING' : 'Log in'}</SubmitButton>
             </ButtonWrapper>
-            <pre>{mData && JSON.stringify(mData, null, 4)}</pre>
-            <pre>{mError && JSON.stringify(mError, null, 4)}</pre>
+            <div>{error && error}</div>
         </LoginForm>
     );
 }
 
 Login.layout = AuthLayout;
+
+/*     const [login, { loading, error }] = useMutation(LOGIN_MUTATION, {
+        onCompleted({ login: { token, user } }) {
+            console.log(token);
+            console.log(JSON.stringify(user, null, 2));
+            userVar(user);
+            authVar(token);
+            localStorage.setItem(AUTH_TOKEN, token);
+            localStorage.setItem(CURRENT_USER, JSON.stringify(user));
+
+            const { username } = user;
+
+            if (typeof window !== 'undefined') {
+                if (username) {
+                    router.replace({
+                        pathname: '/[username]',
+                        query: { username },
+                    });
+                }
+            }
+        },
+    });
+    const [displayedError, setDisplayedError] = useState();*/

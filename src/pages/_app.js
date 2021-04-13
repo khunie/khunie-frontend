@@ -1,6 +1,4 @@
-/** @prettier */
-/* eslint-disable react/jsx-props-no-spreading */
-
+import { useEffect } from 'react';
 import { ApolloProvider } from '@apollo/client';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Head from 'next/head';
@@ -9,7 +7,9 @@ import { library, config, dom } from '@fortawesome/fontawesome-svg-core';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import Layout from 'components/layout/Layout';
 import DefaultLayout from 'components/layout/DefaultLayout';
-import { useApollo } from 'shared/client';
+import { useApollo } from 'client';
+import { authVar, userVar } from 'client/cache';
+import { AUTH_TOKEN, CURRENT_USER } from 'shared/constants';
 
 config.autoAddCss = false;
 
@@ -40,6 +40,19 @@ export default function App({ Component, pageProps }) {
     const apolloClient = useApollo(pageProps);
     const PageLayout = Component.layout || DefaultLayout;
     const showMainLayout = PageLayout.showMainLayout ?? true;
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER));
+            const authToken = localStorage.getItem(AUTH_TOKEN);
+
+            userVar(currentUser || null);
+            authVar(authToken || null);
+
+            console.log(`APP: USER REACTIVE ${JSON.stringify(userVar(), null, 4)}`);
+            console.log(`APP: AUTH_TOKEN REACTIVE ${authVar()}`);
+        }
+    }, []);
 
     return (
         <ApolloProvider client={apolloClient}>

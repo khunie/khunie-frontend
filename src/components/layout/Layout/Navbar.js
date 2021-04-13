@@ -1,8 +1,7 @@
-/** @prettier */
-
 import styled from 'styled-components';
 import Link from 'next/link';
-import NavLink, { NavItem, NavButton } from './NavLink';
+import { useLogout } from 'shared/hooks/auth';
+import NavLink, { NavItem, NavAnchor, NavButton } from './NavLink';
 
 const NavbarContainer = styled.div`
     width: 100%;
@@ -49,6 +48,8 @@ const Logo = styled.img`
 `;
 
 export default function Navbar() {
+    const { logout, error } = useLogout();
+
     return (
         <NavbarContainer>
             <NavContent>
@@ -63,6 +64,7 @@ export default function Navbar() {
                     <NavLink href="/">Pricing</NavLink>
                 </LeftSection>
                 <RightSection>
+                    <NavAnchor onClick={logout}>log out</NavAnchor>
                     <NavLink href="/login">Login</NavLink>
                     <NavButton href="/signup">Get Started</NavButton>
                 </RightSection>

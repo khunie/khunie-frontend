@@ -1,5 +1,3 @@
-/** @prettier */
-
 import styled, { css } from 'styled-components';
 import Link from 'next/link';
 
@@ -35,7 +33,7 @@ export const NavItem = css`
     }
 `;
 
-const Anchor = styled.a`
+export const NavAnchor = styled.a`
     ${NavItem}
 
     &.active {
@@ -69,7 +67,7 @@ export function NavButton({ href, as, onClick, children }) {
 export default function NavLink({ href, as, onClick, children }) {
     return (
         <Link href={href} as={as} onClick={onClick} passHref>
-            <Anchor>{children}</Anchor>
+            <NavAnchor>{children}</NavAnchor>
         </Link>
     );
 }

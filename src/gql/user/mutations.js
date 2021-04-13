@@ -1,4 +1,3 @@
-/** @prettier */
 import { gql } from '@apollo/client';
 
 export const SIGNUP_MUTATION = gql`
@@ -6,6 +5,7 @@ export const SIGNUP_MUTATION = gql`
         signup(email: $email, username: $username, password: $password) {
             token
             user {
+                id
                 email
                 username
                 ownedTeams {
@@ -32,6 +32,7 @@ export const LOGIN_MUTATION = gql`
         login(email: $email, password: $password) {
             token
             user {
+                id
                 email
                 username
                 ownedTeams {
@@ -48,6 +49,20 @@ export const LOGIN_MUTATION = gql`
                         name
                     }
                 }
+            }
+        }
+    }
+`;
+
+export const CREATE_TEAM_MUTATION = gql`
+    mutation CreateTeamMutation($name: String!) {
+        createTeam(name: $name) {
+            id
+            name
+            boards {
+                id
+                title
+                description
             }
         }
     }

@@ -1,5 +1,3 @@
-/** @prettier */
-
 import styled, { css } from 'styled-components';
 import Link from 'next/link';
 

@@ -1,5 +1,3 @@
-/** @prettier */
-
 module.exports = {
     basepath: '',
 };
