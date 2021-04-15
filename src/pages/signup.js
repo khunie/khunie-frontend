@@ -102,8 +102,7 @@ export default function Signup() {
                 value={password}
                 onChange={handleChangePassword}
                 placeholder="Password"
-                minLength={8}
-                maxLength={32}
+                minLength={1}
                 required
                 autoComplete="off"
             />

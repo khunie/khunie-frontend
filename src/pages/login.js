@@ -97,7 +97,7 @@ export default function Login() {
                 value={password}
                 onChange={handleChangePassword}
                 placeholder="Password"
-                minLength={8}
+                minLength={1}
                 required
             />
             <ButtonWrapper>

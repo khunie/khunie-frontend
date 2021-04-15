@@ -21,6 +21,7 @@ const authLink = new ApolloLink((operation, forward) => {
     let token;
     if (typeof window !== 'undefined') {
         token = localStorage?.getItem(AUTH_TOKEN);
+        console.log(`CREATING AUTH LINK BEARER: ${token}`);
     }
     operation.setContext(() => ({
         headers: {

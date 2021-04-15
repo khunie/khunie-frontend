@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useMutation } from '@apollo/client';
 import { LOGIN_MUTATION, SIGNUP_MUTATION } from 'gql/user/mutations';
 import { authVar, userVar } from 'client/cache';
-import { AUTH_TOKEN, CURRENT_USER } from 'shared/constants';
+import { AUTH_TOKEN, CURRENT_USER, USER_URL } from 'shared/constants';
 
 export function useLogin() {
     const router = useRouter();
@@ -20,7 +20,7 @@ export function useLogin() {
             if (typeof window !== 'undefined') {
                 if (username) {
                     router.replace({
-                        pathname: '/[username]',
+                        pathname: `/${USER_URL}/[username]`,
                         query: { username },
                     });
                 }
@@ -47,7 +47,7 @@ export function useSignup() {
     const router = useRouter();
     const [error, setError] = useState(null);
     const [signupMutation, { loading }] = useMutation(SIGNUP_MUTATION, {
-        onCompleted({ login: { token, user } }) {
+        onCompleted({ signup: { token, user } }) {
             localStorage.setItem(AUTH_TOKEN, token);
             localStorage.setItem(CURRENT_USER, JSON.stringify(user));
             userVar(user);
@@ -58,7 +58,7 @@ export function useSignup() {
             if (typeof window !== 'undefined') {
                 if (username) {
                     router.replace({
-                        pathname: '/[username]',
+                        pathname: `/${USER_URL}/[username]`,
                         query: { username },
                     });
                 }

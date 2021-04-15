@@ -3,7 +3,7 @@ import { useQuery, useReactiveVar } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { GET_AUTH_TOKEN, GET_CURRENT_USER } from 'gql/queries/getAuthToken';
 import { authVar, userVar } from 'client/cache';
-import { AUTH_TOKEN } from 'shared/constants';
+import { AUTH_TOKEN, USER_URL } from 'shared/constants';
 
 export default function RedirectHome() {
     const currentUser = useReactiveVar(userVar);
@@ -17,7 +17,7 @@ export default function RedirectHome() {
         if (typeof window !== 'undefined') {
             if (username) {
                 router.replace({
-                    pathname: '/[username]',
+                    pathname: `/${USER_URL}/[username]`,
                     query: { username },
                 });
             } else {
