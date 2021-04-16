@@ -11,10 +11,9 @@ export const Container = styled.div`
     max-height: calc(100vh - 108px);
 `;
 
-export const Content = styled.div`
+export const ListContent = styled.div`
     overflow-y: auto;
-    padding: 8px;
-    padding-top: 2px;
+    padding: 2px 8px;
     margin-right: 4px;
     scrollbar-width: thin;
 
@@ -43,4 +42,21 @@ export const Content = styled.div`
     ::-webkit-scrollbar-corner {
         background: #000;
     }
+`;
+
+export const ListHeader = styled.div`
+    padding: 12px;
+`;
+
+export const ListTitle = styled.h3`
+    color: #555;
+    font-weight: bold;
+    font-family: Roboto;
+`;
+
+export const ListFooter = styled.div`
+    padding: 8px;
+    padding-top: 4px;
+    padding-bottom: 10px;
+    margin-right: 4px;
 `;

@@ -44,7 +44,7 @@ export default function Board({ lists, onAddListClick, onAddCardClick }) {
                     key={list.id}
                     id={list.id}
                     title={list.title}
-                    cards={list.cards}
+                    cards={list.cards || []}
                     onAddCardClick={onAddCardClick}
                 />
             ))}

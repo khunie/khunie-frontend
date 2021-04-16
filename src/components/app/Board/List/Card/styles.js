@@ -18,7 +18,7 @@ export const Container = styled.div`
         right: 0;
         border-radius: 6px;
         z-index: -1;
-        box-shadow: 0px 1px 2px #ccc;
+        box-shadow: 0px 1px 2px #bbb;
     }
 
     &:hover {
@@ -36,4 +36,9 @@ export const Container = styled.div`
     &:last-child {
         margin-bottom: 2px;
     }
+`;
+
+export const CardTitle = styled.h4`
+    word-wrap: break-word;
+    max-width: 240px;
 `;

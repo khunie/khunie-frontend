@@ -1,10 +1,9 @@
-import styled from 'styled-components';
-import { Container } from './styles';
+import { Container, CardTitle } from './styles';
 
 export default function Card({ title }) {
     return (
         <Container>
-            <h4>{title}</h4>
+            <CardTitle>{title}</CardTitle>
         </Container>
     );
 }
