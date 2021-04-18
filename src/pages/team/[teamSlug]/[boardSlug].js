@@ -1,23 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
-import { useQuery, useMutation, useReactiveVar } from '@apollo/client';
-import styled from 'styled-components';
-import AppLayout from 'components/layout/AppLayout';
+import { useQuery, useMutation } from '@apollo/client';
 import { GET_BOARD_QUERY } from 'gql/board/queries';
 import { CREATE_LIST_MUTATION } from 'gql/list/mutations';
 import { CREATE_CARD_MUTATION } from 'gql/card/mutations';
-
+import AppLayout from 'components/layout/AppLayout';
 import Board from 'components/app/Board';
-
-const Container = styled.div`
-    background-color: #fff;
-    height: 100%;
-`;
-
-const Title = styled.h1`
-    font-size: 32px;
-    font-weight: bold;
-`;
 
 export default function BoardPage() {
     const router = useRouter();
@@ -65,23 +53,21 @@ export default function BoardPage() {
         }
     );
 
+    const board = data?.getBoard || {};
+    const { id: boardId, title, team, visibility, lists } = board;
+
     const handleAddList = ({ listTitle }) => {
-        const { id, team } = data?.getBoard;
         const teamId = team?.id;
         createListMutation({
             variables: {
                 teamId,
-                boardId: id,
+                boardId,
                 title: listTitle,
             },
         });
     };
 
-    const lists = data?.getBoard?.lists || [];
-
-    const handleAddCard = ({ listId, cardTitle }) => {
-        console.log('submit');
-        const { id: boardId, team } = data?.getBoard;
+    const handleAddCard = ({ listId, cardTitle, index = 1000 }) => {
         const teamId = team?.id;
         createCardMutation({
             variables: {
@@ -89,31 +75,30 @@ export default function BoardPage() {
                 boardId,
                 listId,
                 title: cardTitle,
-                index: 1000,
+                index,
             },
         });
     };
 
     return (
-        <>
-            <Container>
-                {/* <Title>
-                    hello friend, this is team: {teamSlug} board: {boardSlug}
-                </Title> */}
-                <Board
-                    lists={lists}
-                    onAddListClick={handleAddList}
-                    onAddCardClick={handleAddCard}
-                />
-            </Container>
-            {/* <pre>{data && JSON.stringify(data, null, 4)}</pre>
-            <pre>{error && JSON.stringify(error, null, 4)}</pre>
-            <pre>{mData && JSON.stringify(mData, null, 4)}</pre>
-            <pre>{mError && JSON.stringify(mError, null, 4)}</pre>
-            <pre>{cData && JSON.stringify(cData, null, 4)}</pre>
-            <pre>{cError && JSON.stringify(cError, null, 4)}</pre> */}
-        </>
+        <Board
+            title={title}
+            teamName={team?.name}
+            visibility={visibility}
+            lists={lists || []}
+            onAddListClick={handleAddList}
+            onAddCardClick={handleAddCard}
+        />
     );
 }
 
 BoardPage.layout = AppLayout;
+
+/* 
+    <pre>{data && JSON.stringify(data, null, 4)}</pre>
+    <pre>{error && JSON.stringify(error, null, 4)}</pre>
+    <pre>{mData && JSON.stringify(mData, null, 4)}</pre>
+    <pre>{mError && JSON.stringify(mError, null, 4)}</pre>
+    <pre>{cData && JSON.stringify(cData, null, 4)}</pre>
+    <pre>{cError && JSON.stringify(cError, null, 4)}</pre>  
+*/

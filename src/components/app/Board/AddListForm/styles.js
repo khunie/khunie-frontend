@@ -3,10 +3,24 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Container = styled.div`
-    padding: 8px;
-    padding-top: 4px;
-    padding-bottom: 10px;
-    margin-right: 4px;
+    display: flex;
+    flex: 0 0 280px;
+    flex-direction: column;
+    align-items: center;
+    margin: 4px;
+    align-self: flex-start;
+    background-color: #eee;
+    border-radius: 10px;
+    box-sizing: border-box;
+    position: relative;
+
+    &:after {
+        content: '';
+        position: absolute;
+        right: -12px;
+        width: 1px;
+        height: 1px;
+    }
 `;
 
 export const Form = styled.form`
@@ -14,17 +28,18 @@ export const Form = styled.form`
     flex-direction: column;
 `;
 
-export const CardTitleInput = styled(TextareaAutosize)`
-    border-radius: 6px;
+export const ListTitleInput = styled(TextareaAutosize)`
+    border-radius: 10px;
     border: none;
     padding: 10px;
-    width: 260px;
+    width: 270px;
+    margin: 4px 2px 0 2px;
     box-sizing: border-box;
     resize: none;
     overflow: hidden;
     font-size: 16px;
     font-family: Roboto;
-    min-height: 64px;
+    min-height: 40px;
 
     &:focus {
         outline: none;
@@ -33,14 +48,14 @@ export const CardTitleInput = styled(TextareaAutosize)`
     }
 `;
 
-export const AddCardButton = styled.button`
-    width: 260px;
+export const AddListButton = styled.button`
+    height: 48px;
     padding: 8px;
+    width: 280px;
     box-sizing: border-box;
-    border: none;
     color: #666;
     font-weight: bold;
-    border-radius: 6px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 14px;
 
@@ -53,15 +68,16 @@ export const ActionRow = styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    margin-bottom: 6px;
     margin-top: 6px;
 `;
 
 export const SubmitButton = styled.button`
     width: 100px;
+    height: 36px;
+    margin: 0px 2px 0px 6px;
     padding: 10px;
-    margin-left: 6px;
     border-radius: 6px;
-    border: none;
     background-color: #453794;
     color: white;
     font-weight: bold;

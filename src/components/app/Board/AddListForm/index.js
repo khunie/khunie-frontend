@@ -3,46 +3,50 @@ import useOutsideClick from 'shared/hooks/useOutsideClick';
 import {
     Container,
     Form,
-    CardTitleInput,
-    ActionRow,
+    ListTitleInput,
     SubmitButton,
-    AddCardButton,
+    ActionRow,
+    AddListButton,
     CancelButton,
     Icon,
 } from './styles';
 
-export default function AddCardForm({ listId, onAddCardSubmit }) {
+export default function AddListForm({ onAddListSubmit }) {
     const [showForm, setShowForm] = useState(false);
-    const [cardTitle, setCardTitle] = useState('');
-    const cardTitleInputRef = useRef(null);
+    const [listTitle, setListTitle] = useState('');
+    const listTitleInputRef = useRef(null);
     const formRef = useRef(null);
     const containerRef = useRef(null);
 
     useEffect(() => {
         if (showForm) {
-            cardTitleInputRef.current.focus();
+            listTitleInputRef.current.focus();
+            listTitleInputRef.current.scrollIntoView();
         }
     }, [showForm]);
 
     const closeForm = () => {
-        if (cardTitle.trim().length === 0) {
-            setShowForm(false);
-        }
+        setShowForm(false);
     };
 
     useOutsideClick(containerRef, closeForm);
 
     const handleSubmit = e => {
         e.preventDefault();
-        if (cardTitle.trim().length > 0) {
-            onAddCardSubmit({ listId, cardTitle });
-            setCardTitle('');
-            cardTitleInputRef.current.focus();
+        if (listTitle.trim().length > 0) {
+            onAddListSubmit({ listTitle });
+            setListTitle('');
+            listTitleInputRef.current.focus();
         }
     };
 
     const handleAddCardClick = () => {
         setShowForm(true);
+    };
+
+    const handleFocus = () => {
+        listTitleInputRef.current.selectionStart = listTitleInputRef.current.value.length;
+        listTitleInputRef.current.selectionEnd = listTitleInputRef.current.value.length;
     };
 
     const handleKeyPress = e => {
@@ -53,7 +57,7 @@ export default function AddCardForm({ listId, onAddCardSubmit }) {
     };
 
     const handleCancelClick = () => {
-        setCardTitle('');
+        setListTitle('');
         setShowForm(false);
     };
 
@@ -61,27 +65,28 @@ export default function AddCardForm({ listId, onAddCardSubmit }) {
         <Container ref={containerRef}>
             {showForm ? (
                 <Form onSubmit={handleSubmit} ref={formRef}>
-                    <CardTitleInput
-                        value={cardTitle}
-                        onChange={e => setCardTitle(e.target.value)}
-                        ref={cardTitleInputRef}
+                    <ListTitleInput
+                        value={listTitle}
+                        onChange={e => setListTitle(e.target.value)}
+                        ref={listTitleInputRef}
+                        onFocus={handleFocus}
                         placeholder="Enter a title"
                         onKeyPress={handleKeyPress}
                         spellCheck={false}
                     />
                     <ActionRow>
                         <CancelButton type="button" onClick={handleCancelClick}>
-                            <Icon icon="times" />
+                            <Icon icon="times" size="sm" />
                         </CancelButton>
-                        <SubmitButton type="submit" disabled={cardTitle.length === 0}>
-                            Add card
+                        <SubmitButton type="submit" disabled={listTitle.length === 0}>
+                            Add list
                         </SubmitButton>
                     </ActionRow>
                 </Form>
             ) : (
-                <AddCardButton type="button" onClick={handleAddCardClick}>
-                    + Add a card
-                </AddCardButton>
+                <AddListButton type="button" onClick={handleAddCardClick}>
+                    + Add a list
+                </AddListButton>
             )}
         </Container>
     );

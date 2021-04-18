@@ -7,7 +7,7 @@ export const BoardListItem = styled.li`
 export const ButtonStyle = css`
     display: block;
     height: 128px;
-    width: 200px;
+    width: 216px;
     padding: 16px;
     border: transparent;
     border-radius: 16px;

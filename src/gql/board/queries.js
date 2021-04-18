@@ -19,6 +19,7 @@ export const GET_BOARD_QUERY = gql`
             }
             team {
                 id
+                name
             }
             visibility
             createdAt

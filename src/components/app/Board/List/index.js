@@ -1,13 +1,10 @@
-import { useState } from 'react';
-
-import styled from 'styled-components';
 import { Container, ListContent, ListHeader, ListTitle, ListFooter } from './styles';
 import Card from './Card';
 import AddCardForm from './AddCardForm';
 
-export default function List({ id, title, cards, onAddCardClick }) {
+export default function List({ id, title, cards, onAddCardClick, className }) {
     return (
-        <Container>
+        <Container className={className}>
             <ListHeader>
                 <ListTitle>{title}</ListTitle>
             </ListHeader>

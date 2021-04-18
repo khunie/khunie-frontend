@@ -1,57 +1,81 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Container } from './styles';
+import { Container, BoardContent } from './styles';
 import List from './List';
+import AddListForm from './AddListForm';
 
-const ListTitleInput = styled.input``;
-
-const AddListButton = styled.button`
-    width: 96px;
-    height: 40px;
-    border-radius: 16px;
-    box-shadow: none;
-    border-color: transparent;
-    background-color: #4643da;
-    color: white;
-    margin: 8px;
-
-    &:disabled {
-        background-color: #9291cf;
-    }
-
-    &:hover:enabled {
-        cursor: pointer;
-        background-color: #3835ce;
-    }
-
-    &:active:enabled {
-        background-color: #2e2bc5;
-    }
+const BoardHeader = styled.div`
+    height: 48px;
+    padding: 8px;
+    box-sizing: border-box;
+    display: flex;
 `;
 
-export default function Board({ lists, onAddListClick, onAddCardClick }) {
-    const [listTitle, setListTitle] = useState('');
+const LeftSection = styled.div`
+    flex: 1;
+`;
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        onAddListClick({ listTitle });
-    };
+const RightSection = styled.div`
+    margin-left: auto;
+`;
+
+const BoardHeaderButton = styled.button`
+    padding: 8px;
+    border: none;
+    background-color: #eee;
+    color: #333;
+    cursor: pointer;
+    margin-right: 4px;
+    border-radius: 6px;
+    font-weight: bold;
+`;
+
+export default function Board({
+    title,
+    teamName,
+    visibility,
+    lists,
+    onAddListClick,
+    onAddCardClick,
+}) {
+    const [isDragScrolling, setDragScrolling] = useState(false);
+
+    const onMouseMove = e => {};
+
+    useEffect(() => {}, []);
 
     return (
         <Container>
-            {lists.map(list => (
-                <List
-                    key={list.id}
-                    id={list.id}
-                    title={list.title}
-                    cards={list.cards || []}
-                    onAddCardClick={onAddCardClick}
-                />
-            ))}
-            <form onSubmit={handleSubmit}>
-                <ListTitleInput value={listTitle} onChange={e => setListTitle(e.target.value)} />
-                <AddListButton type="submit">Add List</AddListButton>
-            </form>
+            <BoardHeader>
+                <LeftSection>
+                    <BoardHeaderButton>{title}</BoardHeaderButton>
+                    <BoardHeaderButton>{teamName}</BoardHeaderButton>
+                    <BoardHeaderButton>Visibility: {visibility}</BoardHeaderButton>
+                </LeftSection>
+                <RightSection>
+                    <BoardHeaderButton>{visibility}</BoardHeaderButton>
+                </RightSection>
+            </BoardHeader>
+            <BoardContent ignoreElements=".list" hideScrollbars={false}>
+                {lists.map(list => (
+                    <List
+                        key={list.id}
+                        id={list.id}
+                        title={list.title}
+                        cards={list.cards || []}
+                        onAddCardClick={onAddCardClick}
+                        className="list"
+                    />
+                ))}
+                <AddListForm onAddListSubmit={onAddListClick} />
+                {/* <form onSubmit={handleSubmit}>
+                    <ListTitleInput
+                        value={listTitle}
+                        onChange={e => setListTitle(e.target.value)}
+                    />
+                    <AddListButton type="submit">Add List</AddListButton>
+                </form> */}
+            </BoardContent>
         </Container>
     );
 }

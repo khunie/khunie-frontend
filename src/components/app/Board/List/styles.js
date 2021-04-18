@@ -8,7 +8,11 @@ export const Container = styled.div`
     align-self: flex-start;
     background-color: #eeeeee;
     margin: 4px;
-    max-height: calc(100vh - 108px);
+    max-height: calc(100vh - 128px);
+
+    &:first-child {
+        margin-left: 0;
+    }
 `;
 
 export const ListContent = styled.div`
@@ -52,11 +56,8 @@ export const ListTitle = styled.h3`
     color: #555;
     font-weight: bold;
     font-family: Roboto;
+    word-wrap: break-word;
+    max-width: 256px;
 `;
 
-export const ListFooter = styled.div`
-    padding: 8px;
-    padding-top: 4px;
-    padding-bottom: 10px;
-    margin-right: 4px;
-`;
+export const ListFooter = styled.div``;

@@ -7,7 +7,6 @@ export default function BoardListing({ teamHref, board }) {
         <Link href={`${teamHref}${board.slug}`} passHref>
             <BoardLink>
                 <h4>{board.title}</h4>
-                <p>{board.slug}</p>
                 <p>{board.description}</p>
             </BoardLink>
         </Link>

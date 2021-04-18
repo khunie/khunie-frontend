@@ -6,4 +6,5 @@ export const Container = styled.ul`
     border-radius: 16px;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 `;

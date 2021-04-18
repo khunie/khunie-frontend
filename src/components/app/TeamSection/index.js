@@ -6,9 +6,7 @@ import BoardList from '../BoardList';
 export default function TeamSection({ team, onAddBoardClick }) {
     return (
         <Container>
-            <SectionTitle>
-                {team.name} ({team.slug})
-            </SectionTitle>
+            <SectionTitle>{team.name}</SectionTitle>
             <BoardList
                 teamHref={`/${TEAM_URL}/${team.slug}/`}
                 boards={team.boards}

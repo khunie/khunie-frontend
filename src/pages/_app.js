@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { Reset } from 'styled-reset';
 import { library, config, dom } from '@fortawesome/fontawesome-svg-core';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Layout from 'components/layout/Layout';
 import DefaultLayout from 'components/layout/DefaultLayout';
 import { useApollo } from 'client';
@@ -13,7 +14,7 @@ import { AUTH_TOKEN, CURRENT_USER } from 'shared/constants';
 
 config.autoAddCss = false;
 
-library.add(faGithub);
+library.add(faGithub, faTimes);
 
 const GlobalStyle = createGlobalStyle`
     body {
@@ -31,6 +32,7 @@ const GlobalStyle = createGlobalStyle`
 
     button {
         font-family: Roboto;
+        border: none;
     }
 `;
 

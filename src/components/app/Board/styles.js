@@ -1,14 +1,25 @@
 import styled from 'styled-components';
+import ScrollContainer from 'react-indiana-drag-scroll';
 
 export const Container = styled.div`
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: 48px;
+    width: 100vw;
+    overflow-x: hidden;
+`;
+
+export const BoardContent = styled(ScrollContainer)`
     position: relative;
     display: flex;
-    flex-direction: row;
     overflow-x: scroll;
-    height: calc(100vh - 48px);
-    padding: 16px;
+    height: calc(100vh - 96px);
+    padding: 8px;
+    padding-right: 0px;
+    padding-top: 0;
     box-sizing: border-box;
-    background-color: white;
 
     ::-webkit-scrollbar {
         height: 12px;

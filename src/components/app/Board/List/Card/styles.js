@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { noSelect } from 'shared/styles';
 
 export const Container = styled.div`
     position: relative;
@@ -39,6 +40,9 @@ export const Container = styled.div`
 `;
 
 export const CardTitle = styled.h4`
+    font-size: 16px;
     word-wrap: break-word;
     max-width: 240px;
+
+    ${noSelect}
 `;
