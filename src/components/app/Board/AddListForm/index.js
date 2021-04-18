@@ -25,11 +25,9 @@ export default function AddListForm({ onAddListSubmit }) {
         }
     }, [showForm]);
 
-    const closeForm = () => {
+    useOutsideClick(containerRef, () => {
         setShowForm(false);
-    };
-
-    useOutsideClick(containerRef, closeForm);
+    });
 
     const handleSubmit = e => {
         e.preventDefault();

@@ -24,13 +24,11 @@ export default function AddCardForm({ listId, onAddCardSubmit }) {
         }
     }, [showForm]);
 
-    const closeForm = () => {
+    useOutsideClick(containerRef, () => {
         if (cardTitle.trim().length === 0) {
             setShowForm(false);
         }
-    };
-
-    useOutsideClick(containerRef, closeForm);
+    });
 
     const handleSubmit = e => {
         e.preventDefault();

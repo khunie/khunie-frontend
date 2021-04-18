@@ -2,7 +2,7 @@ import { Container, ListContent, ListHeader, ListTitle, ListFooter } from './sty
 import Card from './Card';
 import AddCardForm from './AddCardForm';
 
-export default function List({ id, title, cards, onAddCardClick, className }) {
+export default function List({ id, title, cards, onAddCardClick, onCardEditClick, className }) {
     return (
         <Container className={className}>
             <ListHeader>
@@ -11,7 +11,7 @@ export default function List({ id, title, cards, onAddCardClick, className }) {
             {cards.length > 0 && (
                 <ListContent>
                     {cards.map(card => (
-                        <Card key={card.id} title={card.title} />
+                        <Card key={card.id} title={card.title} onClick={onCardEditClick} />
                     ))}
                 </ListContent>
             )}
