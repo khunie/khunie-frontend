@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-
 import { Overlay, Container, CloseButton } from './styles';
 
 function Modal({ isVisible, close, children }) {

@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import Modal from 'components/common/Modal';
 import { Container, BoardContent } from './styles';
 import List from './List';
 import AddListForm from './AddListForm';
+import EditCardForm from './EditCardForm';
 
 const BoardHeader = styled.div`
     height: 48px;
@@ -31,26 +33,14 @@ const BoardHeaderButton = styled.button`
 `;
 
 const EditingOverlay = styled.div`
-    background-color: #000000bb;
-    position: absolute;
+    background-color: #000000aa;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 999;
-`;
-
-const EditCardForm = styled.div`
-    position: absolute;
-    top: ${({ top }) => `${top}px`};
-    left: ${({ left }) => `${left}px`};
-    width: ${({ width }) => `${width}px`};
-    padding: 10px;
-    min-height: 120px;
-    border-radius: 6px;
-    box-sizing: border-box;
-    background-color: white;
-    z-index: 9999;
+    z-index: 99;
+    overflow-y: auto;
 `;
 
 export default function Board({
@@ -62,6 +52,10 @@ export default function Board({
     onAddCardClick,
 }) {
     const [editCard, setEditCard] = useState(null);
+    const [editList, setEditList] = useState(null);
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    const isEditing = (editCard || editList) !== null;
 
     useEffect(() => {}, []);
 
@@ -70,7 +64,15 @@ export default function Board({
     };
 
     const handleSelectCardForEdit = ({ layout, cardTitle }) => {
-        setEditCard({ top: layout.top, left: layout.left, width: layout.width, cardTitle });
+        setEditCard({ layout, cardTitle });
+    };
+
+    const openCardDetails = () => {
+        setModalVisible(true);
+    };
+
+    const cancelEditCard = () => {
+        setEditCard(null);
     };
 
     return (
@@ -94,17 +96,26 @@ export default function Board({
                         cards={list.cards || []}
                         onAddCardClick={onAddCardClick}
                         onCardEditClick={handleSelectCardForEdit}
-                        className="list"
+                        onCardClick={openCardDetails}
                     />
                 ))}
                 <AddListForm onAddListSubmit={onAddListClick} />
             </BoardContent>
-            {editCard && (
-                <EditCardForm top={editCard.top} left={editCard.left} width={editCard.width}>
-                    {editCard.cardTitle}
-                </EditCardForm>
+
+            {isEditing && (
+                <EditingOverlay onClick={handleEditOverlayClick}>
+                    {editCard && (
+                        <EditCardForm
+                            layout={editCard.layout}
+                            cardTitle={editCard.cardTitle}
+                            cancelEdit={cancelEditCard}
+                        />
+                    )}
+                </EditingOverlay>
             )}
-            {editCard && <EditingOverlay onClick={handleEditOverlayClick} />}
+            <Modal isVisible={isModalVisible} close={() => setModalVisible(false)}>
+                <div>hello there</div>
+            </Modal>
         </Container>
     );
 }

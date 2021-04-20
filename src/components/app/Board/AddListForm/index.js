@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import useOutsideClick from 'shared/hooks/useOutsideClick';
+import useEscape from 'shared/hooks/useEscape';
 import {
     Container,
     Form,
@@ -26,6 +27,10 @@ export default function AddListForm({ onAddListSubmit }) {
     }, [showForm]);
 
     useOutsideClick(containerRef, () => {
+        setShowForm(false);
+    });
+
+    useEscape(() => {
         setShowForm(false);
     });
 

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import useOutsideClick from 'shared/hooks/useOutsideClick';
+import useEscape from 'shared/hooks/useEscape';
 import {
     Container,
     Form,
@@ -23,6 +24,11 @@ export default function AddCardForm({ listId, onAddCardSubmit }) {
             cardTitleInputRef.current.focus();
         }
     }, [showForm]);
+
+    useEscape(() => {
+        setShowForm(false);
+        setCardTitle('');
+    });
 
     useOutsideClick(containerRef, () => {
         if (cardTitle.trim().length === 0) {

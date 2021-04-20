@@ -17,7 +17,7 @@ const NavBar = styled.div`
     height: 48px;
     line-height: 52px;
     position: relative;
-    z-index: 999;
+    z-index: 99;
     background-color: #6e5fc5;
     background: linear-gradient(to right, #6350c9, #941eca);
 `;
@@ -29,7 +29,7 @@ const NavContent = styled.div`
     line-height: 52px;
     padding: 0px;
     position: relative;
-    z-index: 999;
+    z-index: 99;
 `;
 
 const LeftSection = styled.div`

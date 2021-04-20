@@ -8,7 +8,7 @@ export const Container = styled.div`
     background-color: #fff;
     margin: 8px 0;
     cursor: pointer;
-    z-index: 999;
+    z-index: 99;
 
     &::before {
         content: '';

@@ -8,7 +8,7 @@ const NavbarContainer = styled.div`
     height: 54px;
     line-height: 58px;
     position: relative;
-    z-index: 999;
+    z-index: 99;
     background-color: white;
 
     -webkit-tap-highlight-color: transparent;
@@ -28,7 +28,7 @@ const NavContent = styled.div`
     line-height: 58px;
     padding: 0 16px;
     position: relative;
-    z-index: 999;
+    z-index: 99;
 `;
 
 const LeftSection = styled.div`
