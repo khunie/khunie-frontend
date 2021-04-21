@@ -87,7 +87,7 @@ export default function Board({
                     <BoardHeaderButton>{visibility}</BoardHeaderButton>
                 </RightSection>
             </BoardHeader>
-            <BoardContent ignoreElements=".list" hideScrollbars={false}>
+            <BoardContent ignoreElements={['.list', '.add-list']} hideScrollbars={false}>
                 {lists.map(list => (
                     <List
                         key={list.id}

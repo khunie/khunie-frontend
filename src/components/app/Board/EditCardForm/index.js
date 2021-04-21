@@ -10,7 +10,6 @@ import {
     ActionRow,
     MenuButton,
     SubmitButton,
-    Icon,
 } from './styles';
 
 export default function EditCardForm({ layout, cardTitle, cancelEdit }) {
@@ -79,7 +78,7 @@ export default function EditCardForm({ layout, cardTitle, cancelEdit }) {
                         onFocus={handleFocus}
                         onKeyPress={handleKeyPress}
                         spellCheck={false}
-                        paddingtop={sBrowser === 'Firefox' && 9}
+                        paddingtop={sBrowser === 'Firefox' ? 9 : 10}
                     />
                     <ActionRow>
                         <SubmitButton type="submit" disabled={newCardTitle.length === 0}>
@@ -89,8 +88,10 @@ export default function EditCardForm({ layout, cardTitle, cancelEdit }) {
                 </Form>
             </FormWrapper>
             <PopMenu ref={setPopperElement} style={styles.popper} {...attributes.popper}>
-                <MenuButton>Open Card Details</MenuButton>
-                <MenuButton negative>Delete Card</MenuButton>
+                <MenuButton icon={['fab', 'github']}>Open Card Details</MenuButton>
+                <MenuButton icon="times" negative>
+                    Delete Card
+                </MenuButton>
             </PopMenu>
         </Container>
     );

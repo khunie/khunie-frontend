@@ -9,7 +9,6 @@ import {
     SubmitButton,
     AddCardButton,
     CancelButton,
-    Icon,
 } from './styles';
 
 export default function AddCardForm({ listId, onAddCardSubmit }) {
@@ -74,9 +73,7 @@ export default function AddCardForm({ listId, onAddCardSubmit }) {
                         spellCheck={false}
                     />
                     <ActionRow>
-                        <CancelButton type="button" onClick={handleCancelClick}>
-                            <Icon icon="times" />
-                        </CancelButton>
+                        <CancelButton icon="times" onClick={handleCancelClick} />
                         <SubmitButton type="submit" disabled={cardTitle.length === 0}>
                             Add card
                         </SubmitButton>

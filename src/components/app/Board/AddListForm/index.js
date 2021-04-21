@@ -9,7 +9,6 @@ import {
     ActionRow,
     AddListButton,
     CancelButton,
-    Icon,
 } from './styles';
 
 export default function AddListForm({ onAddListSubmit }) {
@@ -47,6 +46,7 @@ export default function AddListForm({ onAddListSubmit }) {
         setShowForm(true);
     };
 
+    // COMBINE THESE 2 ADDITEMCOMPONENT OR SOMETHING, MAKE THESE COMPONENTS WRAPPERS OF THAT GENERIC COMPONENT, PASSING IN FUNCTIONS
     const handleFocus = () => {
         listTitleInputRef.current.selectionStart = listTitleInputRef.current.value.length;
         listTitleInputRef.current.selectionEnd = listTitleInputRef.current.value.length;
@@ -65,7 +65,7 @@ export default function AddListForm({ onAddListSubmit }) {
     };
 
     return (
-        <Container ref={containerRef}>
+        <Container ref={containerRef} className="add-list">
             {showForm ? (
                 <Form onSubmit={handleSubmit} ref={formRef}>
                     <ListTitleInput
@@ -78,9 +78,7 @@ export default function AddListForm({ onAddListSubmit }) {
                         spellCheck={false}
                     />
                     <ActionRow>
-                        <CancelButton type="button" onClick={handleCancelClick}>
-                            <Icon icon="times" size="sm" />
-                        </CancelButton>
+                        <CancelButton icon="times" onClick={handleCancelClick} />
                         <SubmitButton type="submit" disabled={listTitle.length === 0}>
                             Add list
                         </SubmitButton>

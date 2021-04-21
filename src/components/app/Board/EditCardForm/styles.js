@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
-import TextareaAutosize from 'react-textarea-autosize';
+import Textarea from 'components/common/Textarea';
+import Button from 'components/common/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Container = styled.div`
@@ -10,28 +11,14 @@ export const Container = styled.div`
     z-index: 999;
 `;
 
+// used for popper positioning PopMenu, as form needs its own ref for 'enter' key event
 export const FormWrapper = styled.div`
 `;
 
 export const Form = styled.form``;
 
-export const CardTitleInput = styled(TextareaAutosize)`
-    border-radius: 6px;
-    border: none;
-    padding: 10px;
-    padding-top: ${({ paddingtop }) => `${paddingtop || 10}px`};
-    width: 100%;
-    box-sizing: border-box;
-    resize: none;
-    overflow: hidden;
-    font-size: 16px;
-    font-family: Roboto;
-    min-height: 120px;
-    line-height: 16px;
+export const CardTitleInput = styled(Textarea)`
 
-    &:focus {
-        outline: none;
-    }
 `;
 
 export const PopMenu = styled.div`
@@ -41,13 +28,22 @@ export const PopMenu = styled.div`
     padding: 0 16px;
 `;
 
-export const MenuButton = styled.button`
+export const MenuButton = styled(Button)`
     background-color: #eee;
+    width: auto;
     padding: 10px 16px;
     border-radius: 6px;
     margin-bottom: 8px;
     font-weight: bold;
     color: #555;
+
+    &:hover:enabled {
+        background-color: #e5e5e5;
+    }
+
+    &:active:enabled {
+        background-color: #e0e0e0;
+    }
 
     ${({ negative }) => (negative && css`
         color: #ce4040;
@@ -62,19 +58,10 @@ export const ActionRow = styled.div`
     margin-top: 6px;
 `;
 
-export const SubmitButton = styled.button`
-    width: 100px;
-    height: 36px;
-    margin: 0px 2px 0px 6px;
-    padding: 10px;
-    border-radius: 6px;
+export const SubmitButton = styled(Button)`
     background-color: #41b84b;
-    color: white;
-    font-weight: bold;
-    font-size: 14px;
 
     &:hover:enabled {
-        cursor: pointer;
         background-color: #39b143;
     }
 
@@ -84,32 +71,6 @@ export const SubmitButton = styled.button`
 
     &:disabled {
         background-color: #6ebb75;
-    }
-`;
-
-export const CancelButton = styled.button`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    padding: 10px;
-    border-radius: 6px;
-    color: #ce4040;
-    font-weight: bold;
-    font-size: 14px;
-
-    &:hover:enabled {
-        cursor: pointer;
-        background-color: #ddd;
-    }
-
-    &:active:enabled {
-        background-color: #ccc;
-    }
-
-    &:disabled {
-        color: #cc8888;
     }
 `;
 

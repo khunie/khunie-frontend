@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import TextareaAutosize from 'react-textarea-autosize';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Textarea from 'components/common/Textarea';
+import Button from 'components/common/Button';
+import IconButton from 'components/common/IconButton';
 
 export const Container = styled.div`
     display: flex;
@@ -28,21 +29,13 @@ export const Form = styled.form`
     flex-direction: column;
 `;
 
-export const ListTitleInput = styled(TextareaAutosize)`
+export const ListTitleInput = styled(Textarea)`
     border-radius: 10px;
-    border: none;
-    padding: 10px;
-    width: 270px;
     margin: 4px 2px 0 2px;
-    box-sizing: border-box;
-    resize: none;
-    overflow: hidden;
-    font-size: 16px;
-    font-family: Roboto;
     min-height: 40px;
+    width: 270px;
 
     &:focus {
-        outline: none;
         border: 2px solid #4458b3;
         padding: 8px;
     }
@@ -56,10 +49,10 @@ export const AddListButton = styled.button`
     color: #666;
     font-weight: bold;
     border-radius: 10px;
-    cursor: pointer;
     font-size: 14px;
 
     &:hover {
+        cursor: pointer;
         background-color: #ddd;
     }
 `;
@@ -72,57 +65,14 @@ export const ActionRow = styled.div`
     margin-top: 6px;
 `;
 
-export const SubmitButton = styled.button`
-    width: 100px;
-    height: 36px;
+export const SubmitButton = styled(Button)`
     margin: 0px 2px 0px 6px;
-    padding: 10px;
-    border-radius: 6px;
-    background-color: #453794;
-    color: white;
-    font-weight: bold;
-    font-size: 14px;
-
-    &:hover:enabled {
-        cursor: pointer;
-        background-color: #3c2e8b;
-    }
-
-    &:active:enabled {
-        background-color: #352788;
-    }
-
-    &:disabled {
-        background-color: #736ca0;
-    }
 `;
 
-export const CancelButton = styled.button`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    padding: 10px;
-    border-radius: 6px;
+export const CancelButton = styled(IconButton)`
     color: #ce4040;
-    font-weight: bold;
-    font-size: 14px;
-
-    &:hover:enabled {
-        cursor: pointer;
-        background-color: #ddd;
-    }
-
-    &:active:enabled {
-        background-color: #ccc;
-    }
 
     &:disabled {
         color: #cc8888;
     }
-`;
-
-export const Icon = styled(FontAwesomeIcon)`
-    font-size: 20px;
 `;
