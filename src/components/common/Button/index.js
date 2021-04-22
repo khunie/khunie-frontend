@@ -1,10 +1,15 @@
 import { StyledButton, Content, Icon } from './styles';
 
 export default function Button(props) {
-    const { forwardRef, icon, disabled, loading, children, center, ...rest } = props;
+    const { forwardRef, icon, disabled, loading, children, center, type, ...rest } = props;
 
     return (
-        <StyledButton ref={forwardRef} disabled={disabled || loading} {...rest}>
+        <StyledButton
+            ref={forwardRef}
+            disabled={disabled || loading}
+            type={type || 'button'}
+            {...rest}
+        >
             {loading ? (
                 'Loading'
             ) : (

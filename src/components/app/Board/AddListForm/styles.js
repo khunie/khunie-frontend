@@ -50,10 +50,15 @@ export const AddListButton = styled.button`
     font-weight: bold;
     border-radius: 10px;
     font-size: 14px;
+    outline: none;
 
     &:hover {
         cursor: pointer;
         background-color: #ddd;
+    }
+
+    &:focus {
+        box-shadow: 0px 0px 0px 2px #4a5297 inset;
     }
 `;
 
