@@ -18,7 +18,7 @@ function Modal({ isVisible, close, children }) {
 
     return (
         <Overlay onClick={close}>
-            <Container onClick={handleContainerClick}>
+            <Container onClick={handleContainerClick} onMouseDown={e => e.stopPropagation()}>
                 <h2>this is the modal header</h2>
                 <CloseButton type="button" onClick={close} />
                 {children}

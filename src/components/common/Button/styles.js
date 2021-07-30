@@ -9,6 +9,7 @@ export const StyledButton = styled.button`
     color: white;
     font-weight: bold;
     font-size: 14px;
+    outline: none;
     // align-self: flex-start; // makes it so each button has its own individual width dependent on its content
 
     &:hover:enabled {
@@ -22,6 +23,10 @@ export const StyledButton = styled.button`
 
     &:disabled {
         background-color: #736ca0;
+    }
+
+    &:focus {
+        box-shadow: 0px 0px 0px 2px #4b4c55;
     }
 `;
 

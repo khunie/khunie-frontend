@@ -11,6 +11,7 @@ export const StyledButton = styled.button`
     border-radius: 6px;
     font-weight: bold;
     font-size: 14px;
+    outline: none;
 
     &:hover:enabled {
         cursor: pointer;
@@ -19,6 +20,10 @@ export const StyledButton = styled.button`
 
     &:active:enabled {
         background-color: #ccc;
+    }
+    
+    &:focus {
+        box-shadow: 0px 0px 0px 2px #4a5297;
     }
 `;
 

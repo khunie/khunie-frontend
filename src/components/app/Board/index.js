@@ -33,7 +33,7 @@ const BoardHeaderButton = styled.button`
 `;
 
 const EditingOverlay = styled.div`
-    background-color: #000000aa;
+    background-color: #000000bb;
     position: fixed;
     top: 0;
     left: 0;
