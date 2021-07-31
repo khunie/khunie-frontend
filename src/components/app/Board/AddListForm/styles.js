@@ -10,10 +10,11 @@ export const Container = styled.div`
     align-items: center;
     margin: 4px;
     align-self: flex-start;
-    background-color: #eee;
     border-radius: 10px;
     box-sizing: border-box;
     position: relative;
+    background-color: ${({ open }) => (open ? '#eeeeeeff' : '#88888866')}; // #cccccc44 looks good on colored bgs
+    transition: background-color .15s ease;
 
     &:after {
         content: '';
@@ -46,15 +47,16 @@ export const AddListButton = styled.button`
     padding: 8px;
     width: 280px;
     box-sizing: border-box;
-    color: #666;
+    color: #fff;
     font-weight: bold;
     border-radius: 10px;
     font-size: 14px;
     outline: none;
+    background-color: transparent;
 
     &:hover {
         cursor: pointer;
-        background-color: #ddd;
+        background-color: #88888833; // #cccccc22 looks good on colored bgs
     }
 
     &:focus {
@@ -76,6 +78,7 @@ export const SubmitButton = styled(Button)`
 
 export const CancelButton = styled(IconButton)`
     color: #ce4040;
+    background-color: transparent;
 
     &:disabled {
         color: #cc8888;

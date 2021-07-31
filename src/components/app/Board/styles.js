@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import ScrollContainer from 'react-indiana-drag-scroll';
 
 export const Container = styled.div`
+    background-image: url('https://resi.ze-robot.com/dl/am/among-trees-1920%C3%971080.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
     background-color: white;
     position: absolute;
     top: 0;

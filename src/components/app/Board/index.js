@@ -115,6 +115,9 @@ export default function Board({
             )}
             <Modal isVisible={isModalVisible} close={() => setModalVisible(false)}>
                 <div>hello there</div>
+                <input placeholder="hello" />
+                <input placeholder="hello" />
+                <input placeholder="hello" />
             </Modal>
         </Container>
     );

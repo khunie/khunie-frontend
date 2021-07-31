@@ -33,4 +33,16 @@ export const Container = styled.div`
     }
 `;
 
-export const CloseButton = styled.button``;
+export const ModalHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
+export const CloseButton = styled.button`
+    width: 36px;
+    height: 36px;
+`;
+
+export const ModalBody = styled.div`
+
+`;

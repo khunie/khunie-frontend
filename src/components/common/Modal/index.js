@@ -1,7 +1,13 @@
-import { useEffect } from 'react';
-import { Overlay, Container, CloseButton } from './styles';
+import { useState, useRef, useEffect } from 'react';
+import FocusTrap from 'focus-trap-react';
+import useEscape from 'shared/hooks/useEscape';
+import useOutsideClick from 'shared/hooks/useOutsideClick';
+import { Overlay, Container, ModalHeader, ModalBody, CloseButton } from './styles';
 
 function Modal({ isVisible, close, children }) {
+    const [mouseDown, setMouseDown] = useState(false);
+    const containerRef = useRef(null);
+
     useEffect(() => {
         if (isVisible) {
             document.body.style.overflowY = 'hidden';
@@ -10,19 +16,27 @@ function Modal({ isVisible, close, children }) {
         }
     }, [isVisible]);
 
-    const handleContainerClick = e => {
-        e.stopPropagation();
-    };
+    useEscape(() => close());
+
+    useOutsideClick(containerRef, () => {
+        if (isVisible) close();
+    });
 
     if (!isVisible) return null;
 
     return (
-        <Overlay onClick={close}>
-            <Container onClick={handleContainerClick} onMouseDown={e => e.stopPropagation()}>
-                <h2>this is the modal header</h2>
-                <CloseButton type="button" onClick={close} />
-                {children}
-            </Container>
+        <Overlay>
+            <FocusTrap>
+                <Container ref={containerRef}>
+                    <ModalHeader>
+                        <h2>this is the modal header</h2>
+                        <CloseButton type="button" onClick={close}>
+                            x
+                        </CloseButton>
+                    </ModalHeader>
+                    <ModalBody>{children}</ModalBody>
+                </Container>
+            </FocusTrap>
         </Overlay>
     );
 }

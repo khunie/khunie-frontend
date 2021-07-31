@@ -29,6 +29,11 @@ export const AddCardButton = styled(AddButton)`
     width: 260px;
     height: 36px;
     border-radius: 6px;
+    color: #666;
+
+    &:hover {
+        background-color: #ddd;
+    }
 `;
 
 export const ActionRow = styled.div`

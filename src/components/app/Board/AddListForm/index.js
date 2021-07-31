@@ -65,7 +65,7 @@ export default function AddListForm({ onAddListSubmit }) {
     };
 
     return (
-        <Container ref={containerRef} className="add-list">
+        <Container ref={containerRef} className="add-list" open={showForm}>
             {showForm ? (
                 <Form onSubmit={handleSubmit} ref={formRef}>
                     <ListTitleInput
