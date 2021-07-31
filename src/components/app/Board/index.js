@@ -91,7 +91,6 @@ export default function Board({
                     cancelEdit={cancelEditCard}
                 />
             )}
-            ={' '}
             <Modal isVisible={isModalVisible} close={() => setModalVisible(false)}>
                 <div>hello there</div>
                 <input placeholder="hello" />
