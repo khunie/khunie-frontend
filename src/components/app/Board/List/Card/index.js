@@ -1,11 +1,11 @@
 import { useRef } from 'react';
 import { Container, CardTitle } from './styles';
 
-export default function Card({ title, onClick, onCardClick }) {
+export default function Card({ id, listId, title, onClick, onCardClick }) {
     const containerRef = useRef(null);
 
-    const handleClick = () => {
-        onCardClick();
+    const handleClick = e => {
+        onCardClick({ id, listId });
     };
 
     const handleRightClick = e => {

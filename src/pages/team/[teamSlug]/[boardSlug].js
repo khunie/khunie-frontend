@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_BOARD_QUERY } from 'gql/board/queries';
+import { GET_CARD_QUERY } from 'gql/card/queries';
 import { CREATE_LIST_MUTATION } from 'gql/list/mutations';
 import { CREATE_CARD_MUTATION } from 'gql/card/mutations';
 import AppLayout from 'components/layout/AppLayout';

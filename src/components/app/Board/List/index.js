@@ -13,6 +13,8 @@ export default function List({ id, title, cards, onAddCardClick, onCardEditClick
                     {cards.map(card => (
                         <Card
                             key={card.id}
+                            id={card.id}
+                            listId={id}
                             title={card.title}
                             onClick={onCardEditClick}
                             onCardClick={onCardClick}

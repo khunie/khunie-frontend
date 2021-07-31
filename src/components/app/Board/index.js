@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Modal from 'components/common/Modal';
 import { Container, BoardContent } from './styles';
 import List from './List';
 import AddListForm from './AddListForm';
 import EditCardForm from './EditCardForm';
+import CardDetailsModal from './CardDetailsModal';
 
 const BoardHeader = styled.div`
     height: 48px;
@@ -42,6 +42,7 @@ export default function Board({
 }) {
     const [editCard, setEditCard] = useState(null);
     const [editList, setEditList] = useState(null);
+    const [cardDetails, setCardDetails] = useState(null);
     const [isModalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {}, []);
@@ -50,8 +51,17 @@ export default function Board({
         setEditCard({ layout, cardTitle });
     };
 
-    const openCardDetails = () => {
+    const openCardDetails = ({ id, listId }) => {
+        const list = lists.find(item => item.id === listId);
+        const card = list.cards.find(item => item.id === id);
+        setCardDetails(card);
+
         setModalVisible(true);
+    };
+
+    const closeCardDetails = () => {
+        setModalVisible(false);
+        setCardDetails(null);
     };
 
     const cancelEditCard = () => {
@@ -91,12 +101,13 @@ export default function Board({
                     cancelEdit={cancelEditCard}
                 />
             )}
-            <Modal isVisible={isModalVisible} close={() => setModalVisible(false)}>
-                <div>hello there</div>
-                <input placeholder="hello" />
-                <input placeholder="hello" />
-                <input placeholder="hello" />
-            </Modal>
+            {cardDetails && (
+                <CardDetailsModal
+                    isVisible={isModalVisible}
+                    close={closeCardDetails}
+                    card={cardDetails}
+                />
+            )}
         </Container>
     );
 }

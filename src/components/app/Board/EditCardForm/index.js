@@ -38,9 +38,8 @@ export default function EditCardForm({ layout, cardTitle, cancelEdit }) {
 
     const handleEditOverlayClick = () => {
         if (mouseDown) {
-            cancelEdit();
-        } else {
             setMouseDown(false);
+            cancelEdit();
         }
     };
 
