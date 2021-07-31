@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_BOARD_QUERY } from 'gql/board/queries';
-import { GET_CARD_QUERY } from 'gql/card/queries';
 import { CREATE_LIST_MUTATION } from 'gql/list/mutations';
 import { CREATE_CARD_MUTATION } from 'gql/card/mutations';
 import AppLayout from 'components/layout/AppLayout';
@@ -14,6 +13,7 @@ export default function BoardPage() {
     const { data, loading, error } = useQuery(GET_BOARD_QUERY, {
         variables: { teamSlug, boardSlug },
     });
+
     const [createListMutation, { data: mData, loading: mLoading, error: mError }] = useMutation(
         CREATE_LIST_MUTATION,
         {
@@ -54,6 +54,12 @@ export default function BoardPage() {
         }
     );
 
+    const [cardDetails, setCardDetails] = useState(null);
+
+    useEffect(() => {
+        setCardDetails(router.query.c ?? null);
+    }, [router.query.c]);
+
     const board = data?.getBoard || {};
     const { id: boardId, title, team, visibility, lists } = board;
 
@@ -81,6 +87,14 @@ export default function BoardPage() {
         });
     };
 
+    const handleOpenCard = ({ cardId }) => {
+        router.push(`/team/${teamSlug}/${boardSlug}/?c=${cardId}`, undefined, { shallow: true });
+    };
+
+    const handleCloseCard = () => {
+        router.push(`/team/${teamSlug}/${boardSlug}`, undefined, { shallow: true });
+    };
+
     return (
         <Board
             title={title}
@@ -89,6 +103,9 @@ export default function BoardPage() {
             lists={lists || []}
             onAddListClick={handleAddList}
             onAddCardClick={handleAddCard}
+            onOpenCard={handleOpenCard}
+            onCloseCard={handleCloseCard}
+            cardDetails={cardDetails}
         />
     );
 }

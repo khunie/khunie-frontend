@@ -39,10 +39,12 @@ export default function Board({
     lists,
     onAddListClick,
     onAddCardClick,
+    onOpenCard,
+    onCloseCard,
+    cardDetails,
 }) {
     const [editCard, setEditCard] = useState(null);
     const [editList, setEditList] = useState(null);
-    const [cardDetails, setCardDetails] = useState(null);
     const [isModalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {}, []);
@@ -52,16 +54,13 @@ export default function Board({
     };
 
     const openCardDetails = ({ id, listId }) => {
-        const list = lists.find(item => item.id === listId);
-        const card = list.cards.find(item => item.id === id);
-        setCardDetails(card);
-
+        onOpenCard({ cardId: id });
         setModalVisible(true);
     };
 
     const closeCardDetails = () => {
         setModalVisible(false);
-        setCardDetails(null);
+        onCloseCard();
     };
 
     const cancelEditCard = () => {
@@ -101,13 +100,7 @@ export default function Board({
                     cancelEdit={cancelEditCard}
                 />
             )}
-            {cardDetails && (
-                <CardDetailsModal
-                    isVisible={isModalVisible}
-                    close={closeCardDetails}
-                    card={cardDetails}
-                />
-            )}
+            {cardDetails && <CardDetailsModal isVisible={cardDetails} close={closeCardDetails} />}
         </Container>
     );
 }
