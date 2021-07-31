@@ -3,6 +3,17 @@ import Textarea from 'components/common/Textarea';
 import Button from 'components/common/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+export const EditingOverlay = styled.div`
+    background-color: #000000bb;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99;
+    overflow-y: auto;
+`;
+
 export const Container = styled.div`
     position: absolute;
     top: ${({ top }) => `${top}px`};

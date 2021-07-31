@@ -19,13 +19,18 @@ function Modal({ isVisible, close, children }) {
     useEscape(() => close());
 
     useOutsideClick(containerRef, () => {
-        if (isVisible) close();
+        setMouseDown(true);
     });
+
+    const handleMouseUp = e => {
+        if (mouseDown) close();
+        setMouseDown(false);
+    };
 
     if (!isVisible) return null;
 
     return (
-        <Overlay>
+        <Overlay onMouseUp={handleMouseUp}>
             <FocusTrap>
                 <Container ref={containerRef}>
                     <ModalHeader>

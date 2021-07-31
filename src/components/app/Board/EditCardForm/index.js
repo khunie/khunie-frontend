@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { usePopper } from 'react-popper';
 import useEscape from 'shared/hooks/useEscape';
+import useOutsideClick from 'shared/hooks/useOutsideClick';
 import {
+    EditingOverlay,
     Container,
     FormWrapper,
     Form,
@@ -14,6 +16,7 @@ import {
 
 export default function EditCardForm({ layout, cardTitle, cancelEdit }) {
     const [newCardTitle, setNewCardTitle] = useState(cardTitle);
+    const [mouseDown, setMouseDown] = useState(false);
     const cardTitleInputRef = useRef(null);
     const formRef = useRef(null);
     const containerRef = useRef(null);
@@ -28,6 +31,18 @@ export default function EditCardForm({ layout, cardTitle, cancelEdit }) {
     }, []);
 
     useEscape(() => cancelEdit());
+
+    useOutsideClick(containerRef, () => {
+        setMouseDown(true);
+    });
+
+    const handleEditOverlayClick = () => {
+        if (mouseDown) {
+            cancelEdit();
+        } else {
+            setMouseDown(false);
+        }
+    };
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -61,38 +76,34 @@ export default function EditCardForm({ layout, cardTitle, cancelEdit }) {
     }
 
     return (
-        <Container
-            ref={containerRef}
-            top={layout.top}
-            left={layout.left}
-            width={layout.width}
-            onClick={e => e.stopPropagation()}
-        >
-            <FormWrapper ref={setReferenceElement}>
-                <Form ref={formRef} onSubmit={handleSubmit}>
-                    <CardTitleInput
-                        value={newCardTitle}
-                        onChange={e => setNewCardTitle(e.target.value)}
-                        ref={cardTitleInputRef}
-                        placeholder="Enter a title"
-                        onFocus={handleFocus}
-                        onKeyPress={handleKeyPress}
-                        spellCheck={false}
-                        paddingtop={sBrowser === 'Firefox' ? 9 : 10}
-                    />
-                    <ActionRow>
-                        <SubmitButton type="submit" disabled={newCardTitle.length === 0}>
-                            Save
-                        </SubmitButton>
-                    </ActionRow>
-                </Form>
-            </FormWrapper>
-            <PopMenu ref={setPopperElement} style={styles.popper} {...attributes.popper}>
-                <MenuButton icon={['fab', 'github']}>Open Card Details</MenuButton>
-                <MenuButton icon="times" negative>
-                    Delete Card
-                </MenuButton>
-            </PopMenu>
-        </Container>
+        <EditingOverlay onClick={handleEditOverlayClick}>
+            <Container ref={containerRef} top={layout.top} left={layout.left} width={layout.width}>
+                <FormWrapper ref={setReferenceElement}>
+                    <Form ref={formRef} onSubmit={handleSubmit}>
+                        <CardTitleInput
+                            value={newCardTitle}
+                            onChange={e => setNewCardTitle(e.target.value)}
+                            ref={cardTitleInputRef}
+                            placeholder="Enter a title"
+                            onFocus={handleFocus}
+                            onKeyPress={handleKeyPress}
+                            spellCheck={false}
+                            paddingtop={sBrowser === 'Firefox' ? 9 : 10}
+                        />
+                        <ActionRow>
+                            <SubmitButton type="submit" disabled={newCardTitle.length === 0}>
+                                Save
+                            </SubmitButton>
+                        </ActionRow>
+                    </Form>
+                </FormWrapper>
+                <PopMenu ref={setPopperElement} style={styles.popper} {...attributes.popper}>
+                    <MenuButton icon={['fab', 'github']}>Open Card Details</MenuButton>
+                    <MenuButton icon="times" negative>
+                        Delete Card
+                    </MenuButton>
+                </PopMenu>
+            </Container>
+        </EditingOverlay>
     );
 }

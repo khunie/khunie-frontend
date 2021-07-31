@@ -32,17 +32,6 @@ const BoardHeaderButton = styled.button`
     font-weight: bold;
 `;
 
-const EditingOverlay = styled.div`
-    background-color: #000000bb;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 99;
-    overflow-y: auto;
-`;
-
 export default function Board({
     title,
     teamName,
@@ -55,13 +44,7 @@ export default function Board({
     const [editList, setEditList] = useState(null);
     const [isModalVisible, setModalVisible] = useState(false);
 
-    const isEditing = (editCard || editList) !== null;
-
     useEffect(() => {}, []);
-
-    const handleEditOverlayClick = () => {
-        setEditCard(null);
-    };
 
     const handleSelectCardForEdit = ({ layout, cardTitle }) => {
         setEditCard({ layout, cardTitle });
@@ -101,18 +84,14 @@ export default function Board({
                 ))}
                 <AddListForm onAddListSubmit={onAddListClick} />
             </BoardContent>
-
-            {isEditing && (
-                <EditingOverlay onClick={handleEditOverlayClick}>
-                    {editCard && (
-                        <EditCardForm
-                            layout={editCard.layout}
-                            cardTitle={editCard.cardTitle}
-                            cancelEdit={cancelEditCard}
-                        />
-                    )}
-                </EditingOverlay>
+            {editCard && (
+                <EditCardForm
+                    layout={editCard.layout}
+                    cardTitle={editCard.cardTitle}
+                    cancelEdit={cancelEditCard}
+                />
             )}
+            ={' '}
             <Modal isVisible={isModalVisible} close={() => setModalVisible(false)}>
                 <div>hello there</div>
                 <input placeholder="hello" />
