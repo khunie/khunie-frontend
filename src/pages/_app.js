@@ -4,8 +4,7 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Head from 'next/head';
 import { Reset } from 'styled-reset';
 import { library, config, dom } from '@fortawesome/fontawesome-svg-core';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faTimes, faUser, faBell, faPlus } from '@fortawesome/free-solid-svg-icons';
+import icons from 'shared/styles/fontAwesome';
 import Layout from 'components/layout/Layout';
 import DefaultLayout from 'components/layout/DefaultLayout';
 import { useApollo } from 'client';
@@ -14,7 +13,7 @@ import { AUTH_TOKEN, CURRENT_USER } from 'shared/constants';
 
 config.autoAddCss = false;
 
-library.add(faGithub, faTimes, faUser, faBell, faPlus);
+library.add(icons);
 
 const GlobalStyle = createGlobalStyle`
     body {

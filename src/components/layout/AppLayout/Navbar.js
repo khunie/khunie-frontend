@@ -9,7 +9,7 @@ import { useLogout } from 'shared/hooks/auth';
 import { USER_URL } from 'shared/constants';
 import ProfileCard from 'components/common/ProfileCard';
 import IconButton from 'components/common/IconButton';
-import Dropdown, { DropdownMenu, DropdownMenuButton } from './Dropdown';
+import Dropdown, { DropdownMenu, DropdownMenuButton, Divider } from './Dropdown';
 
 const NavBar = styled.div`
     width: 100%;
@@ -144,6 +144,11 @@ export default function Navbar() {
                 {showAccountMenu && (
                     <Dropdown title="Account" close={() => setShowAccountMenu(false)}>
                         <ProfileCard username={user?.username} email={user?.email} />
+                        <DropdownMenu>
+                            <DropdownMenuButton type="button">Settings</DropdownMenuButton>
+                            <DropdownMenuButton type="button">Help</DropdownMenuButton>
+                        </DropdownMenu>
+                        <Divider />
                         <DropdownMenu>
                             <DropdownMenuButton type="button" onClick={logout}>
                                 Log out

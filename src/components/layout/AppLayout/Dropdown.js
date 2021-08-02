@@ -13,20 +13,22 @@ const Container = styled.div`
     top: 52px;
     border-radius: 4px;
     box-shadow: 0px 0px 0px 1px #555263;
-    padding: 0 0 4px 0;
+    padding: 0;
 `;
 
 const DropdownHeader = styled.div`
     padding: 12px;
     text-align: center;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #e5e5e5;
 `;
 
 const DropdownTitle = styled.h3`
     font-weight: bold;
 `;
 
-export const DropdownMenu = styled.div``;
+export const DropdownMenu = styled.div`
+    padding: 8px 0;
+`;
 
 export const DropdownMenuButton = styled.button`
     width: 100%;
@@ -42,6 +44,13 @@ export const DropdownMenuButton = styled.button`
     &:active:enabled {
         background-color: #e8e8e8;
     }
+`;
+
+export const Divider = styled.div`
+    flex: 1;
+    height: 1px;
+    background-color: #e5e5e5;
+    margin-left: 8px;
 `;
 
 export default function Dropdown({ close, title, children }) {
