@@ -93,6 +93,7 @@ export default function BoardPage() {
 
     const handleCloseCard = () => {
         router.push(`/team/${teamSlug}/${boardSlug}`, undefined, { shallow: true });
+        setCardDetails(null);
     };
 
     return (

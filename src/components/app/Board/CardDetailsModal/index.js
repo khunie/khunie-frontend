@@ -19,7 +19,7 @@ export default function CardDetailsModal({ isVisible, close }) {
     const card = cdData?.getCard ?? {};
 
     return (
-        <Modal isVisible={isVisible && !cdLoading} close={close} title={card.title}>
+        <Modal isVisible={isVisible && !cdLoading} close={close} title={card?.title}>
             <ModalBody>
                 <Section>
                     <SectionHeader>
@@ -32,6 +32,7 @@ export default function CardDetailsModal({ isVisible, close }) {
                 <Section>
                     <SectionHeader>
                         <SectionTitle>Comments</SectionTitle>
+                        <pre>{JSON.stringify(cdError, null, 4)}</pre>
                     </SectionHeader>
                 </Section>
             </ModalBody>

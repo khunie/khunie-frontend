@@ -13,7 +13,6 @@ export const StyledButton = styled.button`
     // align-self: flex-start; // makes it so each button has its own individual width dependent on its content
 
     &:hover:enabled {
-        cursor: pointer;
         background-color: #3c2e8b;
     }
 

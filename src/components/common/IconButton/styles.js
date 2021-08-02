@@ -14,7 +14,6 @@ export const StyledButton = styled.button`
     outline: none;
 
     &:hover:enabled {
-        cursor: pointer;
         background-color: #ddd;
     }
 
@@ -28,5 +27,5 @@ export const StyledButton = styled.button`
 `;
 
 export const Icon = styled(FontAwesomeIcon)`
-    font-size: 20px;
+    font-size: ${({ fontSize }) => `${fontSize}px`};
 `;

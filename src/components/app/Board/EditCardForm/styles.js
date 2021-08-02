@@ -10,7 +10,7 @@ export const EditingOverlay = styled.div`
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 99;
+    z-index: 9999;
     overflow-y: auto;
 `;
 

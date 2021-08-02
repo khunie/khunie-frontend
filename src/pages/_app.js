@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { Reset } from 'styled-reset';
 import { library, config, dom } from '@fortawesome/fontawesome-svg-core';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faUser, faBell, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Layout from 'components/layout/Layout';
 import DefaultLayout from 'components/layout/DefaultLayout';
 import { useApollo } from 'client';
@@ -14,7 +14,7 @@ import { AUTH_TOKEN, CURRENT_USER } from 'shared/constants';
 
 config.autoAddCss = false;
 
-library.add(faGithub, faTimes);
+library.add(faGithub, faTimes, faUser, faBell, faPlus);
 
 const GlobalStyle = createGlobalStyle`
     body {
@@ -27,7 +27,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     h1,h2,h3 {
-        font-family: Montserrat;
+        font-family: Roboto;
     }
 
     button {
@@ -39,6 +39,10 @@ const GlobalStyle = createGlobalStyle`
         -moz-user-select: none; /* Old versions of Firefox */
         -ms-user-select: none; /* Internet Explorer/Edge */
         user-select: none; 
+
+        &:hover:enabled {
+            cursor: pointer;
+        }
     }
 `;
 

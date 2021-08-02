@@ -6,10 +6,16 @@ export const GET_CARD_QUERY = gql`
             id
             title
             description
+            index
             creator {
                 username
             }
+            comments {
+                id
+                content
+            }
             createdAt
+            updatedAt
         }
     }
 `;

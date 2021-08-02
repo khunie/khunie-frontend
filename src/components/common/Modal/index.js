@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import FocusTrap from 'focus-trap-react';
 import useEscape from 'shared/hooks/useEscape';
 import useOutsideClick from 'shared/hooks/useOutsideClick';
-import { Overlay, Container, ModalHeader, ModalBody, CloseButton } from './styles';
+import { Overlay, Container, ModalHeader, ModalTitle, ModalBody, CloseButton } from './styles';
 
 function Modal({ isVisible, close, title, children }) {
     const [mouseDown, setMouseDown] = useState(false);
@@ -36,7 +36,7 @@ function Modal({ isVisible, close, title, children }) {
             <FocusTrap>
                 <Container ref={containerRef}>
                     <ModalHeader>
-                        <h2>{title}</h2>
+                        <ModalTitle>{title}</ModalTitle>
                         <CloseButton type="button" onClick={close}>
                             x
                         </CloseButton>

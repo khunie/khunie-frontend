@@ -33,6 +33,11 @@ export const Container = styled.div`
     }
 `;
 
+export const ModalTitle = styled.h2`
+    font-weight: bold;
+    font-size: 24px;
+`;
+
 export const ModalHeader = styled.div`
     display: flex;
     justify-content: space-between;
