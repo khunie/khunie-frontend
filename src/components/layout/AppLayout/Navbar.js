@@ -8,7 +8,7 @@ import { authVar, userVar } from 'client/cache';
 import { useLogout } from 'shared/hooks/auth';
 import { USER_URL } from 'shared/constants';
 import ProfileCard from 'components/common/ProfileCard';
-import IconButton from 'components/common/IconButton';
+import IconButton, { Icon } from 'components/common/IconButton';
 import Dropdown, { DropdownMenu, DropdownMenuButton, Divider } from './Dropdown';
 
 const NavBar = styled.div`
@@ -90,6 +90,10 @@ const NavButton = styled(IconButton)`
     &:active:enabled {
         background-color: #9b05a8;
     }
+
+    ${Icon} {
+        font-size: 16px;
+    }
 `;
 
 export default function Navbar() {
@@ -114,24 +118,11 @@ export default function Navbar() {
                     </Link>
                 </LeftSection>
                 <RightSection>
-                    {user && (
-                        <NavButton
-                            icon="plus"
-                            iconSize={16}
-                            onClick={() => setShowAddMenu(!showAddMenu)}
-                        />
-                    )}
-                    {user && (
-                        <NavButton
-                            icon="bell"
-                            iconSize={16}
-                            onClick={() => setShowAddMenu(!showAddMenu)}
-                        />
-                    )}
+                    {user && <NavButton icon="plus" onClick={() => setShowAddMenu(!showAddMenu)} />}
+                    {user && <NavButton icon="bell" onClick={() => setShowAddMenu(!showAddMenu)} />}
                     {user && (
                         <NavButton
                             icon="user"
-                            iconSize={16}
                             onClick={() => setShowAccountMenu(!showAccountMenu)}
                         />
                     )}

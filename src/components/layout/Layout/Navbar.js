@@ -61,7 +61,7 @@ export default function Navbar() {
                     </Link>
                     <NavLink href="/">Why khunie?</NavLink>
                     <NavLink href="/">Resources</NavLink>
-                    <NavLink href="/">Pricing</NavLink>
+                    <NavLink href="/pricing">Pricing</NavLink>
                 </LeftSection>
                 <RightSection>
                     <NavAnchor onClick={logout}>log out</NavAnchor>

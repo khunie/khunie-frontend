@@ -50,7 +50,7 @@ export const Divider = styled.div`
     flex: 1;
     height: 1px;
     background-color: #e5e5e5;
-    margin-left: 8px;
+    margin-left: 16px;
 `;
 
 export default function Dropdown({ close, title, children }) {
