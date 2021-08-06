@@ -27,6 +27,7 @@ const GlobalStyle = createGlobalStyle`
 
     h1,h2,h3 {
         font-family: Roboto;
+        color: #333;
     }
 
     button {

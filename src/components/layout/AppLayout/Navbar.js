@@ -81,14 +81,14 @@ const NavButton = styled(IconButton)`
     margin: 0 4px;
     border-radius: 3px;
     color: #ffffffee;
-    background-color: #c10cd1;
+    background-color: #d310c3;
 
     &:hover:enabled {
-        background-color: #b60bc5;
+        background-color: #c40eb4;
     }
 
     &:active:enabled {
-        background-color: #9b05a8;
+        background-color: #b606a7;
     }
 
     ${Icon} {
@@ -101,6 +101,7 @@ export default function Navbar() {
     const user = useReactiveVar(userVar);
     const { logout, error } = useLogout();
     const [showAddMenu, setShowAddMenu] = useState(false);
+    const [showNotificationMenu, setShowNotificationMenu] = useState(false);
     const [showAccountMenu, setShowAccountMenu] = useState(false);
 
     return (
@@ -117,19 +118,27 @@ export default function Navbar() {
                         </Anchor>
                     </Link>
                 </LeftSection>
-                <RightSection>
-                    {user && <NavButton icon="plus" onClick={() => setShowAddMenu(!showAddMenu)} />}
-                    {user && <NavButton icon="bell" onClick={() => setShowAddMenu(!showAddMenu)} />}
-                    {user && (
+                {user && (
+                    <RightSection>
+                        <NavButton icon="plus" onClick={() => setShowAddMenu(!showAddMenu)} />
+                        <NavButton
+                            icon="bell"
+                            onClick={() => setShowNotificationMenu(!showAddMenu)}
+                        />
                         <NavButton
                             icon="user"
                             onClick={() => setShowAccountMenu(!showAccountMenu)}
                         />
-                    )}
-                </RightSection>
+                    </RightSection>
+                )}
                 {showAddMenu && (
                     <Dropdown title="Create something" close={() => setShowAddMenu(false)}>
                         <DropdownMenu>Add Menu</DropdownMenu>
+                    </Dropdown>
+                )}
+                {showNotificationMenu && (
+                    <Dropdown title="Notifications" close={() => setShowNotificationMenu(false)}>
+                        <DropdownMenu>Notifications menu</DropdownMenu>
                     </Dropdown>
                 )}
                 {showAccountMenu && (

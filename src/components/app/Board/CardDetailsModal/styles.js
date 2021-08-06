@@ -11,6 +11,7 @@ export const SectionTitle = styled.h3`
 `;
 
 export const Section = styled.div`
+    width: 100%;
     padding: 16px 0;
     margin: 8px 0 16px 0;
 `;

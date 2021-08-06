@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Container, CardTitle } from './styles';
 
-export default function Card({ id, listId, title, onClick, onCardClick }) {
+export default function Card({ id, listId, title, index, trueIndex, onClick, onCardClick }) {
     const containerRef = useRef(null);
 
     const handleClick = e => {
@@ -18,6 +18,7 @@ export default function Card({ id, listId, title, onClick, onCardClick }) {
     return (
         <Container onClick={handleClick} ref={containerRef} onContextMenu={handleRightClick}>
             <CardTitle>{title}</CardTitle>
+            <div>{`ix${index}, tr${trueIndex}`}</div>
         </Container>
     );
 }

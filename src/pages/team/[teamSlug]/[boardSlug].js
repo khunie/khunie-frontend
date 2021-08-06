@@ -12,6 +12,7 @@ export default function BoardPage() {
     const { teamSlug, boardSlug } = router.query;
     const { data, loading, error } = useQuery(GET_BOARD_QUERY, {
         variables: { teamSlug, boardSlug },
+        fetchPolicy: 'network-only',
     });
 
     const [createListMutation, { data: mData, loading: mLoading, error: mError }] = useMutation(

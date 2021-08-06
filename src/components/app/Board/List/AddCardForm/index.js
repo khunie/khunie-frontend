@@ -11,7 +11,7 @@ import {
     CancelButton,
 } from './styles';
 
-export default function AddCardForm({ listId, onAddCardSubmit }) {
+export default function AddCardForm({ listId, nextIndex, onAddCardSubmit }) {
     const [showForm, setShowForm] = useState(false);
     const [cardTitle, setCardTitle] = useState('');
     const cardTitleInputRef = useRef(null);
@@ -38,7 +38,7 @@ export default function AddCardForm({ listId, onAddCardSubmit }) {
     const handleSubmit = e => {
         e.preventDefault();
         if (cardTitle.trim().length > 0) {
-            onAddCardSubmit({ listId, cardTitle });
+            onAddCardSubmit({ listId, cardTitle, index: nextIndex });
             setCardTitle('');
             cardTitleInputRef.current.focus();
         }
