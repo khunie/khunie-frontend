@@ -7,17 +7,17 @@ const Container = styled.div`
     padding: 128px 0;
     height: 100vh;
     box-sizing: border-box;
-    background-color: #fafafa;
+    background: linear-gradient(to right, #243dac, #6c0ed8);
 `;
 
 const FormContainer = styled.div`
-    max-width: 450px;
+    max-width: 600px;
     background-color: #fff;
-    padding: 48px 64px 64px 64px;
+    padding: 128px 128px 196px 128px;
     margin: 0 auto;
     border-radius: 10px;
-    box-shadow: 4px 4px 16px #ccc;
-    box-shadow: 1px 2px 6px #ccc;
+    /* box-shadow: 4px 4px 16px #ccc;
+    box-shadow: 1px 2px 6px #ccc; */
     box-sizing: border-box;
 `;
 
