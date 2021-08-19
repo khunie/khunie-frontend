@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ContainerScrollbar } from 'shared/styles';
 
 export const Container = styled.div`
     border-radius: 10px;
@@ -19,33 +20,8 @@ export const ListContent = styled.div`
     overflow-y: auto;
     padding: 2px 8px;
     margin-right: 4px;
-    scrollbar-width: thin;
 
-    ::-webkit-scrollbar {
-        height: 8px;
-        width: 8px;
-        background: #ddd;
-        border-radius: 3px;
-        -webkit-border-radius: 3px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: #aaa;
-        border-radius: 3px;
-        -webkit-border-radius: 3px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-        background: #999;
-    }
-
-    ::-webkit-scrollbar-thumb:active {
-        background: #777;
-    }
-
-    ::-webkit-scrollbar-corner {
-        background: #000;
-    }
+    ${ContainerScrollbar}
 `;
 
 export const ListHeader = styled.div`

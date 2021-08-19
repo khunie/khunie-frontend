@@ -5,6 +5,7 @@ import List from './List';
 import AddListForm from './AddListForm';
 import EditCardForm from './EditCardForm';
 import CardDetailsModal from './CardDetailsModal';
+import Sidebar from './Sidebar';
 
 const BoardHeader = styled.div`
     height: 48px;
@@ -30,15 +31,6 @@ const BoardHeaderButton = styled.button`
     margin-right: 4px;
     border-radius: 6px;
     font-weight: bold;
-`;
-
-const Sidebar = styled.div`
-    background-color: white;
-    height: calc(100vh - 48px);
-    width: 360px;
-    word-wrap: break-word;
-    padding: 8px;
-    box-sizing: border-box;
 `;
 
 export default function Board({
@@ -87,11 +79,11 @@ export default function Board({
                         <BoardHeaderButton>Visibility: {visibility}</BoardHeaderButton>
                     </LeftSection>
                     <RightSection>
-                        <BoardHeaderButton
-                            onClick={() => setRightSidebarVisible(!isRightSidebarVisible)}
-                        >
-                            {visibility}
-                        </BoardHeaderButton>
+                        {!isRightSidebarVisible && (
+                            <BoardHeaderButton onClick={() => setRightSidebarVisible(true)}>
+                                {visibility}
+                            </BoardHeaderButton>
+                        )}
                     </RightSection>
                 </BoardHeader>
                 <BoardContent ignoreElements={['.list', '.add-list']} hideScrollbars={false}>
@@ -110,10 +102,10 @@ export default function Board({
                 </BoardContent>
             </MainSection>
             {isRightSidebarVisible && (
-                <Sidebar>
-                    Hey there thsi is the sidebar what is going on dhfhdf
-                    adkfa;lkdjfjkl;adljkfadsljkfl;jkadfl;jkasdl;kjalsk;jflk;jasdflk;asdljklkj;asfljk;asdljk
-                </Sidebar>
+                <Sidebar
+                    isVisible={isRightSidebarVisible}
+                    close={() => setRightSidebarVisible(false)}
+                />
             )}
             {editCard && (
                 <EditCardForm
