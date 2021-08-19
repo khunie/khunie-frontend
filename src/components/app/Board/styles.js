@@ -10,7 +10,12 @@ export const Container = styled.div`
     top: 0;
     left: 0;
     padding-top: 48px;
+    display: flex;
     width: 100vw;
+`;
+
+export const MainSection = styled.div`
+    flex: 1;
     overflow-x: hidden;
 `;
 

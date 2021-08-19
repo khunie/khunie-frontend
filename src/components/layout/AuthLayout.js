@@ -8,6 +8,11 @@ const Container = styled.div`
     height: 100vh;
     box-sizing: border-box;
     background: linear-gradient(to right, #243dac, #6c0ed8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    overflow-y: scroll;
 `;
 
 const FormContainer = styled.div`
@@ -15,7 +20,7 @@ const FormContainer = styled.div`
     background-color: #fff;
     padding: 128px 128px 196px 128px;
     margin: 0 auto;
-    border-radius: 10px;
+    border-radius: 6px;
     /* box-shadow: 4px 4px 16px #ccc;
     box-shadow: 1px 2px 6px #ccc; */
     box-sizing: border-box;

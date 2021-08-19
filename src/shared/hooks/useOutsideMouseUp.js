@@ -21,5 +21,5 @@ export default function useOutsideMouseUp(
         return () => {
             document.removeEventListener('mouseup', handleMouseUp);
         };
-    }, [ref, callback]);
+    }, [ref, callback, onInside]);
 }

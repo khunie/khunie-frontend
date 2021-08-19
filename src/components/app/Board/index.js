@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Container, BoardContent } from './styles';
+import { Container, MainSection, BoardContent } from './styles';
 import List from './List';
 import AddListForm from './AddListForm';
 import EditCardForm from './EditCardForm';
@@ -32,6 +32,15 @@ const BoardHeaderButton = styled.button`
     font-weight: bold;
 `;
 
+const Sidebar = styled.div`
+    background-color: white;
+    height: calc(100vh - 48px);
+    width: 360px;
+    word-wrap: break-word;
+    padding: 8px;
+    box-sizing: border-box;
+`;
+
 export default function Board({
     title,
     teamName,
@@ -46,6 +55,7 @@ export default function Board({
     const [editCard, setEditCard] = useState(null);
     const [editList, setEditList] = useState(null);
     const [isModalVisible, setModalVisible] = useState(false);
+    const [isRightSidebarVisible, setRightSidebarVisible] = useState(false);
 
     useEffect(() => {}, []);
 
@@ -69,30 +79,42 @@ export default function Board({
 
     return (
         <Container>
-            <BoardHeader>
-                <LeftSection>
-                    <BoardHeaderButton>{title}</BoardHeaderButton>
-                    <BoardHeaderButton>{teamName}</BoardHeaderButton>
-                    <BoardHeaderButton>Visibility: {visibility}</BoardHeaderButton>
-                </LeftSection>
-                <RightSection>
-                    <BoardHeaderButton>{visibility}</BoardHeaderButton>
-                </RightSection>
-            </BoardHeader>
-            <BoardContent ignoreElements={['.list', '.add-list']} hideScrollbars={false}>
-                {lists.map(list => (
-                    <List
-                        key={list.id}
-                        id={list.id}
-                        title={list.title}
-                        cards={list.cards || []}
-                        onAddCardClick={onAddCardClick}
-                        onCardEditClick={handleSelectCardForEdit}
-                        onCardClick={openCardDetails}
-                    />
-                ))}
-                <AddListForm onAddListSubmit={onAddListClick} />
-            </BoardContent>
+            <MainSection>
+                <BoardHeader>
+                    <LeftSection>
+                        <BoardHeaderButton>{title}</BoardHeaderButton>
+                        <BoardHeaderButton>{teamName}</BoardHeaderButton>
+                        <BoardHeaderButton>Visibility: {visibility}</BoardHeaderButton>
+                    </LeftSection>
+                    <RightSection>
+                        <BoardHeaderButton
+                            onClick={() => setRightSidebarVisible(!isRightSidebarVisible)}
+                        >
+                            {visibility}
+                        </BoardHeaderButton>
+                    </RightSection>
+                </BoardHeader>
+                <BoardContent ignoreElements={['.list', '.add-list']} hideScrollbars={false}>
+                    {lists.map(list => (
+                        <List
+                            key={list.id}
+                            id={list.id}
+                            title={list.title}
+                            cards={list.cards || []}
+                            onAddCardClick={onAddCardClick}
+                            onCardEditClick={handleSelectCardForEdit}
+                            onCardClick={openCardDetails}
+                        />
+                    ))}
+                    <AddListForm onAddListSubmit={onAddListClick} />
+                </BoardContent>
+            </MainSection>
+            {isRightSidebarVisible && (
+                <Sidebar>
+                    Hey there thsi is the sidebar what is going on dhfhdf
+                    adkfa;lkdjfjkl;adljkfadsljkfl;jkadfl;jkasdl;kjalsk;jflk;jasdflk;asdljklkj;asfljk;asdljk
+                </Sidebar>
+            )}
             {editCard && (
                 <EditCardForm
                     layout={editCard.layout}

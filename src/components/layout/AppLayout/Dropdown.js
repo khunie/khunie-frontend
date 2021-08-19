@@ -63,7 +63,6 @@ export default function Dropdown({ close, title, children }) {
         setMouseDown(true);
     });
 
-    // can use useCallback here on these functions so they aren't constantly recreated
     useOutsideMouseUp(
         containerRef,
         () => {
