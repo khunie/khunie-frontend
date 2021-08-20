@@ -8,12 +8,14 @@ export default function Button(props) {
             ref={forwardRef}
             disabled={disabled || loading}
             type={type || 'button'}
+            hasIcon={!!icon}
+            center={center}
             {...rest}
         >
             {loading ? (
                 'Loading'
             ) : (
-                <Content hasIcon={!!icon} center={center}>
+                <Content>
                     {icon && <Icon icon={icon} />}
                     {children}
                 </Content>

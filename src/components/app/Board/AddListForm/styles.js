@@ -4,15 +4,15 @@ import Button from 'components/common/Button';
 import IconButton from 'components/common/IconButton';
 
 export const Container = styled.div`
+    position: relative;
     display: flex;
     flex: 0 0 280px;
     flex-direction: column;
     align-items: center;
-    margin: 4px;
+    margin: 2px 4px 4px 4px;
     align-self: flex-start;
     border-radius: 6px;
     box-sizing: border-box;
-    position: relative;
     background-color: ${({ open }) => (open ? '#eeeeeeff' : '#88888866')}; // #cccccc44 looks good on colored bgs
     transition: background-color .15s ease;
 
@@ -55,7 +55,6 @@ export const AddListButton = styled.button`
     background-color: transparent;
 
     &:hover {
-        cursor: pointer;
         background-color: #88888833; // #cccccc22 looks good on colored bgs
     }
 

@@ -1,5 +1,6 @@
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import {
+    faEllipsisH,
     faTimes,
     faUser,
     faBell,
@@ -11,6 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 export default [
+    faEllipsisH,
     faGithub,
     faTimes,
     faUser,

@@ -1,41 +1,15 @@
 import { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { Container, MainSection, BoardContent } from './styles';
+import BoardHeader from './BoardHeader';
 import List from './List';
 import AddListForm from './AddListForm';
 import EditCardForm from './EditCardForm';
 import CardDetailsModal from './CardDetailsModal';
 import Sidebar from './Sidebar';
 
-const BoardHeader = styled.div`
-    height: 48px;
-    padding: 8px;
-    box-sizing: border-box;
-    display: flex;
-`;
-
-const LeftSection = styled.div`
-    flex: 1;
-`;
-
-const RightSection = styled.div`
-    margin-left: auto;
-    margin-right: -8px;
-`;
-
-const BoardHeaderButton = styled.button`
-    padding: 8px;
-    border: none;
-    background-color: #eee;
-    color: #333;
-    cursor: pointer;
-    margin-right: 8px;
-    border-radius: 4px;
-    font-weight: bold;
-`;
-
 export default function Board({
     title,
+    description,
     teamName,
     visibility,
     lists,
@@ -73,21 +47,13 @@ export default function Board({
     return (
         <Container>
             <MainSection>
-                <BoardHeader>
-                    <LeftSection>
-                        <BoardHeaderButton>{title}</BoardHeaderButton>
-                        <BoardHeaderButton>{teamName}</BoardHeaderButton>
-                        <BoardHeaderButton>Visibility: {visibility}</BoardHeaderButton>
-                    </LeftSection>
-                    <RightSection>
-                        <BoardHeaderButton>{teamName}</BoardHeaderButton>
-                        {!isRightSidebarVisible && (
-                            <BoardHeaderButton onClick={() => setRightSidebarVisible(true)}>
-                                Show Menu
-                            </BoardHeaderButton>
-                        )}
-                    </RightSection>
-                </BoardHeader>
+                <BoardHeader
+                    title={title}
+                    teamName={teamName}
+                    visibility={visibility}
+                    isRightSidebarVisible={isRightSidebarVisible}
+                    openRightSidebar={() => setRightSidebarVisible(true)}
+                />
                 <BoardContent ignoreElements={['.list', '.add-list']} hideScrollbars={false}>
                     {lists.map(list => (
                         <List

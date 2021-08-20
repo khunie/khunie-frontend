@@ -2,13 +2,17 @@ import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const StyledButton = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100px;
     padding: 10px;
+    box-sizing: border-box;
     border-radius: 4px;
     background-color: #453794;
     color: white;
-    font-weight: bold;
     font-size: 14px;
+    font-weight: bold;
     outline: none;
     // align-self: flex-start; // makes it so each button has its own individual width dependent on its content
 
@@ -29,14 +33,9 @@ export const StyledButton = styled.button`
     }
 `;
 
-export const Content = styled.div`
+export const Content = styled.span`
     display: flex;
-    justify-content: ${({ hasIcon }) => (hasIcon ? 'flex-start' : 'center')};
     align-items: center;
-
-    ${({ center }) => (center && css`
-        justify-content: center;
-    `)}
 `;
 
 export const Icon = styled(FontAwesomeIcon)`

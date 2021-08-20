@@ -23,7 +23,7 @@ export const BoardContent = styled(ScrollContainer)`
     position: relative;
     display: flex;
     overflow-x: scroll;
-    height: calc(100vh - 96px);
+    height: calc(100vh - 100px);
     padding: 8px;
     padding-right: 0px;
     padding-top: 0;

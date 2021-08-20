@@ -40,6 +40,7 @@ export const PopMenu = styled.div`
 `;
 
 export const MenuButton = styled(Button)`
+    justify-content: flex-start;
     background-color: #eee;
     width: auto;
     padding: 10px 16px;

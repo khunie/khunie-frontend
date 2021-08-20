@@ -8,7 +8,7 @@ export const Container = styled.div`
     flex-direction: column;
     align-self: flex-start;
     background-color: #eeeeee;
-    margin: 4px;
+    margin: 2px 4px 4px 4px;
     max-height: calc(100vh - 128px);
 
     &:first-child {

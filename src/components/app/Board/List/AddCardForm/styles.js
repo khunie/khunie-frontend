@@ -4,9 +4,7 @@ import Button from 'components/common/Button';
 import { AddListButton as AddButton, CancelButton } from '../../AddListForm/styles';
 
 export const Container = styled.div`
-    padding: 8px;
-    padding-top: 2px;
-    padding-bottom: 10px;
+    padding: 2px 8px 10px 8px;
     margin-right: 4px;
 `;
 
