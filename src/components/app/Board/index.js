@@ -20,6 +20,7 @@ const LeftSection = styled.div`
 
 const RightSection = styled.div`
     margin-left: auto;
+    margin-right: -8px;
 `;
 
 const BoardHeaderButton = styled.button`
@@ -28,8 +29,8 @@ const BoardHeaderButton = styled.button`
     background-color: #eee;
     color: #333;
     cursor: pointer;
-    margin-right: 4px;
-    border-radius: 6px;
+    margin-right: 8px;
+    border-radius: 4px;
     font-weight: bold;
 `;
 
@@ -79,9 +80,10 @@ export default function Board({
                         <BoardHeaderButton>Visibility: {visibility}</BoardHeaderButton>
                     </LeftSection>
                     <RightSection>
+                        <BoardHeaderButton>{teamName}</BoardHeaderButton>
                         {!isRightSidebarVisible && (
                             <BoardHeaderButton onClick={() => setRightSidebarVisible(true)}>
-                                {visibility}
+                                Show Menu
                             </BoardHeaderButton>
                         )}
                     </RightSection>

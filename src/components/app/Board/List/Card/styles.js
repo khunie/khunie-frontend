@@ -4,7 +4,7 @@ import { noSelect } from 'shared/styles';
 export const Container = styled.div`
     position: relative;
     padding: 10px;
-    border-radius: 6px;
+    border-radius: 4px;
     background-color: #fff;
     margin: 8px 0;
     cursor: pointer;
@@ -17,7 +17,7 @@ export const Container = styled.div`
         bottom: 0;
         left: 0;
         right: 0;
-        border-radius: 6px;
+        border-radius: 4px;
         z-index: -1;
         box-shadow: 0px 1px 2px #bbb;
     }

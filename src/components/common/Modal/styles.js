@@ -20,7 +20,7 @@ export const Container = styled.div`
     width: 800px;
     height: 1300px;
     background-color: white;
-    border-radius: 6px;
+    border-radius: 4px;
     padding: 32px;
     position: relative;
 

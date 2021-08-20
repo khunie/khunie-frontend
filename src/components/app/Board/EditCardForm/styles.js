@@ -29,7 +29,7 @@ export const FormWrapper = styled.div`
 export const Form = styled.form``;
 
 export const CardTitleInput = styled(Textarea)`
-
+    border-radius: 4px;
 `;
 
 export const PopMenu = styled.div`
@@ -43,7 +43,7 @@ export const MenuButton = styled(Button)`
     background-color: #eee;
     width: auto;
     padding: 10px 16px;
-    border-radius: 6px;
+    border-radius: 4px;
     margin-bottom: 8px;
     font-weight: bold;
     color: #555;

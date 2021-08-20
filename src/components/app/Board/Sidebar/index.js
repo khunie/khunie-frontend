@@ -1,17 +1,18 @@
-import { Container, SidebarHeader, SidebarBody, SidebarContent, CloseButton } from './styles';
+import { Container, Header, Title, Body, Content, CloseButton } from './styles';
 
 export default function Sidebar({ isVisible, close }) {
     return (
         <Container>
-            <SidebarHeader>
-                <CloseButton onClick={close} />
-            </SidebarHeader>
-            <SidebarBody>
-                <SidebarContent>
+            <Header>
+                <Title>Menu</Title>
+                <CloseButton onClick={close}>X</CloseButton>
+            </Header>
+            <Body>
+                <Content>
                     Hey there thsi is the sidebar what is going on dhfhdf
                     adkfa;lkdjfjkl;adljkfadsljkfl;jkadfl;jkasdl;kjalsk;jflk;jasdflk;asdljklkj;asfljk;asdljk
-                </SidebarContent>
-            </SidebarBody>
+                </Content>
+            </Body>
         </Container>
     );
 }

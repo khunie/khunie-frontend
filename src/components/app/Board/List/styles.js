@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { ContainerScrollbar } from 'shared/styles';
 
 export const Container = styled.div`
-    border-radius: 10px;
+    border-radius: 6px;
     display: flex;
     flex: 0 0 280px;
     flex-direction: column;

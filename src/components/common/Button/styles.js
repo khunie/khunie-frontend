@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export const StyledButton = styled.button`
     width: 100px;
     padding: 10px;
-    border-radius: 6px;
+    border-radius: 4px;
     background-color: #453794;
     color: white;
     font-weight: bold;

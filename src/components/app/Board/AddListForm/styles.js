@@ -10,7 +10,7 @@ export const Container = styled.div`
     align-items: center;
     margin: 4px;
     align-self: flex-start;
-    border-radius: 10px;
+    border-radius: 6px;
     box-sizing: border-box;
     position: relative;
     background-color: ${({ open }) => (open ? '#eeeeeeff' : '#88888866')}; // #cccccc44 looks good on colored bgs
@@ -31,7 +31,7 @@ export const Form = styled.form`
 `;
 
 export const ListTitleInput = styled(Textarea)`
-    border-radius: 10px;
+    border-radius: 6px;
     margin: 4px 2px 0 2px;
     min-height: 40px;
     width: 270px;
@@ -49,7 +49,7 @@ export const AddListButton = styled.button`
     box-sizing: border-box;
     color: #fff;
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: 6px;
     font-size: 14px;
     outline: none;
     background-color: transparent;

@@ -28,7 +28,7 @@ export const CardTitleInput = styled(Textarea)`
 export const AddCardButton = styled(AddButton)`
     width: 260px;
     height: 36px;
-    border-radius: 6px;
+    border-radius: 4px;
     color: #666;
 
     &:hover {
