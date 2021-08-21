@@ -39,6 +39,7 @@ export const CardTitle = styled.h4`
     font-size: 16px;
     word-wrap: break-word;
     max-width: 240px;
+    width: 240px;
 
     ${noSelect}
 `;

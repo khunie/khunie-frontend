@@ -22,36 +22,37 @@ export default function List({ id, title, cards, onAddCardClick, onCardEditClick
     }, [cards]);
 
     return (
-        <Droppable droppableId={id}>
-            {provided => (
-                <Container className="list" ref={provided.innerRef} {...provided.droppableProps}>
-                    <ListHeader>
-                        <ListTitle>{title}</ListTitle>
-                    </ListHeader>
-                    <ListContent>
-                        {sortedCards.map((card, ix) => (
-                            <Card
-                                key={card.id}
-                                id={card.id}
-                                listId={id}
-                                title={card.title}
-                                index={card.index}
-                                trueIndex={ix}
-                                onClick={onCardEditClick}
-                                onCardClick={onCardClick}
-                            />
-                        ))}
+        <Container className="list">
+            <ListHeader>
+                <ListTitle>{title}</ListTitle>
+            </ListHeader>
+            <Droppable droppableId={id}>
+                {provided => (
+                    <ListContent ref={provided.innerRef} {...provided.droppableProps}>
+                        {sortedCards.length > 0 &&
+                            sortedCards.map((card, ix) => (
+                                <Card
+                                    key={card.id}
+                                    id={card.id}
+                                    listId={id}
+                                    title={card.title}
+                                    index={card.index}
+                                    trueIndex={ix}
+                                    onClick={onCardEditClick}
+                                    onCardClick={onCardClick}
+                                />
+                            ))}
                         {provided.placeholder}
                     </ListContent>
-                    <ListFooter>
-                        <AddCardForm
-                            listId={id}
-                            nextIndex={sortedCards[sortedCards.length - 1]?.index + 1000 || 0}
-                            onAddCardSubmit={onAddCardClick}
-                        />
-                    </ListFooter>
-                </Container>
-            )}
-        </Droppable>
+                )}
+            </Droppable>
+            <ListFooter>
+                <AddCardForm
+                    listId={id}
+                    nextIndex={sortedCards[sortedCards.length - 1]?.index + 1000 || 0}
+                    onAddCardSubmit={onAddCardClick}
+                />
+            </ListFooter>
+        </Container>
     );
 }

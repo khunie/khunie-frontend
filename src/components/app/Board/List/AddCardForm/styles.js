@@ -4,7 +4,7 @@ import Button from 'components/common/Button';
 import { AddListButton as AddButton, CancelButton } from '../../AddListForm/styles';
 
 export const Container = styled.div`
-    padding: 2px 8px 10px 8px;
+    padding: 2px 4px 10px 8px;
     margin-right: 4px;
 `;
 
@@ -14,7 +14,7 @@ export const Form = styled.form`
 `;
 
 export const CardTitleInput = styled(Textarea)`
-    width: 260px;
+    width: 264px;
     min-height: 64px;
 
     &:focus {
@@ -24,7 +24,7 @@ export const CardTitleInput = styled(Textarea)`
 `;
 
 export const AddCardButton = styled(AddButton)`
-    width: 260px;
+    width: 264px;
     height: 36px;
     border-radius: 4px;
     color: #666;
