@@ -3,10 +3,9 @@ import { noSelect } from 'shared/styles';
 
 export const Container = styled.div`
     position: relative;
-    padding: 10px;
+    margin-bottom: 6px;
     border-radius: 4px;
     background-color: #fff;
-    margin: 8px 0;
     cursor: pointer;
     z-index: 99;
 
@@ -30,13 +29,10 @@ export const Container = styled.div`
         background-color: #fafafa;
     }
 
-    &:first-child {
-        margin-top: 0px;
-    }
+`;
 
-    &:last-child {
-        margin-bottom: 2px;
-    }
+export const CardContent = styled.div`
+    padding: 10px;
 `;
 
 export const CardTitle = styled.h4`

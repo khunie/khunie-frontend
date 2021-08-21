@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
 import { Container, MainSection, BoardContent } from './styles';
 import BoardHeader from './BoardHeader';
 import List from './List';
@@ -44,6 +45,8 @@ export default function Board({
         setEditCard(null);
     };
 
+    const handleDragEnd = result => {};
+
     return (
         <Container>
             <MainSection>
@@ -55,17 +58,19 @@ export default function Board({
                     openRightSidebar={() => setRightSidebarVisible(true)}
                 />
                 <BoardContent ignoreElements={['.list', '.add-list']} hideScrollbars={false}>
-                    {lists.map(list => (
-                        <List
-                            key={list.id}
-                            id={list.id}
-                            title={list.title}
-                            cards={list.cards || []}
-                            onAddCardClick={onAddCardClick}
-                            onCardEditClick={handleSelectCardForEdit}
-                            onCardClick={openCardDetails}
-                        />
-                    ))}
+                    <DragDropContext onDragEnd={handleDragEnd}>
+                        {lists.map(list => (
+                            <List
+                                key={list.id}
+                                id={list.id}
+                                title={list.title}
+                                cards={list.cards || []}
+                                onAddCardClick={onAddCardClick}
+                                onCardEditClick={handleSelectCardForEdit}
+                                onCardClick={openCardDetails}
+                            />
+                        ))}
+                    </DragDropContext>
                     <AddListForm onAddListSubmit={onAddListClick} />
                 </BoardContent>
             </MainSection>

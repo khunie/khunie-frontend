@@ -1,5 +1,6 @@
 import { useRef } from 'react';
-import { Container, CardTitle } from './styles';
+import { Draggable } from 'react-beautiful-dnd';
+import { Container, CardContent, CardTitle } from './styles';
 
 export default function Card({ id, listId, title, index, trueIndex, onClick, onCardClick }) {
     const containerRef = useRef(null);
@@ -16,9 +17,21 @@ export default function Card({ id, listId, title, index, trueIndex, onClick, onC
     };
 
     return (
-        <Container onClick={handleClick} ref={containerRef} onContextMenu={handleRightClick}>
-            <CardTitle>{title}</CardTitle>
-            <div>{`ix${index}, tr${trueIndex}`}</div>
-        </Container>
+        <Draggable draggableId={id} index={trueIndex}>
+            {provided => (
+                <Container
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    ref={provided.innerRef}
+                    onClick={handleClick}
+                    onContextMenu={handleRightClick}
+                >
+                    <CardContent ref={containerRef}>
+                        <CardTitle>{title}</CardTitle>
+                        {/* <div>{`ix${index}, tr${trueIndex}`}</div> */}
+                    </CardContent>
+                </Container>
+            )}
+        </Draggable>
     );
 }
