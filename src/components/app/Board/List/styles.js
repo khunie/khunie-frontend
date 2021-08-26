@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ContainerScrollbar } from 'shared/styles';
+import { noSelect, ContainerScrollbar } from 'shared/styles';
 
 export const Container = styled.div`
     border-radius: 6px;
@@ -35,6 +35,8 @@ export const ListTitle = styled.h3`
     font-family: Roboto;
     word-wrap: break-word;
     max-width: 256px;
+
+    ${noSelect}
 `;
 
 export const ListFooter = styled.div``;

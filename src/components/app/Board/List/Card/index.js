@@ -28,7 +28,7 @@ export default function Card({ id, listId, title, index, trueIndex, onClick, onC
                 >
                     <CardContent ref={containerRef}>
                         <CardTitle>{title}</CardTitle>
-                        {/* <div>{`ix${index}, tr${trueIndex}`}</div> */}
+                        <div>{`ix${index}, tr${trueIndex}, ${id}`}</div>
                     </CardContent>
                 </Container>
             )}

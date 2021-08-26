@@ -28,11 +28,11 @@ export const Container = styled.div`
     &:active {
         background-color: #fafafa;
     }
-
 `;
 
 export const CardContent = styled.div`
     padding: 10px;
+    ${noSelect}
 `;
 
 export const CardTitle = styled.h4`
@@ -40,6 +40,4 @@ export const CardTitle = styled.h4`
     word-wrap: break-word;
     max-width: 240px;
     width: 240px;
-
-    ${noSelect}
 `;

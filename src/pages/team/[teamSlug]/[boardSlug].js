@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery, useMutation } from '@apollo/client';
+import { toast } from 'react-toastify';
 import { GET_BOARD_QUERY } from 'gql/board/queries';
 import { CREATE_LIST_MUTATION } from 'gql/list/mutations';
-import { CREATE_CARD_MUTATION } from 'gql/card/mutations';
+import { CREATE_CARD_MUTATION, REPOSITION_CARD_MUTATION } from 'gql/card/mutations';
 import AppLayout from 'components/layout/AppLayout';
 import Board from 'components/app/Board';
 
@@ -52,8 +53,44 @@ export default function BoardPage() {
                     },
                 });
             },
+            onCompleted: () => {
+                toast('✨New card added!✨');
+            },
+            onError: () => {
+                toast.error('Failed to create new card');
+            },
         }
     );
+
+    const [repositionCardMutation, { data: rData, loading: rLoading, error: rError }] = useMutation(
+        REPOSITION_CARD_MUTATION,
+        {
+            update(cache, { data: { repositionCard } }) {
+                cache.writeQuery({
+                    query: GET_BOARD_QUERY,
+                    data: {
+                        getBoard: {
+                            lists: repositionCard,
+                        },
+                    },
+                    variables: {
+                        teamSlug,
+                        boardSlug,
+                    },
+                });
+            },
+            onCompleted: () => {
+                toast('✨Card moved!✨');
+            },
+            onError: () => {
+                toast.error('Failed to move card');
+            },
+        }
+    );
+
+    useEffect(() => {
+        console.log(JSON.stringify(rError, null, 4));
+    }, [rError]);
 
     const [cardDetails, setCardDetails] = useState(null);
 
@@ -88,6 +125,19 @@ export default function BoardPage() {
         });
     };
 
+    const handleMoveCard = ({ cardId, listId, index = 1000 }) => {
+        const teamId = team?.id;
+        repositionCardMutation({
+            variables: {
+                cardId,
+                teamId,
+                boardId,
+                listId,
+                index,
+            },
+        });
+    };
+
     const handleOpenCard = ({ cardId }) => {
         router.push(`/team/${teamSlug}/${boardSlug}/?c=${cardId}`, undefined, { shallow: true });
     };
@@ -99,6 +149,8 @@ export default function BoardPage() {
 
     return (
         <Board
+            id={boardId}
+            teamId={team?.id}
             title={title}
             description={description}
             teamName={team?.name}
@@ -106,6 +158,7 @@ export default function BoardPage() {
             lists={lists || []}
             onAddListClick={handleAddList}
             onAddCardClick={handleAddCard}
+            onMoveCard={handleMoveCard}
             onOpenCard={handleOpenCard}
             onCloseCard={handleCloseCard}
             cardDetails={cardDetails}

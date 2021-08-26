@@ -46,13 +46,13 @@ export default function CardDetailsModal({ isVisible, close }) {
     const card = cdData?.getCard ?? {};
 
     return (
-        <Modal isVisible={isVisible && !cdLoading} close={close} title={card?.title}>
+        <Modal isVisible={isVisible} close={close} title={card?.title}>
             <ModalBody>
                 <Section>
                     <SectionHeader>
                         <SectionTitle>Description</SectionTitle>
                     </SectionHeader>
-                    <div>{card.description}</div>
+                    <div>{card?.description}</div>
                     <ReactMde
                         value={value}
                         onChange={setValue}

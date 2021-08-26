@@ -22,3 +22,26 @@ export const CREATE_CARD_MUTATION = gql`
         }
     }
 `;
+
+export const REPOSITION_CARD_MUTATION = gql`
+    mutation RepositionCardMutation(
+        $cardId: String!
+        $teamId: String!
+        $boardId: String!
+        $listId: String
+        $index: Int!
+    ) {
+        repositionCard(
+            cardId: $cardId
+            listId: $listId
+            teamId: $teamId
+            boardId: $boardId
+            index: $index
+        ) {
+            id
+            title
+            description
+            index
+        }
+    }
+`;

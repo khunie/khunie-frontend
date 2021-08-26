@@ -9,6 +9,8 @@ import CardDetailsModal from './CardDetailsModal';
 import Sidebar from './Sidebar';
 
 export default function Board({
+    id,
+    teamId,
     title,
     description,
     teamName,
@@ -16,6 +18,7 @@ export default function Board({
     lists,
     onAddListClick,
     onAddCardClick,
+    onMoveCard,
     onOpenCard,
     onCloseCard,
     cardDetails,
@@ -24,8 +27,10 @@ export default function Board({
     const [editList, setEditList] = useState(null);
     const [isModalVisible, setModalVisible] = useState(false);
     const [isRightSidebarVisible, setRightSidebarVisible] = useState(false);
+    const [lastDraggedCard, setLastDraggedCard] = useState(null);
+    const [sortedLists, setSortedLists] = useState([]);
 
-    useEffect(() => {}, []);
+    useEffect(() => {}, [lists]);
 
     const handleSelectCardForEdit = ({ layout, cardTitle }) => {
         setEditCard({ layout, cardTitle });
@@ -45,14 +50,43 @@ export default function Board({
         setEditCard(null);
     };
 
-    const handleDragEnd = result => {};
+    const handleDragEnd = result => {
+        const { draggableId: cardId, source, destination } = result;
+        const { index: sourceIndex, droppableId: sourceListId } = source;
+        if (!destination) return;
+
+        const { index: destIndex, droppableId: destListId } = destination;
+
+        if (sourceListId === destListId) {
+            if (sourceIndex === destIndex) return;
+
+            const destList = lists.find(list => list.id === destListId);
+            const { cards } = destList;
+            console.log(destList);
+            let newIndex = 0;
+            if (cards.length > 0) {
+                if (destIndex === 0) {
+                    newIndex = cards[0].index - 1000;
+                } else if (destIndex === cards.length - 1) {
+                    newIndex = cards[cards.length - 1].index + 1000;
+                } else {
+                    newIndex = (cards[destIndex + 1].index + cards[destIndex].index) / 2;
+                }
+            }
+            console.log(newIndex);
+            onMoveCard({ cardId, index: newIndex });
+        } else {
+            // move to new list
+        }
+        setLastDraggedCard(result);
+    };
 
     return (
         <Container>
             <MainSection>
                 <BoardHeader
-                    title={title}
-                    teamName={teamName}
+                    title={id}
+                    teamName={teamId}
                     visibility={visibility}
                     isRightSidebarVisible={isRightSidebarVisible}
                     openRightSidebar={() => setRightSidebarVisible(true)}
@@ -78,6 +112,7 @@ export default function Board({
                 <Sidebar
                     isVisible={isRightSidebarVisible}
                     close={() => setRightSidebarVisible(false)}
+                    data={lastDraggedCard || {}}
                 />
             )}
             {editCard && (
@@ -87,7 +122,7 @@ export default function Board({
                     cancelEdit={cancelEditCard}
                 />
             )}
-            {cardDetails && <CardDetailsModal isVisible={cardDetails} close={closeCardDetails} />}
+            {cardDetails && <CardDetailsModal isVisible={!!cardDetails} close={closeCardDetails} />}
         </Container>
     );
 }

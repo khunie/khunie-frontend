@@ -3,6 +3,8 @@ import { ApolloProvider } from '@apollo/client';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Head from 'next/head';
 import { Reset } from 'styled-reset';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { library, config, dom } from '@fortawesome/fontawesome-svg-core';
 import icons from 'shared/styles/fontAwesome';
 import Layout from 'components/layout/Layout';
@@ -93,6 +95,18 @@ export default function App({ Component, pageProps }) {
                     <PageLayout>
                         <Component {...pageProps} />
                     </PageLayout>
+                    <ToastContainer
+                        position="bottom-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        draggablePercent={40}
+                        pauseOnHover
+                    />
                 </Layout>
             </ThemeProvider>
         </ApolloProvider>

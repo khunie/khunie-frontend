@@ -1,6 +1,11 @@
+import styled from 'styled-components';
 import { Container, Header, Title, Body, Content, CloseButton } from './styles';
 
-export default function Sidebar({ isVisible, close }) {
+const Pre = styled.pre`
+    white-space: pre-wrap;
+`;
+
+export default function Sidebar({ isVisible, close, data }) {
     return (
         <Container>
             <Header>
@@ -9,8 +14,7 @@ export default function Sidebar({ isVisible, close }) {
             </Header>
             <Body>
                 <Content>
-                    Hey there thsi is the sidebar what is going on dhfhdf
-                    adkfa;lkdjfjkl;adljkfadsljkfl;jkadfl;jkasdl;kjalsk;jflk;jasdflk;asdljklkj;asfljk;asdljk
+                    <Pre>{JSON.stringify(data, null, 8)}</Pre>
                 </Content>
             </Body>
         </Container>
