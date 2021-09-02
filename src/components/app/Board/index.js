@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { compare } from 'shared/utils';
 import { Container, MainSection, BoardContent } from './styles';
 import BoardHeader from './BoardHeader';
 import List from './List';
@@ -32,6 +33,10 @@ export default function Board({
 
     useEffect(() => {}, [lists]);
 
+    /* useEffect(() => {
+        setSortedCards([...cards].sort((first, second) => compare(first.index, second.index)));
+    }, [cards]); */
+
     const handleSelectCardForEdit = ({ layout, cardTitle }) => {
         setEditCard({ layout, cardTitle });
     };
@@ -61,8 +66,9 @@ export default function Board({
             if (sourceIndex === destIndex) return;
 
             const destList = lists.find(list => list.id === destListId);
-            const { cards } = destList;
-            console.log(destList);
+            const cards = [...destList.cards].sort((first, second) =>
+                compare(first.index, second.index)
+            );
             let newIndex = 0;
             if (cards.length > 0) {
                 if (destIndex === 0) {
@@ -70,10 +76,12 @@ export default function Board({
                 } else if (destIndex === cards.length - 1) {
                     newIndex = cards[cards.length - 1].index + 1000;
                 } else {
-                    newIndex = (cards[destIndex + 1].index + cards[destIndex].index) / 2;
+                    const extra = destIndex > sourceIndex ? 1 : 0; // TODO: why does dest < source indexes cause the cards for new index calc to shift?
+                    newIndex = Math.floor(
+                        (cards[destIndex + extra].index + cards[destIndex - 1 + extra].index) / 2
+                    );
                 }
             }
-            console.log(newIndex);
             onMoveCard({ cardId, index: newIndex });
         } else {
             // move to new list

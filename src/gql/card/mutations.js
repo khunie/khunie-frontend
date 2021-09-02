@@ -42,6 +42,9 @@ export const REPOSITION_CARD_MUTATION = gql`
             title
             description
             index
+            list {
+                id
+            }
         }
     }
 `;

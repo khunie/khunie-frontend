@@ -5,7 +5,7 @@ const ISSERVER = typeof window === 'undefined';
 
 export const userVar = makeVar(null);
 export const authVar = makeVar(null);
-
+// setSortedCards([...cards].sort((first, second) => compare(first.index, second.index))
 export const cache = new InMemoryCache({
     typePolicies: {
         Query: {
@@ -24,5 +24,14 @@ export const cache = new InMemoryCache({
                 },
             },
         },
+        /* List: {
+            fields: {
+                cards: {
+                    read(cards = []) {
+                        return cards;
+                    },
+                },
+            },
+        }, */
     },
 });

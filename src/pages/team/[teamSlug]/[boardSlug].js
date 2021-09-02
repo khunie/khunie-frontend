@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery, useMutation, gql } from '@apollo/client';
 import { toast } from 'react-toastify';
 import { GET_BOARD_QUERY } from 'gql/board/queries';
 import { CREATE_LIST_MUTATION } from 'gql/list/mutations';
@@ -20,21 +20,57 @@ export default function BoardPage() {
         CREATE_LIST_MUTATION,
         {
             update(cache, { data: { createList } }) {
-                cache.writeQuery({
+                const previous = cache.readQuery({
                     query: GET_BOARD_QUERY,
-                    data: {
-                        getBoard: {
-                            lists: createList,
-                        },
-                    },
                     variables: {
                         teamSlug,
                         boardSlug,
                     },
                 });
+                cache.writeQuery({
+                    query: GET_BOARD_QUERY,
+                    variables: {
+                        teamSlug,
+                        boardSlug,
+                    },
+                    data: {
+                        getBoard: {
+                            ...previous.getBoard,
+                            lists: [...previous.getBoard.lists, createList],
+                        },
+                    },
+                });
             },
         }
     );
+
+    /* const [createListMutation, { data: mData, loading: mLoading, error: mError }] = useMutation(
+        CREATE_LIST_MUTATION,
+        {
+            update(cache, { data: { createList } }) {
+                cache.modify({
+                    fields: {
+                        getBoard(existingBoard = {}, helpers) {
+                            console.log(JSON.stringify(existingBoard, null, 2));
+                            console.log(JSON.stringify(helpers, null, 2));
+                            const boardLists = existingBoard.lists || [];
+                            const newListRef = cache.writeFragment({
+                                data: createList,
+                                fragment: gql`
+                                    fragment NewList on List {
+                                        id
+                                        cards
+                                    }
+                                `,
+                            });
+
+                            return { ...existingBoard, lists: [...boardLists, newListRef] };
+                        },
+                    },
+                });
+            },
+        }
+    ); */
 
     const [createCardMutation, { data: cData, loading: cLoading, error: cError }] = useMutation(
         CREATE_CARD_MUTATION,
@@ -66,21 +102,39 @@ export default function BoardPage() {
         REPOSITION_CARD_MUTATION,
         {
             update(cache, { data: { repositionCard } }) {
-                cache.writeQuery({
+                const previous = cache.readQuery({
                     query: GET_BOARD_QUERY,
-                    data: {
-                        getBoard: {
-                            lists: repositionCard,
-                        },
-                    },
                     variables: {
                         teamSlug,
                         boardSlug,
                     },
                 });
+
+                const { list } = repositionCard;
+                const oldList = previous.getBoard.lists.find(listz => listz.id === list.id);
+                const cards = [...oldList.cards];
+                const cardIndex = cards.findIndex(card => card.id === repositionCard.id);
+                cards[cardIndex] = repositionCard;
+                const newList = { ...oldList, cards };
+                const newLists = [...previous.getBoard.lists];
+                const listIndex = newLists.findIndex(listz => listz.id === newList.id);
+                newLists[listIndex] = newList;
+                cache.writeQuery({
+                    query: GET_BOARD_QUERY,
+                    variables: {
+                        teamSlug,
+                        boardSlug,
+                    },
+                    data: {
+                        getBoard: {
+                            ...previous.getBoard,
+                            lists: newLists,
+                        },
+                    },
+                });
             },
             onCompleted: () => {
-                toast('✨Card moved!✨');
+                toast.success('Card moved!');
             },
             onError: () => {
                 toast.error('Failed to move card');
@@ -134,6 +188,14 @@ export default function BoardPage() {
                 boardId,
                 listId,
                 index,
+            },
+            optimisticResponse: {
+                repositionCard: {
+                    id: cardId,
+                    __typename: 'Card',
+                    listId,
+                    index,
+                },
             },
         });
     };

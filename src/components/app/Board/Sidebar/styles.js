@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ContainerScrollbar } from 'shared/styles';
+import { containerScrollbar } from 'shared/styles';
 
 export const Container = styled.div`
     background-color: white;
@@ -32,7 +32,7 @@ export const Body = styled.div`
     height: 100%;
     box-sizing: border-box;
 
-    ${ContainerScrollbar}
+    ${containerScrollbar}
 `;
 
 export const Content = styled.div`

@@ -13,6 +13,7 @@ export const GET_BOARD_QUERY = gql`
                 cards {
                     id
                     title
+                    description
                     index
                 }
             }

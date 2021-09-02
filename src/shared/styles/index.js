@@ -9,7 +9,7 @@ export const noSelect = css`
     user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 `;
 
-export const ContainerScrollbar = css`
+export const containerScrollbar = css`
     scrollbar-width: thin;
 
     ::-webkit-scrollbar {

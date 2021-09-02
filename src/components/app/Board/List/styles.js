@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { noSelect, ContainerScrollbar } from 'shared/styles';
+import { noSelect, containerScrollbar } from 'shared/styles';
 
 export const Container = styled.div`
     border-radius: 6px;
@@ -22,7 +22,7 @@ export const ListContent = styled.div`
     padding: 2px 4px 2px 8px;
     margin-right: 4px;
 
-    ${ContainerScrollbar}
+    ${containerScrollbar}
 `;
 
 export const ListHeader = styled.div`

@@ -20,7 +20,7 @@ export default function List({ id, title, cards, onAddCardClick, onCardEditClick
                         <ListTitle>{title}</ListTitle>
                     </ListHeader>
                     <ListContent ref={provided.innerRef} {...provided.droppableProps}>
-                        {cards.map((card, ix) => (
+                        {sortedCards.map((card, ix) => (
                             <Card
                                 key={card.id}
                                 id={card.id}
