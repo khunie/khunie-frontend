@@ -28,6 +28,7 @@ export const BoardContent = styled(ScrollContainer)`
     padding-right: 0px;
     padding-top: 0;
     box-sizing: border-box;
+    scrollbar-width: thin;
 
     ::-webkit-scrollbar {
         height: 12px;

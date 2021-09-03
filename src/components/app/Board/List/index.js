@@ -20,7 +20,7 @@ export default function List({ id, title, cards, onAddCardClick, onCardEditClick
                         <ListTitle>{title}</ListTitle>
                     </ListHeader>
                     <ListContent ref={provided.innerRef} {...provided.droppableProps}>
-                        {sortedCards.map((card, ix) => (
+                        {cards.map((card, ix) => (
                             <Card
                                 key={card.id}
                                 id={card.id}
@@ -37,7 +37,7 @@ export default function List({ id, title, cards, onAddCardClick, onCardEditClick
                     <ListFooter>
                         <AddCardForm
                             listId={id}
-                            nextIndex={sortedCards[sortedCards.length - 1]?.index + 1000 || 0}
+                            nextIndex={sortedCards[sortedCards.length - 1]?.index + 100000 || 0}
                             onAddCardSubmit={onAddCardClick}
                         />
                     </ListFooter>

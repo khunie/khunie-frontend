@@ -1,20 +1,62 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useQuery, useMutation, gql } from '@apollo/client';
+import { useQuery, useMutation, gql, useApolloClient } from '@apollo/client';
 import { toast } from 'react-toastify';
 import { GET_BOARD_QUERY } from 'gql/board/queries';
 import { CREATE_LIST_MUTATION } from 'gql/list/mutations';
 import { CREATE_CARD_MUTATION, REPOSITION_CARD_MUTATION } from 'gql/card/mutations';
+import { compare } from 'shared/utils';
 import AppLayout from 'components/layout/AppLayout';
 import Board from 'components/app/Board';
 
 export default function BoardPage() {
     const router = useRouter();
     const { teamSlug, boardSlug } = router.query;
+    const client = useApolloClient();
     const { data, loading, error } = useQuery(GET_BOARD_QUERY, {
         variables: { teamSlug, boardSlug },
         fetchPolicy: 'network-only',
     });
+
+    useEffect(() => {
+        if (data?.getBoard) {
+            console.log('-----------CACHE CACHE CACHE---------');
+            const { cache } = client;
+            const cachedBoard = cache.readQuery({
+                query: GET_BOARD_QUERY,
+                variables: {
+                    teamSlug,
+                    boardSlug,
+                },
+            });
+
+            const { getBoard } = cachedBoard;
+            const newLists = [];
+            getBoard.lists.forEach(list => {
+                const { cards } = list;
+                const newCards = [...cards].sort((first, second) =>
+                    compare(first.index, second.index)
+                );
+                newLists.push({ ...list, cards: newCards });
+            });
+
+            cache.writeQuery({
+                query: GET_BOARD_QUERY,
+                variables: {
+                    teamSlug,
+                    boardSlug,
+                },
+                data: {
+                    getBoard: {
+                        ...getBoard,
+                        lists: newLists,
+                    },
+                },
+            });
+            console.log(newLists);
+            console.log('==============END CACHE=============');
+        }
+    }, [data]);
 
     const [createListMutation, { data: mData, loading: mLoading, error: mError }] = useMutation(
         CREATE_LIST_MUTATION,
@@ -43,34 +85,6 @@ export default function BoardPage() {
             },
         }
     );
-
-    /* const [createListMutation, { data: mData, loading: mLoading, error: mError }] = useMutation(
-        CREATE_LIST_MUTATION,
-        {
-            update(cache, { data: { createList } }) {
-                cache.modify({
-                    fields: {
-                        getBoard(existingBoard = {}, helpers) {
-                            console.log(JSON.stringify(existingBoard, null, 2));
-                            console.log(JSON.stringify(helpers, null, 2));
-                            const boardLists = existingBoard.lists || [];
-                            const newListRef = cache.writeFragment({
-                                data: createList,
-                                fragment: gql`
-                                    fragment NewList on List {
-                                        id
-                                        cards
-                                    }
-                                `,
-                            });
-
-                            return { ...existingBoard, lists: [...boardLists, newListRef] };
-                        },
-                    },
-                });
-            },
-        }
-    ); */
 
     const [createCardMutation, { data: cData, loading: cLoading, error: cError }] = useMutation(
         CREATE_CARD_MUTATION,
@@ -102,7 +116,7 @@ export default function BoardPage() {
         REPOSITION_CARD_MUTATION,
         {
             update(cache, { data: { repositionCard } }) {
-                const previous = cache.readQuery({
+                const cachedBoard = cache.readQuery({
                     query: GET_BOARD_QUERY,
                     variables: {
                         teamSlug,
@@ -110,13 +124,19 @@ export default function BoardPage() {
                     },
                 });
 
+                const { getBoard } = cachedBoard;
+
                 const { list } = repositionCard;
-                const oldList = previous.getBoard.lists.find(listz => listz.id === list.id);
+                const oldList = getBoard.lists.find(listz => listz.id === list.id);
                 const cards = [...oldList.cards];
-                const cardIndex = cards.findIndex(card => card.id === repositionCard.id);
-                cards[cardIndex] = repositionCard;
+                const oldIndex = cards.findIndex(card => card.id === repositionCard.id);
+                cards.splice(oldIndex, 1);
+                let newIndex = cards.findIndex(card => card.index > repositionCard.index);
+                newIndex = newIndex === -1 ? cards.length : newIndex;
+                cards.splice(newIndex, 0, repositionCard);
+                console.log('NEW INDEX NEW INDEX, ' + newIndex);
                 const newList = { ...oldList, cards };
-                const newLists = [...previous.getBoard.lists];
+                const newLists = [...getBoard.lists];
                 const listIndex = newLists.findIndex(listz => listz.id === newList.id);
                 newLists[listIndex] = newList;
                 cache.writeQuery({
@@ -127,7 +147,7 @@ export default function BoardPage() {
                     },
                     data: {
                         getBoard: {
-                            ...previous.getBoard,
+                            ...getBoard,
                             lists: newLists,
                         },
                     },
@@ -166,7 +186,7 @@ export default function BoardPage() {
         });
     };
 
-    const handleAddCard = ({ listId, cardTitle, index = 1000 }) => {
+    const handleAddCard = ({ listId, cardTitle, index = 100000 }) => {
         const teamId = team?.id;
         createCardMutation({
             variables: {
@@ -179,7 +199,7 @@ export default function BoardPage() {
         });
     };
 
-    const handleMoveCard = ({ cardId, listId, index = 1000 }) => {
+    const handleMoveCard = ({ cardId, listId, index = 100000, card }) => {
         const teamId = team?.id;
         repositionCardMutation({
             variables: {
@@ -191,10 +211,12 @@ export default function BoardPage() {
             },
             optimisticResponse: {
                 repositionCard: {
-                    id: cardId,
+                    ...card,
                     __typename: 'Card',
-                    listId,
                     index,
+                    list: {
+                        id: listId,
+                    },
                 },
             },
         });
