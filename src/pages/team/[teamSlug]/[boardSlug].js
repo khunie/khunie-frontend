@@ -15,12 +15,8 @@ export default function BoardPage() {
     const client = useApolloClient();
     const { data, loading, error } = useQuery(GET_BOARD_QUERY, {
         variables: { teamSlug, boardSlug },
-        fetchPolicy: 'network-only',
-    });
-
-    useEffect(() => {
-        if (data?.getBoard) {
-            console.log('-----------CACHE CACHE CACHE---------');
+        fetchPolicy: 'cache-first',
+        onCompleted: () => {
             const { cache } = client;
             const cachedBoard = cache.readQuery({
                 query: GET_BOARD_QUERY,
@@ -53,10 +49,8 @@ export default function BoardPage() {
                     },
                 },
             });
-            console.log(newLists);
-            console.log('==============END CACHE=============');
-        }
-    }, [data]);
+        },
+    });
 
     const [createListMutation, { data: mData, loading: mLoading, error: mError }] = useMutation(
         CREATE_LIST_MUTATION,
@@ -90,16 +84,36 @@ export default function BoardPage() {
         CREATE_CARD_MUTATION,
         {
             update(cache, { data: { createCard } }) {
-                cache.writeQuery({
+                const cachedBoard = cache.readQuery({
                     query: GET_BOARD_QUERY,
-                    data: {
-                        getBoard: {
-                            lists: createCard,
-                        },
-                    },
                     variables: {
                         teamSlug,
                         boardSlug,
+                    },
+                });
+
+                const { getBoard } = cachedBoard;
+
+                const { list } = createCard;
+                const oldList = getBoard.lists.find(listz => listz.id === list.id);
+                const cards = [...oldList.cards];
+                cards.push(createCard);
+
+                const newList = { ...oldList, cards };
+                const newLists = [...getBoard.lists];
+                const listIndex = newLists.findIndex(listz => listz.id === newList.id);
+                newLists[listIndex] = newList;
+                cache.writeQuery({
+                    query: GET_BOARD_QUERY,
+                    variables: {
+                        teamSlug,
+                        boardSlug,
+                    },
+                    data: {
+                        getBoard: {
+                            ...getBoard,
+                            lists: newLists,
+                        },
                     },
                 });
             },
@@ -134,7 +148,6 @@ export default function BoardPage() {
                 let newIndex = cards.findIndex(card => card.index > repositionCard.index);
                 newIndex = newIndex === -1 ? cards.length : newIndex;
                 cards.splice(newIndex, 0, repositionCard);
-                console.log('NEW INDEX NEW INDEX, ' + newIndex);
                 const newList = { ...oldList, cards };
                 const newLists = [...getBoard.lists];
                 const listIndex = newLists.findIndex(listz => listz.id === newList.id);
@@ -195,6 +208,18 @@ export default function BoardPage() {
                 listId,
                 title: cardTitle,
                 index,
+            },
+            optimisticResponse: {
+                createCard: {
+                    __typename: 'Card',
+                    id: 'temp-id',
+                    title: cardTitle,
+                    description: '',
+                    index,
+                    list: {
+                        id: listId,
+                    },
+                },
             },
         });
     };

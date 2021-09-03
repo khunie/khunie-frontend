@@ -19,6 +19,9 @@ export const CREATE_CARD_MUTATION = gql`
             title
             description
             index
+            list {
+                id
+            }
         }
     }
 `;
