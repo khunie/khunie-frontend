@@ -3,7 +3,7 @@ import { noSelect } from 'shared/styles';
 
 export const Container = styled.div`
     position: relative;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     border-radius: 4px;
     background-color: #fff;
     cursor: pointer;
@@ -18,7 +18,8 @@ export const Container = styled.div`
         right: 0;
         border-radius: 4px;
         z-index: -1;
-        box-shadow: 0px 1px 2px #bbb;
+        box-shadow: ${({ isDragging }) => (isDragging ? '1px 4px 8px #00000055' : '0px 1px 2px #00000033')};
+        transition: box-shadow .125s;
     }
 
     &:hover {

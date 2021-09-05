@@ -16,13 +16,26 @@ export default function Card({ id, listId, title, index, trueIndex, onClick, onC
         onClick({ layout: offset, cardTitle: title });
     };
 
+    function getStyle(style, snapshot) {
+        if (!snapshot.isDropAnimating) {
+            return style;
+        }
+        return {
+            ...style,
+            // cannot be 0, but make it super tiny
+            transitionDuration: '0.125s',
+        };
+    }
+
     return (
         <Draggable draggableId={id} index={trueIndex}>
-            {provided => (
+            {(provided, snapshot) => (
                 <Container
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     ref={provided.innerRef}
+                    style={getStyle(provided.draggableProps.style, snapshot)}
+                    isDragging={snapshot.isDragging}
                     onClick={handleClick}
                     onContextMenu={handleRightClick}
                 >

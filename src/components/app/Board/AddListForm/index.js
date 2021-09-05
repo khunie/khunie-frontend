@@ -76,6 +76,7 @@ export default function AddListForm({ onAddListSubmit }) {
                         placeholder="Enter a title"
                         onKeyPress={handleKeyPress}
                         spellCheck={false}
+                        maxLength={32}
                     />
                     <ActionRow>
                         <CancelButton icon="times" onClick={handleCancelClick} />

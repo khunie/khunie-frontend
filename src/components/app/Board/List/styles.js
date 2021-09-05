@@ -39,4 +39,7 @@ export const ListTitle = styled.h3`
     ${noSelect}
 `;
 
-export const ListFooter = styled.div``;
+export const ListFooter = styled.div`
+    margin-top: -4px;
+    z-index: 999;
+`;

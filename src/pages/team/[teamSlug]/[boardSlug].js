@@ -17,16 +17,7 @@ export default function BoardPage() {
         variables: { teamSlug, boardSlug },
         fetchPolicy: 'cache-first',
         onCompleted: () => {
-            const { cache } = client;
-            const cachedBoard = cache.readQuery({
-                query: GET_BOARD_QUERY,
-                variables: {
-                    teamSlug,
-                    boardSlug,
-                },
-            });
-
-            const { getBoard } = cachedBoard;
+            const { getBoard } = data;
             const newLists = [];
             getBoard.lists.forEach(list => {
                 const { cards } = list;
@@ -36,7 +27,7 @@ export default function BoardPage() {
                 newLists.push({ ...list, cards: newCards });
             });
 
-            cache.writeQuery({
+            client.writeQuery({
                 query: GET_BOARD_QUERY,
                 variables: {
                     teamSlug,
@@ -77,6 +68,9 @@ export default function BoardPage() {
                     },
                 });
             },
+            onError: () => {
+                toast.error('Failed to create new list');
+            },
         }
     );
 
@@ -95,13 +89,13 @@ export default function BoardPage() {
                 const { getBoard } = cachedBoard;
 
                 const { list } = createCard;
-                const oldList = getBoard.lists.find(listz => listz.id === list.id);
+                const oldList = getBoard.lists.find(item => item.id === list.id);
                 const cards = [...oldList.cards];
                 cards.push(createCard);
 
                 const newList = { ...oldList, cards };
                 const newLists = [...getBoard.lists];
-                const listIndex = newLists.findIndex(listz => listz.id === newList.id);
+                const listIndex = newLists.findIndex(item => item.id === newList.id);
                 newLists[listIndex] = newList;
                 cache.writeQuery({
                     query: GET_BOARD_QUERY,
@@ -116,9 +110,6 @@ export default function BoardPage() {
                         },
                     },
                 });
-            },
-            onCompleted: () => {
-                toast('✨New card added!✨');
             },
             onError: () => {
                 toast.error('Failed to create new card');
@@ -141,16 +132,16 @@ export default function BoardPage() {
                 const { getBoard } = cachedBoard;
 
                 const { list } = repositionCard;
-                const oldList = getBoard.lists.find(listz => listz.id === list.id);
+                const oldList = getBoard.lists.find(item => item.id === list.id);
                 const cards = [...oldList.cards];
-                const oldIndex = cards.findIndex(card => card.id === repositionCard.id);
+                const oldIndex = cards.findIndex(item => item.id === repositionCard.id);
                 cards.splice(oldIndex, 1);
-                let newIndex = cards.findIndex(card => card.index > repositionCard.index);
+                let newIndex = cards.findIndex(item => item.index > repositionCard.index);
                 newIndex = newIndex === -1 ? cards.length : newIndex;
                 cards.splice(newIndex, 0, repositionCard);
                 const newList = { ...oldList, cards };
                 const newLists = [...getBoard.lists];
-                const listIndex = newLists.findIndex(listz => listz.id === newList.id);
+                const listIndex = newLists.findIndex(item => item.id === newList.id);
                 newLists[listIndex] = newList;
                 cache.writeQuery({
                     query: GET_BOARD_QUERY,
@@ -165,9 +156,6 @@ export default function BoardPage() {
                         },
                     },
                 });
-            },
-            onCompleted: () => {
-                toast.success('Card moved!');
             },
             onError: () => {
                 toast.error('Failed to move card');
@@ -199,7 +187,7 @@ export default function BoardPage() {
         });
     };
 
-    const handleAddCard = ({ listId, cardTitle, index = 100000 }) => {
+    const handleAddCard = ({ listId, cardTitle, index }) => {
         const teamId = team?.id;
         createCardMutation({
             variables: {
@@ -224,7 +212,7 @@ export default function BoardPage() {
         });
     };
 
-    const handleMoveCard = ({ cardId, listId, index = 100000, card }) => {
+    const handleMoveCard = ({ cardId, listId, index, card }) => {
         const teamId = team?.id;
         repositionCardMutation({
             variables: {

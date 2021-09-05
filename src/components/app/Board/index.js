@@ -29,13 +29,6 @@ export default function Board({
     const [isModalVisible, setModalVisible] = useState(false);
     const [isRightSidebarVisible, setRightSidebarVisible] = useState(false);
     const [lastDraggedCard, setLastDraggedCard] = useState(null);
-    const [sortedLists, setSortedLists] = useState([]);
-
-    useEffect(() => {}, [lists]);
-
-    /* useEffect(() => {
-        setSortedCards([...cards].sort((first, second) => compare(first.index, second.index)));
-    }, [cards]); */
 
     const handleSelectCardForEdit = ({ layout, cardTitle }) => {
         setEditCard({ layout, cardTitle });
