@@ -8,7 +8,7 @@ const Container = styled.div`
     position: absolute;
     width: 320px;
     background-color: #fff;
-    z-index: 999;
+    z-index: 9999;
     right: 4px;
     top: 52px;
     border-radius: 4px;
