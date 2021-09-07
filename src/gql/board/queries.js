@@ -10,6 +10,7 @@ export const GET_BOARD_QUERY = gql`
             lists {
                 id
                 title
+                index
                 cards {
                     id
                     title

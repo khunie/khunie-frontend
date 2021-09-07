@@ -102,6 +102,7 @@ export default function Board({
                                 key={list.id}
                                 id={list.id}
                                 title={list.title}
+                                index={list.index}
                                 cards={list.cards || []}
                                 onAddCardClick={onAddCardClick}
                                 onCardEditClick={handleSelectCardForEdit}

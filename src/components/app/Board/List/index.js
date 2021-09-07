@@ -4,7 +4,15 @@ import { Container, ListContent, ListHeader, ListTitle, ListFooter } from './sty
 import Card from './Card';
 import AddCardForm from './AddCardForm';
 
-export default function List({ id, title, cards, onAddCardClick, onCardEditClick, onCardClick }) {
+export default function List({
+    id,
+    title,
+    index,
+    cards,
+    onAddCardClick,
+    onCardEditClick,
+    onCardClick,
+}) {
     return (
         <Droppable droppableId={id}>
             {provided => (
