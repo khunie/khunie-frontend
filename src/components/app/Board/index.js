@@ -74,7 +74,7 @@ export default function Board({
                 }
             }
             onMoveCard({
-                cardId,
+                id: cardId,
                 listId: destListId,
                 index: newIndex,
                 card: cards.find(card => card.id === cardId),
@@ -89,8 +89,8 @@ export default function Board({
         <Container>
             <MainSection>
                 <BoardHeader
-                    title={id}
-                    teamName={teamId}
+                    title={title}
+                    teamName={teamName}
                     visibility={visibility}
                     isRightSidebarVisible={isRightSidebarVisible}
                     openRightSidebar={() => setRightSidebarVisible(true)}

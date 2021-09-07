@@ -4,7 +4,11 @@ import { useQuery, useMutation, gql, useApolloClient } from '@apollo/client';
 import { toast } from 'react-toastify';
 import { GET_BOARD_QUERY } from 'gql/board/queries';
 import { CREATE_LIST_MUTATION } from 'gql/list/mutations';
-import { CREATE_CARD_MUTATION, REPOSITION_CARD_MUTATION } from 'gql/card/mutations';
+import {
+    CREATE_CARD_MUTATION,
+    UPDATE_CARD_MUTATION,
+    REPOSITION_CARD_MUTATION,
+} from 'gql/card/mutations';
 import { compare } from 'shared/utils';
 import AppLayout from 'components/layout/AppLayout';
 import Board from 'components/app/Board';
@@ -117,10 +121,10 @@ export default function BoardPage() {
         }
     );
 
-    const [repositionCardMutation, { data: rData, loading: rLoading, error: rError }] = useMutation(
-        REPOSITION_CARD_MUTATION,
+    const [updateCardMutation, { data: uData, loading: uLoading, error: uError }] = useMutation(
+        UPDATE_CARD_MUTATION,
         {
-            update(cache, { data: { repositionCard } }) {
+            update(cache, { data: { updateCard } }) {
                 const cachedBoard = cache.readQuery({
                     query: GET_BOARD_QUERY,
                     variables: {
@@ -131,14 +135,14 @@ export default function BoardPage() {
 
                 const { getBoard } = cachedBoard;
 
-                const { list } = repositionCard;
+                const { list } = updateCard;
                 const oldList = getBoard.lists.find(item => item.id === list.id);
                 const cards = [...oldList.cards];
-                const oldIndex = cards.findIndex(item => item.id === repositionCard.id);
+                const oldIndex = cards.findIndex(item => item.id === updateCard.id);
                 cards.splice(oldIndex, 1);
-                let newIndex = cards.findIndex(item => item.index > repositionCard.index);
+                let newIndex = cards.findIndex(item => item.index > updateCard.index);
                 newIndex = newIndex === -1 ? cards.length : newIndex;
-                cards.splice(newIndex, 0, repositionCard);
+                cards.splice(newIndex, 0, updateCard);
                 const newList = { ...oldList, cards };
                 const newLists = [...getBoard.lists];
                 const listIndex = newLists.findIndex(item => item.id === newList.id);
@@ -164,8 +168,8 @@ export default function BoardPage() {
     );
 
     useEffect(() => {
-        console.log(JSON.stringify(rError, null, 4));
-    }, [rError]);
+        console.log(JSON.stringify(uError, null, 4));
+    }, [uError]);
 
     const [cardDetails, setCardDetails] = useState(null);
 
@@ -188,11 +192,8 @@ export default function BoardPage() {
     };
 
     const handleAddCard = ({ listId, cardTitle, index }) => {
-        const teamId = team?.id;
         createCardMutation({
             variables: {
-                teamId,
-                boardId,
                 listId,
                 title: cardTitle,
                 index,
@@ -212,18 +213,16 @@ export default function BoardPage() {
         });
     };
 
-    const handleMoveCard = ({ cardId, listId, index, card }) => {
-        const teamId = team?.id;
-        repositionCardMutation({
+    const handleMoveCard = ({ id, listId, index, card }) => {
+        updateCardMutation({
             variables: {
-                cardId,
-                teamId,
-                boardId,
-                listId,
-                index,
+                input: {
+                    id,
+                    index,
+                },
             },
             optimisticResponse: {
-                repositionCard: {
+                updateCard: {
                     ...card,
                     __typename: 'Card',
                     index,

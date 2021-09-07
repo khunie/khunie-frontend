@@ -17,8 +17,8 @@ export const Overlay = styled.div`
 `;
 
 export const Container = styled.div`
-    width: 800px;
-    height: 1300px;
+    width: 400px;
+    height: 400px;
     background-color: white;
     border-radius: 4px;
     padding: 32px;

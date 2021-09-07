@@ -35,7 +35,11 @@ export default function CardDetailsModal({ isVisible, close }) {
         return true;
     };
 
-    const { data: cdData, loading: cdLoading, error: cdError } = useQuery(GET_CARD_QUERY, {
+    const {
+        data: cdData,
+        loading: cdLoading,
+        error: cdError,
+    } = useQuery(GET_CARD_QUERY, {
         variables: { teamSlug, boardSlug, cardId: router.query.c },
         fetchPolicy: 'network-only',
     });

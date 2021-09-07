@@ -61,13 +61,15 @@ const Logo = styled.img`
     -webkit-user-drag: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+    transition: all 0.15s;
 
     &:hover {
         filter: saturate(90%) brightness(0.96);
+        transform: scale(1.1);
     }
 
     &:active {
-        filter: saturate(88%) brightness(0.88);
+        filter: saturate(80%) brightness(0.88);
     }
 `;
 

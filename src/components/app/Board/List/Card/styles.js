@@ -18,7 +18,7 @@ export const Container = styled.div`
         right: 0;
         border-radius: 4px;
         z-index: -1;
-        box-shadow: ${({ isDragging }) => (isDragging ? '1px 4px 8px #00000055' : '0px 1px 2px #00000033')};
+        box-shadow: ${({ isDragging }) => (isDragging ? '2px 6px 12px #00000044' : '0px 1px 2px #00000044')};
         transition: box-shadow .125s;
     }
 
