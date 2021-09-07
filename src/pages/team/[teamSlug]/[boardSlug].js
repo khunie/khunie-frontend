@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useQuery, useMutation, gql, useApolloClient } from '@apollo/client';
 import { toast } from 'react-toastify';
 import { GET_BOARD_QUERY } from 'gql/board/queries';
-import { CREATE_LIST_MUTATION } from 'gql/list/mutations';
+import { CREATE_LIST_MUTATION, UPDATE_LIST_MUTATION } from 'gql/list/mutations';
 import {
     CREATE_CARD_MUTATION,
     UPDATE_CARD_MUTATION,
@@ -31,6 +31,10 @@ export default function BoardPage() {
                 newLists.push({ ...list, cards: newCards });
             });
 
+            const sortedLists = [...newLists].sort((first, second) =>
+                compare(first.index, second.index)
+            );
+
             client.writeQuery({
                 query: GET_BOARD_QUERY,
                 variables: {
@@ -40,7 +44,7 @@ export default function BoardPage() {
                 data: {
                     getBoard: {
                         ...getBoard,
-                        lists: newLists,
+                        lists: sortedLists,
                     },
                 },
             });
@@ -51,7 +55,7 @@ export default function BoardPage() {
         CREATE_LIST_MUTATION,
         {
             update(cache, { data: { createList } }) {
-                const previous = cache.readQuery({
+                const cachedBoard = cache.readQuery({
                     query: GET_BOARD_QUERY,
                     variables: {
                         teamSlug,
@@ -66,14 +70,63 @@ export default function BoardPage() {
                     },
                     data: {
                         getBoard: {
-                            ...previous.getBoard,
-                            lists: [...previous.getBoard.lists, createList],
+                            ...cachedBoard.getBoard,
+                            lists: [...cachedBoard.getBoard.lists, createList],
                         },
                     },
                 });
             },
             onError: () => {
                 toast.error('Failed to create new list');
+            },
+        }
+    );
+
+    const [updateListMutation, { data: ulData, loading: ulLoading, error: ulError }] = useMutation(
+        UPDATE_LIST_MUTATION,
+        {
+            update(cache, { data: { updateList } }) {
+                const cachedBoard = cache.readQuery({
+                    query: GET_BOARD_QUERY,
+                    variables: {
+                        teamSlug,
+                        boardSlug,
+                    },
+                });
+
+                const { getBoard } = cachedBoard;
+                const { lists } = getBoard;
+
+                const newLists = [...lists];
+                const oldIndex = newLists.findIndex(item => item.id === updateList.id);
+                const sortedCards = [...lists[oldIndex].cards].sort((first, second) =>
+                    compare(first.index, second.index)
+                );
+
+                const newItem = { ...updateList, cards: sortedCards };
+                console.log(JSON.stringify(lists[oldIndex].cards, null, 2));
+                console.log(JSON.stringify(newItem, null, 2));
+                newLists.splice(oldIndex, 1);
+                let newIndex = newLists.findIndex(item => item.index > newItem.index);
+                newIndex = newIndex === -1 ? lists.length : newIndex;
+                newLists.splice(newIndex, 0, newItem);
+
+                cache.writeQuery({
+                    query: GET_BOARD_QUERY,
+                    variables: {
+                        teamSlug,
+                        boardSlug,
+                    },
+                    data: {
+                        getBoard: {
+                            ...getBoard,
+                            lists: newLists,
+                        },
+                    },
+                });
+            },
+            onError: () => {
+                toast.error('Failed to move list');
             },
         }
     );
@@ -182,11 +235,40 @@ export default function BoardPage() {
 
     const handleAddList = ({ listTitle }) => {
         const teamId = team?.id;
+        const index = lists[lists.length - 1]?.index + 100000 || 0;
         createListMutation({
             variables: {
                 teamId,
                 boardId,
                 title: listTitle,
+                index,
+            },
+            optimisticResponse: {
+                createList: {
+                    __typename: 'List',
+                    id: 'temp-list-id',
+                    title: listTitle,
+                    index,
+                    cards: [],
+                },
+            },
+        });
+    };
+
+    const handleMoveList = ({ id, index }) => {
+        updateListMutation({
+            variables: {
+                input: {
+                    id,
+                    index,
+                },
+            },
+            optimisticResponse: {
+                updateList: {
+                    __typename: 'List',
+                    id,
+                    index,
+                },
             },
         });
     };
@@ -201,7 +283,7 @@ export default function BoardPage() {
             optimisticResponse: {
                 createCard: {
                     __typename: 'Card',
-                    id: 'temp-id',
+                    id: 'temp-card-id',
                     title: cardTitle,
                     description: '',
                     index,
@@ -253,6 +335,7 @@ export default function BoardPage() {
             visibility={visibility}
             lists={lists || []}
             onAddListClick={handleAddList}
+            onMoveList={handleMoveList}
             onAddCardClick={handleAddCard}
             onMoveCard={handleMoveCard}
             onOpenCard={handleOpenCard}

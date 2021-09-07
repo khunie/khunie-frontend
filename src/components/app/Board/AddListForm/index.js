@@ -42,7 +42,7 @@ export default function AddListForm({ onAddListSubmit }) {
         }
     };
 
-    const handleAddCardClick = () => {
+    const handleAddListClick = () => {
         setShowForm(true);
     };
 
@@ -76,7 +76,7 @@ export default function AddListForm({ onAddListSubmit }) {
                         placeholder="Enter a title"
                         onKeyPress={handleKeyPress}
                         spellCheck={false}
-                        maxLength={32}
+                        maxLength={35}
                     />
                     <ActionRow>
                         <CancelButton icon="times" onClick={handleCancelClick} />
@@ -86,7 +86,7 @@ export default function AddListForm({ onAddListSubmit }) {
                     </ActionRow>
                 </Form>
             ) : (
-                <AddListButton type="button" onClick={handleAddCardClick}>
+                <AddListButton type="button" onClick={handleAddListClick}>
                     + Add a list
                 </AddListButton>
             )}

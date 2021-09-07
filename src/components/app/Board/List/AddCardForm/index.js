@@ -71,6 +71,7 @@ export default function AddCardForm({ listId, nextIndex, onAddCardSubmit }) {
                         placeholder="Enter a title"
                         onKeyPress={handleKeyPress}
                         spellCheck={false}
+                        maxLength={500}
                     />
                     <ActionRow>
                         <CancelButton icon="times" onClick={handleCancelClick} />

@@ -11,6 +11,7 @@ export const Container = styled.div`
     margin: 2px 8px 4px 0px;
     max-height: calc(100vh - 128px);
     max-width: 280px;
+    box-shadow: ${({ isDragging }) => (isDragging && '4px 8px 24px #00000088')};
 `;
 
 export const ListContent = styled.div`

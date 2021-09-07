@@ -17,6 +17,7 @@ export default function Board({
     visibility,
     lists,
     onAddListClick,
+    onMoveList,
     onAddCardClick,
     onMoveCard,
     onOpenCard,
@@ -93,7 +94,30 @@ export default function Board({
     };
 
     const handleMoveList = result => {
-        console.log(result);
+        const { draggableId: listId, source, destination } = result;
+        const { index: sourceIndex } = source;
+        if (!destination) return;
+
+        const { index: destIndex } = destination;
+        if (sourceIndex === destIndex) return;
+
+        let newIndex = 0;
+        if (lists.length > 0) {
+            if (destIndex === 0) {
+                newIndex = lists[0].index - 100000;
+            } else if (destIndex === lists.length - 1) {
+                newIndex = lists[lists.length - 1].index + 100000;
+            } else {
+                const extra = destIndex > sourceIndex ? 1 : 0; // TODO: why does dest < source indexes cause the cards for new index calc to shift?
+                newIndex = Math.floor(
+                    (lists[destIndex + extra].index + lists[destIndex - 1 + extra].index) / 2
+                );
+            }
+        }
+        onMoveList({
+            id: listId,
+            index: newIndex,
+        });
     };
 
     return (
