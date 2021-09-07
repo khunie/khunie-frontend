@@ -9,7 +9,7 @@ export const Container = styled.div`
     flex: 0 0 280px;
     flex-direction: column;
     align-items: center;
-    margin: 2px 4px 4px 4px;
+    margin: 2px 0px 4px 0px;
     align-self: flex-start;
     border-radius: 6px;
     box-sizing: border-box;

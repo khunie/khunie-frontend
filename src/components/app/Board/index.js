@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { DragDropContext } from 'react-beautiful-dnd';
-import { compare } from 'shared/utils';
-import { Container, MainSection, BoardContent } from './styles';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { Container, MainSection, BoardContent, ListsContainer } from './styles';
 import BoardHeader from './BoardHeader';
 import List from './List';
 import AddListForm from './AddListForm';
@@ -49,6 +48,14 @@ export default function Board({
     };
 
     const handleDragEnd = result => {
+        if (result.type === 'CARD') {
+            handleMoveCard(result);
+        } else {
+            handleMoveList(result);
+        }
+    };
+
+    const handleMoveCard = result => {
         const { draggableId: cardId, source, destination } = result;
         const { index: sourceIndex, droppableId: sourceListId } = source;
         if (!destination) return;
@@ -85,30 +92,45 @@ export default function Board({
         setLastDraggedCard(result);
     };
 
+    const handleMoveList = result => {
+        console.log(result);
+    };
+
     return (
         <Container>
             <MainSection>
                 <BoardHeader
-                    title={title}
-                    teamName={teamName}
+                    title={id}
+                    teamName={teamId}
                     visibility={visibility}
                     isRightSidebarVisible={isRightSidebarVisible}
                     openRightSidebar={() => setRightSidebarVisible(true)}
                 />
                 <BoardContent ignoreElements={['.list', '.add-list']} hideScrollbars={false}>
                     <DragDropContext onDragEnd={handleDragEnd}>
-                        {lists.map(list => (
-                            <List
-                                key={list.id}
-                                id={list.id}
-                                title={list.title}
-                                index={list.index}
-                                cards={list.cards || []}
-                                onAddCardClick={onAddCardClick}
-                                onCardEditClick={handleSelectCardForEdit}
-                                onCardClick={openCardDetails}
-                            />
-                        ))}
+                        <Droppable droppableId={id} direction="horizontal" type="LIST">
+                            {provided => (
+                                <ListsContainer
+                                    ref={provided.innerRef}
+                                    {...provided.droppableProps}
+                                >
+                                    {lists.map((list, ix) => (
+                                        <List
+                                            key={list.id}
+                                            id={list.id}
+                                            title={list.title}
+                                            index={list.index}
+                                            trueIndex={ix}
+                                            cards={list.cards || []}
+                                            onAddCardClick={onAddCardClick}
+                                            onCardEditClick={handleSelectCardForEdit}
+                                            onCardClick={openCardDetails}
+                                        />
+                                    ))}
+                                    {provided.placeholder}
+                                </ListsContainer>
+                            )}
+                        </Droppable>
                     </DragDropContext>
                     <AddListForm onAddListSubmit={onAddListClick} />
                 </BoardContent>

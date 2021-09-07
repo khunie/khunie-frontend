@@ -8,13 +8,9 @@ export const Container = styled.div`
     flex-direction: column;
     align-self: flex-start;
     background-color: #eeeeee;
-    margin: 2px 4px 4px 4px;
+    margin: 2px 8px 4px 0px;
     max-height: calc(100vh - 128px);
     max-width: 280px;
-
-    &:first-child {
-        margin-left: 0;
-    }
 `;
 
 export const ListContent = styled.div`

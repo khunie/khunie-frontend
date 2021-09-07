@@ -53,3 +53,8 @@ export const BoardContent = styled(ScrollContainer)`
         background: #000;
     }
 `;
+
+export const ListsContainer = styled.div`
+    overflow-x: visible;
+    display: flex;
+`;

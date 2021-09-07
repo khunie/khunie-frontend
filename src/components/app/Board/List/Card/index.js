@@ -28,7 +28,7 @@ export default function Card({ id, listId, title, index, trueIndex, onClick, onC
     }
 
     return (
-        <Draggable draggableId={id} index={trueIndex}>
+        <Draggable draggableId={id} index={trueIndex} type="CARD">
             {(provided, snapshot) => (
                 <Container
                     {...provided.draggableProps}
