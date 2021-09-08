@@ -99,13 +99,12 @@ export default function BoardPage() {
 
                 const newLists = [...lists];
                 const oldIndex = newLists.findIndex(item => item.id === updateList.id);
+                // TODO: why does just taking the cards from the old list item not keep them sorted? clearly did something wrong, figure it out!!!
                 const sortedCards = [...lists[oldIndex].cards].sort((first, second) =>
                     compare(first.index, second.index)
                 );
 
                 const newItem = { ...updateList, cards: sortedCards };
-                console.log(JSON.stringify(lists[oldIndex].cards, null, 2));
-                console.log(JSON.stringify(newItem, null, 2));
                 newLists.splice(oldIndex, 1);
                 let newIndex = newLists.findIndex(item => item.index > newItem.index);
                 newIndex = newIndex === -1 ? lists.length : newIndex;
@@ -266,7 +265,7 @@ export default function BoardPage() {
             optimisticResponse: {
                 updateList: {
                     __typename: 'List',
-                    id,
+                    ...board.lists.find(item => item.id === id),
                     index,
                 },
             },

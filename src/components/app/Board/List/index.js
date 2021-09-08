@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { Container, ListContent, ListHeader, ListTitle, ListFooter } from './styles';
 import Card from './Card';
@@ -27,7 +26,6 @@ export default function List({
                         >
                             <ListHeader {...dragProvided.dragHandleProps}>
                                 <ListTitle>{title}</ListTitle>
-                                <div>{index}</div>
                             </ListHeader>
                             <ListContent ref={provided.innerRef} {...provided.droppableProps}>
                                 {cards.map((card, ix) => (

@@ -17,6 +17,20 @@ export const GET_USER_QUERY = gql`
                     description
                 }
             }
+            memberships {
+                team {
+                    id
+                    name
+                    slug
+                    boards {
+                        id
+                        title
+                        slug
+                        description
+                    }
+                }
+                role
+            }
         }
     }
 `;

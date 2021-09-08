@@ -129,6 +129,7 @@ export default function UserHome() {
     };
 
     const ownedTeams = data?.getUser?.ownedTeams || [];
+    const memberships = data?.getUser?.memberships || [];
 
     const handleAddBoard = ({ team }) => {
         showModal();
@@ -169,6 +170,16 @@ export default function UserHome() {
                         onAddBoardClick={() => handleAddBoard({ team })}
                     />
                 ))}
+                {memberships.map(
+                    membership =>
+                        !ownedTeams.find(team => team.id === membership.team.id) && (
+                            <TeamSection
+                                key={membership.team.id}
+                                team={membership.team}
+                                onAddBoardClick={() => {}}
+                            />
+                        )
+                )}
             </MainContent>
             {/* <div>
                 <pre>{data && JSON.stringify(data, null, 4)}</pre>
