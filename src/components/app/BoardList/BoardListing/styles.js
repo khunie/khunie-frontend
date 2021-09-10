@@ -6,11 +6,11 @@ export const BoardListItem = styled.li`
 
 export const ButtonStyle = css`
     display: block;
-    height: 128px;
-    width: 216px;
+    height: 120px;
+    width: 200px;
     padding: 16px;
     border: transparent;
-    border-radius: 16px;
+    border-radius: 6px;
     box-sizing: border-box;
     font-size: 16px;
 
@@ -34,7 +34,7 @@ export const BoardLink = styled.a`
 export const AddBoardButton = styled.button`
     ${ButtonStyle}
     background-color: transparent;
-    border: 3px dashed #ccc;
+    border: 4px dashed #ccc;
 
     &:hover:enabled {
         background-color: #f5f5f5;

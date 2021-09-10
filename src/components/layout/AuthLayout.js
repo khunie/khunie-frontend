@@ -71,6 +71,9 @@ export default function AuthLayout({ children }) {
                     <FormTitle>{formTitle}</FormTitle>
                 </FormHeader>
                 {children}
+                <Link href={isLogin ? '/signup' : 'login'} passHref>
+                    {isLogin ? 'No account? Sign up here!' : 'Already have an account? Log in here'}
+                </Link>
             </FormContainer>
         </Container>
     );

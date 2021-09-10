@@ -6,10 +6,22 @@ export const GET_USER_QUERY = gql`
             id
             email
             username
+            profile {
+                id
+                first
+                last
+                bio
+                pic
+            }
             ownedTeams {
                 id
                 name
                 slug
+                members {
+                    user {
+                        username
+                    }
+                }
                 boards {
                     id
                     title
@@ -22,6 +34,11 @@ export const GET_USER_QUERY = gql`
                     id
                     name
                     slug
+                    members {
+                        user {
+                            username
+                        }
+                    }
                     boards {
                         id
                         title

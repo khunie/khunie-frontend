@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+// TODO: create user fragments
 export const SIGNUP_MUTATION = gql`
     mutation SignupMutation($email: String!, $username: String!, $password: String!) {
         signup(email: $email, username: $username, password: $password) {
@@ -8,19 +9,47 @@ export const SIGNUP_MUTATION = gql`
                 id
                 email
                 username
-                ownedTeams {
-                    name
-                }
                 profile {
                     id
                     first
                     last
                     bio
+                    pic
+                }
+                ownedTeams {
+                    id
+                    name
+                    slug
+                    members {
+                        user {
+                            username
+                        }
+                    }
+                    boards {
+                        id
+                        title
+                        slug
+                        description
+                    }
                 }
                 memberships {
                     team {
+                        id
                         name
+                        slug
+                        members {
+                            user {
+                                username
+                            }
+                        }
+                        boards {
+                            id
+                            title
+                            slug
+                            description
+                        }
                     }
+                    role
                 }
             }
         }
@@ -35,19 +64,37 @@ export const LOGIN_MUTATION = gql`
                 id
                 email
                 username
-                ownedTeams {
-                    name
-                }
                 profile {
                     id
                     first
                     last
                     bio
+                    pic
+                }
+                ownedTeams {
+                    id
+                    name
+                    slug
+                    boards {
+                        id
+                        title
+                        slug
+                        description
+                    }
                 }
                 memberships {
                     team {
+                        id
                         name
+                        slug
+                        boards {
+                            id
+                            title
+                            slug
+                            description
+                        }
                     }
+                    role
                 }
             }
         }

@@ -15,7 +15,7 @@ import Modal from 'components/common/Modal';
 const Container = styled.div`
     background-color: #fff;
     padding: 32px;
-    max-width: 1280px;
+    max-width: 1200px;
     margin: 0 auto;
 `;
 
@@ -60,7 +60,12 @@ export default function UserHome() {
 
     const { username } = router.query;
 
-    const { data, loading, error } = useQuery(GET_USER_QUERY, { variables: { username } });
+    const { data, loading, error } = useQuery(GET_USER_QUERY, {
+        variables: { username },
+        onCompleted: () => {
+            console.log(JSON.stringify(data, null, 4));
+        },
+    });
     const [createTeamMutation, { data: mData, loading: mLoading, error: mError }] = useMutation(
         CREATE_TEAM_MUTATION,
         {
@@ -134,7 +139,6 @@ export default function UserHome() {
     const handleAddBoard = ({ team }) => {
         showModal();
         setCurrentTeam(team);
-        console.log(`modal visible ${team.id} ${team.name}`);
     };
 
     const handleCreateBoard = ({ team }) => {
@@ -172,7 +176,7 @@ export default function UserHome() {
                 ))}
                 {memberships.map(
                     membership =>
-                        !ownedTeams.find(team => team.id === membership.team.id) && (
+                        membership.role !== 'OWNER' && (
                             <TeamSection
                                 key={membership.team.id}
                                 team={membership.team}

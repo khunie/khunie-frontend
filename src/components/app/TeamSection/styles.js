@@ -5,7 +5,17 @@ export const Container = styled.section`
     border-top: 1px solid #eee;
 `;
 
-export const SectionTitle = styled.h3`
+export const TeamHeader = styled.div`
+    display: flex;
+`;
+
+export const HeaderLeft = styled.div``;
+
+export const HeaderRight = styled.div`
+    margin-left: auto;
+`;
+
+export const TeamName = styled.h3`
     font-size: 24px;
     font-weight: bold;
     font-family: Roboto;

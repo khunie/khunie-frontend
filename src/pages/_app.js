@@ -67,8 +67,8 @@ export default function App({ Component, pageProps }) {
             userVar(currentUser || null);
             authVar(authToken || null);
 
-            console.log(`APP: USER REACTIVE ${JSON.stringify(userVar(), null, 4)}`);
-            console.log(`APP: AUTH_TOKEN REACTIVE ${authVar()}`);
+            /* console.log(`APP: USER REACTIVE ${JSON.stringify(userVar(), null, 4)}`);
+            console.log(`APP: AUTH_TOKEN REACTIVE ${authVar()}`); */
         }
     }, []);
 
