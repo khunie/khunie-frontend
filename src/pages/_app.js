@@ -35,6 +35,7 @@ const GlobalStyle = createGlobalStyle`
     button {
         font-family: Roboto;
         border: none;
+        border-radius: 4px;
         -webkit-touch-callout: none; /* iOS Safari */
         -webkit-user-select: none; /* Safari */
         -khtml-user-select: none; /* Konqueror HTML */

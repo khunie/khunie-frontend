@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { Container } from './styles';
 import BoardListing from './BoardListing';
 import { BoardListItem, AddBoardButton } from './BoardListing/styles';
@@ -11,11 +10,13 @@ export default function BoardList({ teamHref, boards, onAddBoardClick }) {
                     <BoardListing teamHref={teamHref} board={board} />
                 </BoardListItem>
             ))}
-            <BoardListItem>
-                <AddBoardButton type="button" onClick={onAddBoardClick}>
-                    Add Board
-                </AddBoardButton>
-            </BoardListItem>
+            {onAddBoardClick && (
+                <BoardListItem>
+                    <AddBoardButton type="button" onClick={onAddBoardClick}>
+                        Add Board
+                    </AddBoardButton>
+                </BoardListItem>
+            )}
         </Container>
     );
 }

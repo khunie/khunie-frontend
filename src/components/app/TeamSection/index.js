@@ -1,21 +1,24 @@
 import { TEAM_URL } from 'shared/constants';
-import { Container, TeamHeader, HeaderLeft, HeaderRight, TeamName } from './styles';
+import { Container, TeamHeader, HeaderLeft, HeaderRight, HeaderButton, TeamName } from './styles';
 import BoardList from '../BoardList';
 
-export default function TeamSection({ team = {}, onAddBoardClick }) {
+const ADMIN_ROLES = ['OWNER', 'ADMIN'];
+
+export default function TeamSection({ name, slug, userRole, boards, members, onAddBoardClick }) {
     return (
         <Container>
             <TeamHeader>
                 <HeaderLeft>
-                    <TeamName>{team.name}</TeamName>
+                    <TeamName>{name}</TeamName>
                 </HeaderLeft>
                 <HeaderRight>
-                    <button>Members: {team.members.length}</button>
+                    {ADMIN_ROLES.includes(userRole) && <HeaderButton>+ Member</HeaderButton>}
+                    <HeaderButton>Members ({members.length})</HeaderButton>
                 </HeaderRight>
             </TeamHeader>
             <BoardList
-                teamHref={`/${TEAM_URL}/${team.slug}/`}
-                boards={team.boards}
+                teamHref={`/${TEAM_URL}/${slug}/`}
+                boards={boards}
                 onAddBoardClick={onAddBoardClick}
             />
         </Container>

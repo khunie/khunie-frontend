@@ -10,19 +10,23 @@ import { authVar, userVar } from 'client/cache';
 import { AUTH_TOKEN } from 'shared/constants';
 import AppLayout from 'components/layout/AppLayout';
 import TeamSection from 'components/app/TeamSection';
+import Sidebar from 'components/app/UserHome/Sidebar';
+import { Button as SidebarButton } from 'components/app/UserHome/Sidebar/styles';
 import Modal from 'components/common/Modal';
 
 const Container = styled.div`
     background-color: #fff;
-    padding: 32px;
-    max-width: 1200px;
     margin: 0 auto;
+    display: flex;
+    height: 200vh;
+    max-width: 1380px;
 `;
 
 const MainContent = styled.div`
     padding: 32px;
     box-sizing: border-box;
     border-radius: 16px;
+    flex: 1;
 `;
 
 const Title = styled.h1`
@@ -156,9 +160,16 @@ export default function UserHome() {
     };
     return (
         <Container>
+            <Sidebar>
+                <SidebarButton>Hey</SidebarButton>
+                <SidebarButton>Hey</SidebarButton>
+                <SidebarButton>Hey</SidebarButton>
+                <SidebarButton>Hey</SidebarButton>
+                <SidebarButton>Hey</SidebarButton>
+                <SidebarButton>Hey</SidebarButton>
+            </Sidebar>
             <MainContent>
                 <Title>hello friend, {username}</Title>
-
                 <input value={teamName} onChange={e => setTeamName(e.target.value)} />
                 <AddTeamButton
                     type="button"
@@ -170,7 +181,11 @@ export default function UserHome() {
                 {ownedTeams.map(team => (
                     <TeamSection
                         key={team.id}
-                        team={team}
+                        name={team.name}
+                        slug={team.slug}
+                        userRole="OWNER"
+                        boards={team.boards}
+                        members={team.members}
                         onAddBoardClick={() => handleAddBoard({ team })}
                     />
                 ))}
@@ -179,8 +194,12 @@ export default function UserHome() {
                         membership.role !== 'OWNER' && (
                             <TeamSection
                                 key={membership.team.id}
-                                team={membership.team}
-                                onAddBoardClick={() => {}}
+                                name={membership.team.name}
+                                slug={membership.team.slug}
+                                userRole={membership.role}
+                                boards={membership.team.boards}
+                                members={membership.team.members}
+                                onAddBoardClick={null}
                             />
                         )
                 )}

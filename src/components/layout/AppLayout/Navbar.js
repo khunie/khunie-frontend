@@ -14,10 +14,11 @@ import Dropdown, { DropdownMenu, DropdownMenuButton, Divider } from './Dropdown'
 const NavBar = styled.div`
     width: 100%;
     height: 48px;
-    position: relative;
+    position: sticky;
+    top: 0;
     z-index: 9999;
-    background-color: #6e5fc5ee;
-    background: linear-gradient(to right, #6350c9ee, #941ecaee);
+    background-color: #6e5fc5;
+    background: linear-gradient(to right, #6350c9, #941eca);
 `;
 
 const NavContent = styled.div`
