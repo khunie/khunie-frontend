@@ -1,14 +1,36 @@
-import { StyledButton, Content, Icon } from './styles';
+import { StyledButton, Content, LeftIcon, RightIcon } from './styles';
 
-export default function Button(props) {
-    const { forwardRef, icon, disabled, loading, children, center, type, ...rest } = props;
+export default function Button({
+    forwardRef,
+    disabled,
+    loading,
+    children,
+    center,
+    type,
+    leftIcon,
+    rightIcon,
+    leftIconName,
+    rightIconName,
+    ...rest
+}) {
+    const renderLeftIcon = () => {
+        if (leftIcon) return leftIcon();
+        if (leftIconName) return <LeftIcon icon={leftIconName} />;
+        return null;
+    };
+
+    const renderRightIcon = () => {
+        if (rightIcon) return rightIcon();
+        if (rightIconName) return <RightIcon icon={rightIconName} />;
+        return null;
+    };
 
     return (
         <StyledButton
             ref={forwardRef}
             disabled={disabled || loading}
             type={type || 'button'}
-            hasIcon={!!icon}
+            hasIcon={!!leftIcon}
             center={center}
             {...rest}
         >
@@ -16,8 +38,9 @@ export default function Button(props) {
                 'Loading'
             ) : (
                 <Content>
-                    {icon && <Icon icon={icon} />}
+                    {renderLeftIcon()}
                     {children}
+                    {renderRightIcon()}
                 </Content>
             )}
         </StyledButton>

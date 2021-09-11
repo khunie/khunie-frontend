@@ -6,7 +6,7 @@ export const StyledButton = styled.button`
     justify-content: center;
     align-items: center;
     width: 100px;
-    padding: 10px;
+    padding: 8px;
     box-sizing: border-box;
     border-radius: 4px;
     background-color: #453794;
@@ -38,8 +38,14 @@ export const Content = styled.span`
     align-items: center;
 `;
 
-export const Icon = styled(FontAwesomeIcon)`
+export const LeftIcon = styled(FontAwesomeIcon)`
     font-size: 20px;
     margin-right: 4px;
+    min-width: 20px;
+`;
+
+export const RightIcon = styled(FontAwesomeIcon)`
+    font-size: 20px;
+    margin-left: 4px;
     min-width: 20px;
 `;
