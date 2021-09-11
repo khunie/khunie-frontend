@@ -1,6 +1,6 @@
 import { Container, Content } from './styles';
 
-export default function Sidebar({ children }) {
+export default function CreateTeamModal({ children }) {
     return (
         <Container>
             <Content>{children}</Content>

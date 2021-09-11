@@ -1,21 +1,13 @@
 import styled from 'styled-components';
+import StickyBox from 'react-sticky-box';
 
-export const Container = styled.section`
-    position: relative;
+export const Container = styled(StickyBox)`
     flex: 0 0 260px;
-    padding-top: 120px;
 `;
 
 export const Content = styled.div`
-    position: sticky;
-    top: 80px;
     padding: 8px;
-    background-color: #fafafa;
-    border-radius: 6px;
-`;
-
-export const Accordion = styled.div`
-
+    margin: 8px;
 `;
 
 export const Button = styled.button`

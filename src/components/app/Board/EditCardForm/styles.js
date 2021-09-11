@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
-import Textarea from 'components/common/Textarea';
-import Button from 'components/common/Button';
+import { Button, TextArea } from 'components/common';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const EditingOverlay = styled.div`
@@ -28,7 +27,7 @@ export const FormWrapper = styled.div`
 
 export const Form = styled.form``;
 
-export const CardTitleInput = styled(Textarea)`
+export const CardTitleInput = styled(TextArea)`
     border-radius: 4px;
 `;
 

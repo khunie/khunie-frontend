@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import Textarea from 'components/common/Textarea';
-import Button from 'components/common/Button';
+import { Button, TextArea } from 'components/common';
 import { AddListButton as AddButton, CancelButton } from '../../AddListForm/styles';
 
 export const Container = styled.div`
@@ -13,7 +12,7 @@ export const Form = styled.form`
     flex-direction: column;
 `;
 
-export const CardTitleInput = styled(Textarea)`
+export const CardTitleInput = styled(TextArea)`
     width: 264px;
     min-height: 64px;
 

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import Textarea from 'components/common/Textarea';
-import Button from 'components/common/Button';
+import { Button, TextArea } from 'components/common';
 import IconButton from 'components/common/IconButton';
 
 export const Container = styled.div`
@@ -30,7 +29,7 @@ export const Form = styled.form`
     flex-direction: column;
 `;
 
-export const ListTitleInput = styled(Textarea)`
+export const ListTitleInput = styled(TextArea)`
     border-radius: 6px;
     margin: 4px 2px 0 2px;
     min-height: 40px;

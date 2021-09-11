@@ -10,15 +10,16 @@ import { authVar, userVar } from 'client/cache';
 import { AUTH_TOKEN } from 'shared/constants';
 import AppLayout from 'components/layout/AppLayout';
 import TeamSection from 'components/app/TeamSection';
-import Sidebar from 'components/app/UserHome/Sidebar';
-import { Button as SidebarButton } from 'components/app/UserHome/Sidebar/styles';
-import Modal from 'components/common/Modal';
+import Sidebar from 'components/app/Home/Sidebar';
+import { Button as SidebarButton } from 'components/app/Home/Sidebar/styles';
+import { Accordion, Modal } from 'components/common';
 
 const Container = styled.div`
     background-color: #fff;
     margin: 0 auto;
     display: flex;
-    height: 200vh;
+    align-items: flex-start;
+    min-height: 500vh;
     max-width: 1380px;
 `;
 
@@ -161,12 +162,50 @@ export default function UserHome() {
     return (
         <Container>
             <Sidebar>
-                <SidebarButton>Hey</SidebarButton>
-                <SidebarButton>Hey</SidebarButton>
-                <SidebarButton>Hey</SidebarButton>
-                <SidebarButton>Hey</SidebarButton>
-                <SidebarButton>Hey</SidebarButton>
-                <SidebarButton>Hey</SidebarButton>
+                <Accordion
+                    id="button-1"
+                    renderButton={({ handleClick }) => (
+                        <SidebarButton onClick={handleClick}>Click me to open hey</SidebarButton>
+                    )}
+                >
+                    <SidebarButton>Hey</SidebarButton>
+                    <SidebarButton>Hey</SidebarButton>
+                    <SidebarButton>Hey</SidebarButton>
+                    <SidebarButton>Hey</SidebarButton>
+                </Accordion>
+                <Accordion
+                    id="button-2"
+                    renderButton={({ handleClick }) => (
+                        <SidebarButton onClick={handleClick}>Click me to open hey</SidebarButton>
+                    )}
+                >
+                    <SidebarButton>Hey</SidebarButton>
+                    <SidebarButton>Hey</SidebarButton>
+                    <SidebarButton>Hey</SidebarButton>
+                    <SidebarButton>Hey</SidebarButton>
+                </Accordion>
+                <Accordion
+                    id="button-3"
+                    renderButton={({ handleClick }) => (
+                        <SidebarButton onClick={handleClick}>Click me to open hey</SidebarButton>
+                    )}
+                >
+                    <SidebarButton>Hey</SidebarButton>
+                    <SidebarButton>Hey</SidebarButton>
+                    <SidebarButton>Hey</SidebarButton>
+                    <SidebarButton>Hey</SidebarButton>
+                </Accordion>
+                <Accordion
+                    id="button-4"
+                    renderButton={({ handleClick }) => (
+                        <SidebarButton onClick={handleClick}>Click me to open hey</SidebarButton>
+                    )}
+                >
+                    <SidebarButton>Hey</SidebarButton>
+                    <SidebarButton>Hey</SidebarButton>
+                    <SidebarButton>Hey</SidebarButton>
+                    <SidebarButton>Hey</SidebarButton>
+                </Accordion>
             </Sidebar>
             <MainContent>
                 <Title>hello friend, {username}</Title>

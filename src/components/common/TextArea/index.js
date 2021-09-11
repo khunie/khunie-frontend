@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import TextareaAutosize from 'react-textarea-autosize';
 
-export const TextareaInput = styled(TextareaAutosize)`
+const TextArea = styled(TextareaAutosize)`
     border-radius: 6px;
     border: none;
     padding: 10px;
@@ -19,3 +19,5 @@ export const TextareaInput = styled(TextareaAutosize)`
         outline: none;
     }
 `;
+
+export default TextArea;
