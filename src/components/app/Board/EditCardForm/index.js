@@ -97,8 +97,8 @@ export default function EditCardForm({ layout, cardTitle, cancelEdit }) {
                     </Form>
                 </FormWrapper>
                 <PopMenu ref={setPopperElement} style={styles.popper} {...attributes.popper}>
-                    <MenuButton leftIconName={['fab', 'github']}>Open Card Details</MenuButton>
-                    <MenuButton leftIconName="times" negative>
+                    <MenuButton iconName={['fab', 'github']}>Open Card Details</MenuButton>
+                    <MenuButton iconName="times" negative>
                         Delete Card
                     </MenuButton>
                 </PopMenu>

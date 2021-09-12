@@ -17,7 +17,7 @@ export default function BoardHeader({
             <RightSection>
                 <BoardHeaderButton>{teamName}</BoardHeaderButton>
                 {!isRightSidebarVisible && (
-                    <BoardHeaderButton leftIconName="ellipsis-h" onClick={openRightSidebar}>
+                    <BoardHeaderButton iconName="ellipsis-h" onClick={openRightSidebar}>
                         Show Menu
                     </BoardHeaderButton>
                 )}

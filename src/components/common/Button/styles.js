@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const StyledButton = styled.button`
@@ -36,16 +36,17 @@ export const StyledButton = styled.button`
 export const Content = styled.span`
     display: flex;
     align-items: center;
+    width: 100%;
 `;
 
 export const LeftIcon = styled(FontAwesomeIcon)`
-    font-size: 20px;
+    font-size: ${({ $size }) => ($size ? `${$size}px` : '20px')};
     margin-right: 4px;
-    min-width: 20px;
+    min-width: ${({ $minWidth }) => ($minWidth ? `${$minWidth}px` : '20px')};
 `;
 
 export const RightIcon = styled(FontAwesomeIcon)`
-    font-size: 20px;
-    margin-left: 4px;
+    font-size: 14px;
+    margin-left: auto;
     min-width: 20px;
 `;

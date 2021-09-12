@@ -7,15 +7,17 @@ export default function Button({
     children,
     center,
     type,
-    leftIcon,
+    icon,
     rightIcon,
-    leftIconName,
+    iconName,
     rightIconName,
+    iconMinWidth,
+    iconSize,
     ...rest
 }) {
     const renderLeftIcon = () => {
-        if (leftIcon) return leftIcon();
-        if (leftIconName) return <LeftIcon icon={leftIconName} />;
+        if (icon) return icon();
+        if (iconName) return <LeftIcon icon={iconName} $minWidth={iconMinWidth} $size={iconSize} />;
         return null;
     };
 
@@ -30,7 +32,7 @@ export default function Button({
             ref={forwardRef}
             disabled={disabled || loading}
             type={type || 'button'}
-            hasIcon={!!leftIcon}
+            hasIcon={!!icon}
             center={center}
             {...rest}
         >

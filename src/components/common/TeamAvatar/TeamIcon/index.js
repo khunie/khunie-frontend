@@ -21,12 +21,11 @@ const COLORS = [
     '#7f8c8d',
 ];
 
-export default function TeamIcon({ teamName, width, height, className }) {
-    const initials = teamName.charAt(0);
+export default function TeamIcon({ name, width, height, className }) {
+    const initials = name.charAt(0);
     //  name.split(' ')[0].charAt(0).toUpperCase() + name.split(' ')[1].charAt(0).toUpperCase()),
-    const charIndex = teamName.charCodeAt(0) - 65;
-    const colorIndex =
-        (charIndex + teamName.charCodeAt(teamName.length - 1) * teamName.length) % 18;
+    const charIndex = name.charCodeAt(0) - 65;
+    const colorIndex = (charIndex + name.charCodeAt(name.length - 1) * name.length) % 18;
 
     return (
         <Icon

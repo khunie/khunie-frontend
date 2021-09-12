@@ -11,8 +11,8 @@ import { AUTH_TOKEN } from 'shared/constants';
 import AppLayout from 'components/layout/AppLayout';
 import TeamSection from 'components/app/TeamSection';
 import Sidebar from 'components/app/Home/Sidebar';
-import { SidebarButton, DropdownButton } from 'components/app/Home/Sidebar/styles';
-import { Accordion, Modal, TeamIcon } from 'components/common';
+import TeamAccordion from 'components/app/Home/Sidebar/TeamAccordion';
+import { Modal } from 'components/common';
 
 const Container = styled.div`
     background-color: #fff;
@@ -58,18 +58,6 @@ const AddTeamButton = styled.button`
         background-color: #2e2bc5;
     }
 `;
-
-const Logo = styled.img`
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-    margin-right: 8px;
-`;
-
-const StyledTeamIcon = styled(TeamIcon)`
-    margin-right: 8px;
-`;
-
 export default function UserHome() {
     const router = useRouter();
     const modalInputRef = useRef(null);
@@ -170,46 +158,20 @@ export default function UserHome() {
         setModalVisible(false);
         setBoardTitle('');
     };
+
     return (
         <Container>
             <Sidebar>
                 {ownedTeams.map(team => (
-                    <Accordion
-                        id={team.name}
-                        renderButton={({ handleClick }) => (
-                            <SidebarButton
-                                onClick={handleClick}
-                                leftIcon={() => <StyledTeamIcon teamName={team.name} />}
-                            >
-                                {team.name}
-                            </SidebarButton>
-                        )}
-                    >
-                        <DropdownButton>Boards</DropdownButton>
-                        <DropdownButton>Members</DropdownButton>
-                        <DropdownButton>Settings</DropdownButton>
-                    </Accordion>
+                    <TeamAccordion name={team.name} />
                 ))}
                 {memberships.map(
                     membership =>
                         membership.role !== 'OWNER' && (
-                            <Accordion
-                                id={membership.team.name}
-                                renderButton={({ handleClick }) => (
-                                    <SidebarButton
-                                        onClick={handleClick}
-                                        leftIcon={() => (
-                                            <StyledTeamIcon teamName={membership.team.name} />
-                                        )}
-                                    >
-                                        {membership.team.name}
-                                    </SidebarButton>
-                                )}
-                            >
-                                <DropdownButton>Boards</DropdownButton>
-                                <DropdownButton>Members</DropdownButton>
-                                <DropdownButton>Settings</DropdownButton>
-                            </Accordion>
+                            <TeamAccordion
+                                name={membership.team.name}
+                                avatar="/img/khunie-icon-gradient-7.svg"
+                            />
                         )
                 )}
             </Sidebar>
@@ -244,7 +206,6 @@ export default function UserHome() {
                                 userRole={membership.role}
                                 boards={membership.team.boards}
                                 members={membership.team.members}
-                                onAddBoardClick={null}
                             />
                         )
                 )}

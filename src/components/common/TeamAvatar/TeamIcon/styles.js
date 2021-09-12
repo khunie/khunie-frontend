@@ -9,6 +9,6 @@ export const Icon = styled.div`
     font-family: Arial;
     color: #FFF;
     text-align: center;
-    border-radius: 2px;
+    border-radius: 6%;
     text-transform: uppercase;
 `;

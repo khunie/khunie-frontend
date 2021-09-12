@@ -3,12 +3,17 @@ import {
     faEllipsisH,
     faTimes,
     faUser,
+    faUsers,
     faBell,
     faPlus,
     faColumns,
     faQuestionCircle,
     faSignOutAlt,
     faCog,
+    faChevronDown,
+    faChevronUp,
+    faChevronRight,
+    faListAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
 export default [
@@ -16,10 +21,15 @@ export default [
     faGithub,
     faTimes,
     faUser,
+    faUsers,
     faBell,
     faPlus,
     faColumns,
     faQuestionCircle,
     faSignOutAlt,
     faCog,
+    faChevronDown,
+    faChevronUp,
+    faChevronRight,
+    faListAlt,
 ];
