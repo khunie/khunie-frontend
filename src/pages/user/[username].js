@@ -163,13 +163,14 @@ export default function UserHome() {
         <Container>
             <Sidebar>
                 {ownedTeams.map(team => (
-                    <TeamAccordion name={team.name} />
+                    <TeamAccordion name={team.name} userRole="OWNER" />
                 ))}
                 {memberships.map(
                     membership =>
                         membership.role !== 'OWNER' && (
                             <TeamAccordion
                                 name={membership.team.name}
+                                userRole={membership.role}
                                 avatar="/img/khunie-icon-gradient-7.svg"
                             />
                         )

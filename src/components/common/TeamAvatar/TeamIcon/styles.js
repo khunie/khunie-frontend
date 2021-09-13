@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const Icon = styled.div`
     background-color: ${({ backgroundColor }) => backgroundColor || 'pink'};
@@ -7,7 +7,7 @@ export const Icon = styled.div`
     font-size: ${({ width }) => (width ? `${width / 2}px` : '12px')};
     line-height: ${({ height }) => (height ? `${height}px` : '24px')};
     font-family: Arial;
-    color: #FFF;
+    color: #fff;
     text-align: center;
     border-radius: 6%;
     text-transform: uppercase;

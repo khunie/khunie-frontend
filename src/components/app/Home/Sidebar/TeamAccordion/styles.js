@@ -3,13 +3,13 @@ import { Button, TeamAvatar } from 'components/common';
 
 export const SidebarButton = styled(Button)`
     justify-content: flex-start;
-    background-color: #eee;
+    background-color: #f2f2f2;
     width: 100%;
     padding: 10px 8px;
     border-radius: 4px;
     margin: 8px 0;
     font-weight: bold;
-    color: #555;
+    color: #333;
 
     &:hover:enabled {
         background-color: #e5e5e5;
@@ -18,10 +18,6 @@ export const SidebarButton = styled(Button)`
     &:active:enabled {
         background-color: #e0e0e0;
     }
-
-    ${({ negative }) => (negative && css`
-        color: #ce4040;
-    `)}
 `;
 
 export const DropdownButton = styled(Button)`
@@ -38,16 +34,12 @@ export const DropdownButton = styled(Button)`
     color: #555;
 
     &:hover:enabled {
-        background-color: #e5e5e5;
+        background-color: #f5f5f5;
     }
 
     &:active:enabled {
-        background-color: #e0e0e0;
+        background-color: #eeeeee;
     }
-
-    ${({ negative }) => (negative && css`
-        color: #ce4040;
-    `)}
 `;
 
 export const StyledTeamAvatar = styled(TeamAvatar)`

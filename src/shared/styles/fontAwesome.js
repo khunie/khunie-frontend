@@ -14,7 +14,9 @@ import {
     faChevronUp,
     faChevronRight,
     faListAlt,
+    faStar,
 } from '@fortawesome/free-solid-svg-icons';
+import { faStar as regStar } from '@fortawesome/free-regular-svg-icons';
 
 export default [
     faEllipsisH,
@@ -32,4 +34,6 @@ export default [
     faChevronUp,
     faChevronRight,
     faListAlt,
+    faStar,
+    regStar,
 ];

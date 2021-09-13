@@ -13,11 +13,20 @@ export default function Button({
     rightIconName,
     iconMinWidth,
     iconSize,
+    iconColor,
     ...rest
 }) {
     const renderLeftIcon = () => {
         if (icon) return icon();
-        if (iconName) return <LeftIcon icon={iconName} $minWidth={iconMinWidth} $size={iconSize} />;
+        if (iconName)
+            return (
+                <LeftIcon
+                    icon={iconName}
+                    $minWidth={iconMinWidth}
+                    $size={iconSize}
+                    $color={iconColor}
+                />
+            );
         return null;
     };
 

@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const BoardListItem = styled.li`
     margin: 0 4px 16px 4px;
@@ -20,14 +21,37 @@ export const ButtonStyle = css`
     }
 `;
 
+export const StarContainer = styled.div`
+    position: absolute;
+    bottom: 16px;
+    right: -16px;
+    transition: all .2s;
+    opacity: ${({ starred }) => (starred ? 1 : 0)};
+    color: ${({ starred }) => (starred ? 'gold' : 'white')};
+    transform: ${({ starred }) => (starred && 'translateX(-32px)')};
+`;
+
+export const Star = styled(FontAwesomeIcon)`
+    transition: transform .2s;
+    &:hover {
+        transform: scale(1.5);
+    }
+`;
+
 export const BoardLink = styled.a`
     ${ButtonStyle}
+    position: relative;
     background-color: #352092;
     color: white;
     text-decoration: none;
 
     &:hover {
-        background-color: #271285;
+        background-color: #28128d;
+
+        ${StarContainer} {
+            opacity: 1;
+            transform: ${({ starred }) => (!starred && 'translateX(-32px)')};
+        }
     }
 `;
 
@@ -41,3 +65,4 @@ export const AddBoardButton = styled.button`
         background-color: #f9f9f9;
     }
 `;
+

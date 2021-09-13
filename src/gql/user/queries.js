@@ -48,6 +48,12 @@ export const GET_USER_QUERY = gql`
                 }
                 role
             }
+            stars {
+                id
+                title
+                slug
+                description
+            }
         }
     }
 `;

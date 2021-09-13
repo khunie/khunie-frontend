@@ -1,7 +1,9 @@
 import { Accordion } from 'components/common';
 import { SidebarButton, DropdownButton, StyledTeamAvatar } from './styles';
 
-export default function TeamAccordion({ name, avatar }) {
+const ADMIN_ROLES = ['OWNER', 'ADMIN'];
+
+export default function TeamAccordion({ name, avatar, userRole }) {
     return (
         <Accordion
             id={name}
@@ -21,9 +23,11 @@ export default function TeamAccordion({ name, avatar }) {
             <DropdownButton iconName="users" iconMinWidth={30} iconSize={16}>
                 Members
             </DropdownButton>
-            <DropdownButton iconName="cog" iconMinWidth={30} iconSize={16}>
-                Settings
-            </DropdownButton>
+            {ADMIN_ROLES.includes(userRole) && (
+                <DropdownButton iconName="cog" iconMinWidth={30} iconSize={16}>
+                    Settings
+                </DropdownButton>
+            )}
         </Accordion>
     );
 }

@@ -51,6 +51,12 @@ export const SIGNUP_MUTATION = gql`
                     }
                     role
                 }
+                stars {
+                    id
+                    title
+                    slug
+                    description
+                }
             }
         }
     }
@@ -95,6 +101,12 @@ export const LOGIN_MUTATION = gql`
                         }
                     }
                     role
+                }
+                stars {
+                    id
+                    title
+                    slug
+                    description
                 }
             }
         }
