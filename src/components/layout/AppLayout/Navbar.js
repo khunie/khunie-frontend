@@ -1,3 +1,4 @@
+/* eslint-disable no-confusing-arrow */
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
@@ -18,7 +19,10 @@ const NavBar = styled.div`
     top: 0;
     z-index: 9999;
     background-color: #6e5fc5;
-    background: linear-gradient(to right, #6350c9, #941eca);
+    background: ${({ isBoard }) =>
+        isBoard
+            ? 'linear-gradient(to right, #6350c9cc, #5e32d8cc)'
+            : 'linear-gradient(to right, #6350c9, #5e32d8)'};
 `;
 
 const NavContent = styled.div`
@@ -82,15 +86,15 @@ const NavButton = styled(IconButton)`
     padding: 6px;
     margin: 0 4px;
     border-radius: 3px;
-    color: #ffffffee;
-    background-color: #d310c3;
+    color: white;
+    background-color: #9060ff;
 
     &:hover:enabled {
-        background-color: #c40eb4;
+        background-color: #8452fa;
     }
 
     &:active:enabled {
-        background-color: #b606a7;
+        background-color: #7642f0;
     }
 
     ${Icon} {
@@ -106,11 +110,19 @@ export default function Navbar() {
     const [showNotificationMenu, setShowNotificationMenu] = useState(false);
     const [showAccountMenu, setShowAccountMenu] = useState(false);
 
+    const isHome =
+        router.pathname === '/user/[username]' && user?.username === router.query?.username;
+    const isBoard = router.pathname === '/team/[teamSlug]/[boardSlug]';
+
     return (
-        <NavBar>
+        <NavBar isBoard={isBoard}>
             <NavContent>
                 <LeftSection>
-                    <Link href={`/${USER_URL}/${user?.username}`} passHref>
+                    <Link
+                        href={`/${USER_URL}/${user?.username}`}
+                        as={`/${USER_URL}/${user?.username}`}
+                        passHref
+                    >
                         <Anchor
                             onDragStart={e => {
                                 e.preventDefault();

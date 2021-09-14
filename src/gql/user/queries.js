@@ -54,6 +54,7 @@ export const GET_USER_QUERY = gql`
                 slug
                 description
                 team {
+                    id
                     slug
                     name
                 }

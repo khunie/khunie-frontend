@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export const Container = styled.section`
-    padding: 32px 16px 48px 16px;
-    border-top: 1px solid #eee;
+export const Icon = styled(FontAwesomeIcon)`
+    color: #ffbb00;
+    margin-right: 4px;
+    font-size: 14px;
 `;

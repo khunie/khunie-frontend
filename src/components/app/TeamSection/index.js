@@ -1,31 +1,42 @@
-import { Container, TeamHeader, HeaderLeft, HeaderRight, HeaderButton, TeamName } from './styles';
-import BoardList from '../BoardList';
+import {
+    Container,
+    Header,
+    HeaderLeft,
+    HeaderRight,
+    HeaderButton,
+    Title,
+} from 'components/app/BoardSection';
+import BoardList from 'components/app/BoardList';
+import { StyledTeamAvatar } from './styles';
 
 const ADMIN_ROLES = ['OWNER', 'ADMIN'];
 
 export default function TeamSection({
+    id,
     name,
     slug,
     userRole,
     userStars,
     boards,
     members,
+    avatar,
     onAddBoardClick,
     onStarClick,
 }) {
     return (
         <Container>
-            <TeamHeader>
+            <Header>
                 <HeaderLeft>
-                    <TeamName>{name}</TeamName>
+                    <StyledTeamAvatar src={avatar} name={name} width={32} height={32} />
+                    <Title>{name}</Title>
                 </HeaderLeft>
                 <HeaderRight>
                     {ADMIN_ROLES.includes(userRole) && <HeaderButton>+ Member</HeaderButton>}
                     <HeaderButton>Members ({members.length})</HeaderButton>
                 </HeaderRight>
-            </TeamHeader>
+            </Header>
             <BoardList
-                team={{ name, slug }}
+                team={{ id, name, slug }}
                 boards={boards}
                 userStars={userStars}
                 onAddBoardClick={onAddBoardClick}

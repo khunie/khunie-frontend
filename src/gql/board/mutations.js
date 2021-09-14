@@ -19,6 +19,7 @@ export const STAR_BOARD_MUTATION = gql`
             slug
             description
             team {
+                id
                 slug
                 name
             }
@@ -33,6 +34,11 @@ export const UNSTAR_BOARD_MUTATION = gql`
             title
             slug
             description
+            team {
+                id
+                slug
+                name
+            }
         }
     }
 `;

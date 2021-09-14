@@ -43,13 +43,12 @@ export default function Button({
             disabled={disabled || loading}
             type={type || 'button'}
             hasIcon={!!icon}
-            center={center}
             {...rest}
         >
             {loading ? (
                 'Loading'
             ) : (
-                <Content>
+                <Content center={center || (!icon && !iconName)}>
                     {renderLeftIcon()}
                     <Title $maxWidth={titleMaxWidth}>{children}</Title>
                     {renderRightIcon()}

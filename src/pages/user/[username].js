@@ -24,12 +24,12 @@ const Container = styled.div`
     margin: 0 auto;
     display: flex;
     align-items: flex-start;
-    min-height: 500vh;
-    max-width: 1380px;
+    min-height: 100vh;
+    max-width: 1280px;
 `;
 
 const MainContent = styled.div`
-    padding: 32px;
+    padding: 16px;
     box-sizing: border-box;
     border-radius: 16px;
     flex: 1;
@@ -239,6 +239,7 @@ export default function UserHome() {
                     unstarBoard: {
                         __typename: 'Board',
                         ...board,
+                        team,
                     },
                 },
             });
@@ -263,6 +264,7 @@ export default function UserHome() {
             <Sidebar>
                 {ownedTeams.map(team => (
                     <TeamAccordion
+                        key={team.id}
                         name={team.name}
                         userRole="OWNER"
                         boardsLength={team.boards.length}
@@ -273,6 +275,7 @@ export default function UserHome() {
                     membership =>
                         membership.role !== 'OWNER' && (
                             <TeamAccordion
+                                key={membership.team.id}
                                 name={membership.team.name}
                                 userRole={membership.role}
                                 avatar="/img/khunie-icon-gradient-7.svg"
@@ -293,9 +296,11 @@ export default function UserHome() {
                     {mLoading ? 'loading' : 'Add team'}
                 </AddTeamButton>
                 <StarredBoardSection boards={stars} onStarClick={handleStar} />
+                <h2>Owned Teams</h2>
                 {ownedTeams.map(team => (
                     <TeamSection
                         key={team.id}
+                        id={team.id}
                         name={team.name}
                         slug={team.slug}
                         userRole="OWNER"
@@ -306,11 +311,13 @@ export default function UserHome() {
                         onStarClick={handleStar}
                     />
                 ))}
+                <h2>Membership Teams</h2>
                 {memberships.map(
                     membership =>
                         membership.role !== 'OWNER' && (
                             <TeamSection
                                 key={membership.team.id}
+                                id={membership.team.id}
                                 name={membership.team.name}
                                 slug={membership.team.slug}
                                 userRole={membership.role}

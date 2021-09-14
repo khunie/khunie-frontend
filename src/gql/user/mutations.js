@@ -57,6 +57,7 @@ export const SIGNUP_MUTATION = gql`
                     slug
                     description
                     team {
+                        id
                         slug
                         name
                     }
@@ -112,6 +113,7 @@ export const LOGIN_MUTATION = gql`
                     slug
                     description
                     team {
+                        id
                         slug
                         name
                     }

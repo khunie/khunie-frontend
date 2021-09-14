@@ -35,6 +35,7 @@ export const StyledButton = styled.button`
 
 export const Content = styled.span`
     display: flex;
+    justify-content: ${({ center }) => (center && 'center')};
     align-items: center;
     width: 100%;
 `;
