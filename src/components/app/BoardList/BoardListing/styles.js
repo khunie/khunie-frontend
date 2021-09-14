@@ -27,8 +27,12 @@ export const StarContainer = styled.div`
     right: -16px;
     transition: all .2s;
     opacity: ${({ starred }) => (starred ? 1 : 0)};
-    color: ${({ starred }) => (starred ? 'gold' : 'white')};
+    color: ${({ starred }) => (starred ? '#ffd151' : 'white')};
     transform: ${({ starred }) => (starred && 'translateX(-32px)')};
+    
+    &:hover {
+        color: ${({ starred }) => (starred ? '#f5bb1d' : '#d5d0f5')};
+    }
 `;
 
 export const Star = styled(FontAwesomeIcon)`

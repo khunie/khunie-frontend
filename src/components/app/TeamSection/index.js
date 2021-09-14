@@ -4,7 +4,16 @@ import BoardList from '../BoardList';
 
 const ADMIN_ROLES = ['OWNER', 'ADMIN'];
 
-export default function TeamSection({ name, slug, userRole, boards, members, onAddBoardClick }) {
+export default function TeamSection({
+    name,
+    slug,
+    userRole,
+    userStars,
+    boards,
+    members,
+    onAddBoardClick,
+    onStarClick,
+}) {
     return (
         <Container>
             <TeamHeader>
@@ -19,7 +28,9 @@ export default function TeamSection({ name, slug, userRole, boards, members, onA
             <BoardList
                 teamHref={`/${TEAM_URL}/${slug}/`}
                 boards={boards}
+                userStars={userStars}
                 onAddBoardClick={onAddBoardClick}
+                onStarClick={onStarClick}
             />
         </Container>
     );

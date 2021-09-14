@@ -5,6 +5,29 @@ export const CREATE_BOARD_MUTATION = gql`
         createBoard(teamId: $teamId, title: $title) {
             id
             title
+            slug
+            description
+        }
+    }
+`;
+
+export const STAR_BOARD_MUTATION = gql`
+    mutation StarBoardMutation($id: String!) {
+        starBoard(id: $id) {
+            id
+            title
+            slug
+            description
+        }
+    }
+`;
+
+export const UNSTAR_BOARD_MUTATION = gql`
+    mutation UnstarBoardMutation($id: String!) {
+        unstarBoard(id: $id) {
+            id
+            title
+            slug
             description
         }
     }

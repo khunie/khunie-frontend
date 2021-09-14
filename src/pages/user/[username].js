@@ -5,7 +5,11 @@ import styled from 'styled-components';
 import { GET_AUTH_TOKEN, GET_CURRENT_USER } from 'gql/queries/getAuthToken';
 import { GET_USER_QUERY } from 'gql/user/queries';
 import { CREATE_TEAM_MUTATION } from 'gql/team/mutations';
-import { CREATE_BOARD_MUTATION } from 'gql/board/mutations';
+import {
+    CREATE_BOARD_MUTATION,
+    STAR_BOARD_MUTATION,
+    UNSTAR_BOARD_MUTATION,
+} from 'gql/board/mutations';
 import { authVar, userVar } from 'client/cache';
 import { AUTH_TOKEN } from 'shared/constants';
 import AppLayout from 'components/layout/AppLayout';
@@ -112,6 +116,70 @@ export default function UserHome() {
         }
     );
 
+    const [starBoardMutation, { data: sbData, loading: sbLoading, error: sbError }] = useMutation(
+        STAR_BOARD_MUTATION,
+        {
+            update(cache, { data: { starBoard } }) {
+                const cachedUser = cache.readQuery({
+                    query: GET_USER_QUERY,
+                    variables: {
+                        username,
+                    },
+                });
+
+                const { getUser } = cachedUser;
+                const { stars } = getUser;
+                const newStars = [...stars, starBoard];
+
+                cache.writeQuery({
+                    query: GET_USER_QUERY,
+                    data: {
+                        getUser: {
+                            ...getUser,
+                            stars: newStars,
+                        },
+                    },
+                    variables: {
+                        username,
+                    },
+                });
+            },
+            onCompleted() {},
+            onError() {},
+        }
+    );
+
+    const [unstarBoardMutation, { data: usbData, loading: usbLoading, error: usbError }] =
+        useMutation(UNSTAR_BOARD_MUTATION, {
+            update(cache, { data: { unstarBoard } }) {
+                const cachedUser = cache.readQuery({
+                    query: GET_USER_QUERY,
+                    variables: {
+                        username,
+                    },
+                });
+
+                const { getUser } = cachedUser;
+                const { stars } = getUser;
+                const newStars = [...stars].filter(board => board.id !== unstarBoard.id);
+
+                cache.writeQuery({
+                    query: GET_USER_QUERY,
+                    data: {
+                        getUser: {
+                            ...getUser,
+                            stars: newStars,
+                        },
+                    },
+                    variables: {
+                        username,
+                    },
+                });
+            },
+            onCompleted() {},
+            onError() {},
+        });
+
     const [teamName, setTeamName] = useState('');
     const [isModalVisible, setModalVisible] = useState(false);
     const [currentTeam, setCurrentTeam] = useState(null);
@@ -139,6 +207,7 @@ export default function UserHome() {
 
     const ownedTeams = data?.getUser?.ownedTeams || [];
     const memberships = data?.getUser?.memberships || [];
+    const stars = data?.getUser?.stars || [];
 
     const handleAddBoard = ({ team }) => {
         showModal();
@@ -157,6 +226,34 @@ export default function UserHome() {
         setCurrentTeam(null);
         setModalVisible(false);
         setBoardTitle('');
+    };
+
+    const handleStar = ({ board, starred }) => {
+        if (starred) {
+            unstarBoardMutation({
+                variables: {
+                    id: board.id,
+                },
+                optimisticResponse: {
+                    unstarBoard: {
+                        __typename: 'Board',
+                        ...board,
+                    },
+                },
+            });
+        } else {
+            starBoardMutation({
+                variables: {
+                    id: board.id,
+                },
+                optimisticResponse: {
+                    starBoard: {
+                        __typename: 'Board',
+                        ...board,
+                    },
+                },
+            });
+        }
     };
 
     return (
@@ -192,9 +289,11 @@ export default function UserHome() {
                         name={team.name}
                         slug={team.slug}
                         userRole="OWNER"
+                        userStars={stars}
                         boards={team.boards}
                         members={team.members}
                         onAddBoardClick={() => handleAddBoard({ team })}
+                        onStarClick={handleStar}
                     />
                 ))}
                 {memberships.map(
@@ -205,8 +304,10 @@ export default function UserHome() {
                                 name={membership.team.name}
                                 slug={membership.team.slug}
                                 userRole={membership.role}
+                                userStars={stars}
                                 boards={membership.team.boards}
                                 members={membership.team.members}
+                                onStarClick={handleStar}
                             />
                         )
                 )}
