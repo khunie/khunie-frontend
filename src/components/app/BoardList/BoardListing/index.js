@@ -1,17 +1,17 @@
 import Link from 'next/link';
-import { BoardLink, StarContainer, Star } from './styles';
+import { BoardLink, Title, TeamName, StarContainer, Star } from './styles';
 
-export default function BoardListing({ teamHref, board, starred, onStarClick }) {
+export default function BoardListing({ teamHref, team, board, starred, onStarClick, showTeam }) {
     const handleStarClick = e => {
         e.preventDefault();
-        onStarClick?.({ board, starred });
+        onStarClick?.({ team, board, starred });
     };
 
     return (
         <Link href={`${teamHref}${board.slug}`} passHref>
             <BoardLink starred={starred}>
-                <h4>{board.title}</h4>
-                <p>{board.description}</p>
+                <Title title="This is the board's title">{board.title}</Title>
+                {showTeam && <TeamName title="This is the board's team name">{team.name}</TeamName>}
                 <StarContainer
                     title={`Click to ${starred ? 'unstar' : 'star'} this board`}
                     starred={starred}

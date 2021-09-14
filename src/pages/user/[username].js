@@ -16,6 +16,7 @@ import AppLayout from 'components/layout/AppLayout';
 import TeamSection from 'components/app/TeamSection';
 import Sidebar from 'components/app/Home/Sidebar';
 import TeamAccordion from 'components/app/Home/Sidebar/TeamAccordion';
+import StarredBoardSection from 'components/app/Home/StarredBoardSection';
 import { Modal } from 'components/common';
 
 const Container = styled.div`
@@ -228,7 +229,7 @@ export default function UserHome() {
         setBoardTitle('');
     };
 
-    const handleStar = ({ board, starred }) => {
+    const handleStar = ({ team, board, starred }) => {
         if (starred) {
             unstarBoardMutation({
                 variables: {
@@ -250,6 +251,7 @@ export default function UserHome() {
                     starBoard: {
                         __typename: 'Board',
                         ...board,
+                        team,
                     },
                 },
             });
@@ -260,7 +262,12 @@ export default function UserHome() {
         <Container>
             <Sidebar>
                 {ownedTeams.map(team => (
-                    <TeamAccordion name={team.name} userRole="OWNER" />
+                    <TeamAccordion
+                        name={team.name}
+                        userRole="OWNER"
+                        boardsLength={team.boards.length}
+                        membersLength={team.members.length}
+                    />
                 ))}
                 {memberships.map(
                     membership =>
@@ -269,6 +276,8 @@ export default function UserHome() {
                                 name={membership.team.name}
                                 userRole={membership.role}
                                 avatar="/img/khunie-icon-gradient-7.svg"
+                                boardsLength={membership.team.boards.length}
+                                membersLength={membership.team.members.length}
                             />
                         )
                 )}
@@ -283,6 +292,7 @@ export default function UserHome() {
                 >
                     {mLoading ? 'loading' : 'Add team'}
                 </AddTeamButton>
+                <StarredBoardSection boards={stars} onStarClick={handleStar} />
                 {ownedTeams.map(team => (
                     <TeamSection
                         key={team.id}

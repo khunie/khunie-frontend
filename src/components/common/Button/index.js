@@ -1,4 +1,4 @@
-import { StyledButton, Content, LeftIcon, RightIcon } from './styles';
+import { StyledButton, Content, Title, LeftIcon, RightIcon } from './styles';
 
 export default function Button({
     forwardRef,
@@ -14,6 +14,7 @@ export default function Button({
     iconMinWidth,
     iconSize,
     iconColor,
+    titleMaxWidth,
     ...rest
 }) {
     const renderLeftIcon = () => {
@@ -50,7 +51,7 @@ export default function Button({
             ) : (
                 <Content>
                     {renderLeftIcon()}
-                    {children}
+                    <Title $maxWidth={titleMaxWidth}>{children}</Title>
                     {renderRightIcon()}
                 </Content>
             )}

@@ -1,4 +1,3 @@
-import { TEAM_URL } from 'shared/constants';
 import { Container, TeamHeader, HeaderLeft, HeaderRight, HeaderButton, TeamName } from './styles';
 import BoardList from '../BoardList';
 
@@ -26,7 +25,7 @@ export default function TeamSection({
                 </HeaderRight>
             </TeamHeader>
             <BoardList
-                teamHref={`/${TEAM_URL}/${slug}/`}
+                team={{ name, slug }}
                 boards={boards}
                 userStars={userStars}
                 onAddBoardClick={onAddBoardClick}

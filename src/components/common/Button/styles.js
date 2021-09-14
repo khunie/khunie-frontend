@@ -39,6 +39,13 @@ export const Content = styled.span`
     width: 100%;
 `;
 
+export const Title = styled.p`
+    max-width: ${({ $maxWidth }) => ($maxWidth && `${$maxWidth}px`)};
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
+
 export const LeftIcon = styled(FontAwesomeIcon)`
     font-size: ${({ $size }) => ($size ? `${$size}px` : '20px')};
     margin-right: 4px;

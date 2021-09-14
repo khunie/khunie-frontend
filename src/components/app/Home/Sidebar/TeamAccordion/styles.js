@@ -10,6 +10,7 @@ export const SidebarButton = styled(Button)`
     margin: 8px 0;
     font-weight: bold;
     color: #333;
+    text-align: left;
 
     &:hover:enabled {
         background-color: #e5e5e5;

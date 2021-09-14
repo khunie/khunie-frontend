@@ -21,6 +21,23 @@ export const ButtonStyle = css`
     }
 `;
 
+export const Title = styled.h4`
+    word-wrap: break-word;
+`;
+
+export const TeamName = styled.p`
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    color: #bcb1e4;
+    font-weight: normal;
+    font-size: 12px;
+    width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
+
 export const StarContainer = styled.div`
     position: absolute;
     bottom: 16px;

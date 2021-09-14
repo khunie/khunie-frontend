@@ -18,6 +18,10 @@ export const STAR_BOARD_MUTATION = gql`
             title
             slug
             description
+            team {
+                slug
+                name
+            }
         }
     }
 `;
