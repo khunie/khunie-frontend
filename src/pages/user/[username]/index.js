@@ -120,11 +120,29 @@ export default function UserHome() {
         CREATE_BOARD_MUTATION,
         {
             update(cache, { data: { createBoard } }) {
+                const { getUser } = cache.readQuery({
+                    query: GET_USER_QUERY,
+                    variables: {
+                        username,
+                    },
+                });
+
+                const { ownedTeams } = getUser;
+                const teamIndex = ownedTeams.findIndex(item => item.id === createBoard.team.id);
+                const team = ownedTeams[teamIndex];
+                const { boards } = team;
+                const newBoards = [...boards, createBoard];
+                const newTeam = { ...team, boards: newBoards };
+                const newTeams = [...ownedTeams];
+                newTeams.splice(teamIndex, 1);
+                newTeams.splice(teamIndex, 0, newTeam);
+
                 cache.writeQuery({
                     query: GET_USER_QUERY,
                     data: {
                         getUser: {
-                            ownedTeams: createBoard,
+                            ...getUser,
+                            ownedTeams: newTeams,
                         },
                     },
                     variables: {
@@ -288,6 +306,7 @@ export default function UserHome() {
                     <TeamAccordion
                         key={team.id}
                         name={team.name}
+                        avatar={team.pic}
                         userRole="OWNER"
                         boardsLength={team.boards.length}
                         membersLength={team.members.length}
@@ -299,8 +318,8 @@ export default function UserHome() {
                             <TeamAccordion
                                 key={membership.team.id}
                                 name={membership.team.name}
+                                avatar={membership.team.pic}
                                 userRole={membership.role}
-                                avatar="/img/khunie-icon-gradient-7.svg"
                                 boardsLength={membership.team.boards.length}
                                 membersLength={membership.team.members.length}
                             />
@@ -324,6 +343,7 @@ export default function UserHome() {
                         id={team.id}
                         name={team.name}
                         slug={team.slug}
+                        avatar={team.pic}
                         userRole="OWNER"
                         userStars={stars}
                         boards={team.boards}
@@ -341,6 +361,7 @@ export default function UserHome() {
                                 id={membership.team.id}
                                 name={membership.team.name}
                                 slug={membership.team.slug}
+                                avatar={membership.team.pic}
                                 userRole={membership.role}
                                 userStars={stars}
                                 boards={membership.team.boards}

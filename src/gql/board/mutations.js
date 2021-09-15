@@ -8,6 +8,9 @@ export const CREATE_BOARD_MUTATION = gql`
             slug
             description
             background
+            team {
+                id
+            }
         }
     }
 `;

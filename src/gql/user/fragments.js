@@ -16,6 +16,7 @@ export const USER_FRAGMENT = gql`
             id
             name
             slug
+            pic
             members {
                 user {
                     username
@@ -34,6 +35,7 @@ export const USER_FRAGMENT = gql`
                 id
                 name
                 slug
+                pic
                 members {
                     user {
                         username

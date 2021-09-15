@@ -15,11 +15,11 @@ export default function TeamSection({
     id,
     name,
     slug,
+    avatar,
     userRole,
     userStars,
     boards,
     members,
-    avatar,
     onAddBoardClick,
     onStarClick,
 }) {
