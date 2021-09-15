@@ -23,6 +23,7 @@ export const GET_BOARD_QUERY = gql`
                 name
             }
             visibility
+            background
             createdAt
         }
     }

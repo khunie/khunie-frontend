@@ -15,6 +15,7 @@ export default function Board({
     description,
     teamName,
     visibility,
+    background,
     lists,
     onAddListClick,
     onMoveList,
@@ -121,7 +122,7 @@ export default function Board({
     };
 
     return (
-        <Container>
+        <Container background={background}>
             <MainSection>
                 <BoardHeader
                     title={id}

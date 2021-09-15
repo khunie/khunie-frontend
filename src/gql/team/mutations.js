@@ -6,6 +6,11 @@ export const CREATE_TEAM_MUTATION = gql`
             id
             name
             slug
+            members {
+                user {
+                    username
+                }
+            }
             boards {
                 id
                 title

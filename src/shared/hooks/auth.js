@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useMutation } from '@apollo/client';
+import { GET_USER_QUERY } from 'gql/user/queries';
 import { LOGIN_MUTATION, SIGNUP_MUTATION } from 'gql/user/mutations';
 import { authVar, userVar } from 'client/cache';
 import { AUTH_TOKEN, CURRENT_USER, USER_URL } from 'shared/constants';
@@ -9,6 +10,21 @@ export function useLogin() {
     const router = useRouter();
     const [error, setError] = useState(null);
     const [loginMutation, { loading }] = useMutation(LOGIN_MUTATION, {
+        update(cache, { data: { login } }) {
+            const { user } = login;
+
+            cache.writeQuery({
+                query: GET_USER_QUERY,
+                data: {
+                    getUser: {
+                        ...user,
+                    },
+                },
+                variables: {
+                    username: user?.username,
+                },
+            });
+        },
         onCompleted({ login: { token, user } }) {
             localStorage.setItem(AUTH_TOKEN, token);
             localStorage.setItem(CURRENT_USER, JSON.stringify(user));
@@ -47,6 +63,21 @@ export function useSignup() {
     const router = useRouter();
     const [error, setError] = useState(null);
     const [signupMutation, { loading }] = useMutation(SIGNUP_MUTATION, {
+        update(cache, { data: { signup } }) {
+            const { user } = signup;
+
+            cache.writeQuery({
+                query: GET_USER_QUERY,
+                data: {
+                    getUser: {
+                        ...user,
+                    },
+                },
+                variables: {
+                    username: user?.username,
+                },
+            });
+        },
         onCompleted({ signup: { token, user } }) {
             localStorage.setItem(AUTH_TOKEN, token);
             localStorage.setItem(CURRENT_USER, JSON.stringify(user));

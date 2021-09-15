@@ -23,6 +23,8 @@ export const ButtonStyle = css`
 
 export const Title = styled.h4`
     word-wrap: break-word;
+    -webkit-font-smoothing: subpixel-antialiased;
+    transform: translateZ(0);
 `;
 
 export const TeamName = styled.p`
@@ -36,6 +38,8 @@ export const TeamName = styled.p`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    -webkit-font-smoothing: subpixel-antialiased;
+    transform: translateZ(0);
 `;
 
 export const StarContainer = styled.div`
@@ -65,9 +69,12 @@ export const BoardLink = styled.a`
     background-color: #352092;
     color: white;
     text-decoration: none;
+    transition: transform .2s;
+    backface-visibility: hidden;
 
     &:hover {
         background-color: #28128d;
+        transform: scale(1.025) translateZ(0);
 
         ${StarContainer} {
             opacity: 1;
@@ -78,7 +85,7 @@ export const BoardLink = styled.a`
 
 export const AddBoardButton = styled.button`
     ${ButtonStyle}
-    background-color: transparent;
+    background-color: white;
     border: 4px dashed #ccc;
     color: #888;
 
@@ -86,4 +93,3 @@ export const AddBoardButton = styled.button`
         background-color: #f9f9f9;
     }
 `;
-

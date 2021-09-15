@@ -7,6 +7,7 @@ export const CREATE_BOARD_MUTATION = gql`
             title
             slug
             description
+            background
         }
     }
 `;
@@ -18,6 +19,7 @@ export const STAR_BOARD_MUTATION = gql`
             title
             slug
             description
+            background
             team {
                 id
                 slug
@@ -34,6 +36,7 @@ export const UNSTAR_BOARD_MUTATION = gql`
             title
             slug
             description
+            background
             team {
                 id
                 slug

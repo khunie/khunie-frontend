@@ -230,7 +230,7 @@ export default function BoardPage() {
     }, [router.query.c]);
 
     const board = data?.getBoard || {};
-    const { id: boardId, title, description, team, visibility, lists } = board;
+    const { id: boardId, title, description, team, visibility, background, lists } = board;
 
     const handleAddList = ({ listTitle }) => {
         const teamId = team?.id;
@@ -332,6 +332,7 @@ export default function BoardPage() {
             description={description}
             teamName={team?.name}
             visibility={visibility}
+            background={background}
             lists={lists || []}
             onAddListClick={handleAddList}
             onMoveList={handleMoveList}

@@ -1,17 +1,22 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import ScrollContainer from 'react-indiana-drag-scroll';
 
 export const Container = styled.div`
-    background-image: url('https://resi.ze-robot.com/dl/am/among-trees-1920%C3%971080.jpg');
+    background-color: ${({ background }) => (background?.color || '#3657e7')}; // purple: 4731a8  4a2ac0  green: 40a74e blue: 3679b1 3657e7
     background-size: cover;
     background-repeat: no-repeat;
-    background-color: white;
+    transition: background-color .5s;
     position: absolute;
     top: 0;
     left: 0;
     padding-top: 48px;
     display: flex;
     width: 100vw;
+
+    ${({ background }) => (background?.type === 'IMAGE' && css`
+            background-image: url(${background.src});
+        `
+    )}
 `;
 
 export const MainSection = styled.div`

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useQuery, useMutation, useReactiveVar } from '@apollo/client';
+import { useQuery, useMutation, useReactiveVar, useApolloClient } from '@apollo/client';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { GET_AUTH_TOKEN, GET_CURRENT_USER } from 'gql/queries/getAuthToken';
@@ -63,11 +63,22 @@ const AddTeamButton = styled.button`
         background-color: #2e2bc5;
     }
 `;
+
+const MainSectionTitle = styled.h2`
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 4px;
+    text-indent: 4px;
+    color: #6f87bd;
+    text-transform: uppercase;
+`;
 export default function UserHome() {
     const router = useRouter();
     const modalInputRef = useRef(null);
 
     const { username } = router.query;
+    /* const client = useApolloClient();
+    console.log(client); */
 
     const { data, loading, error } = useQuery(GET_USER_QUERY, {
         variables: { username },
@@ -79,11 +90,22 @@ export default function UserHome() {
         CREATE_TEAM_MUTATION,
         {
             update(cache, { data: { createTeam } }) {
+                const { getUser } = cache.readQuery({
+                    query: GET_USER_QUERY,
+                    variables: {
+                        username,
+                    },
+                });
+
+                const { ownedTeams } = getUser;
+
+                const newTeams = [...ownedTeams, createTeam];
                 cache.writeQuery({
                     query: GET_USER_QUERY,
                     data: {
                         getUser: {
-                            ownedTeams: createTeam,
+                            ...getUser,
+                            ownedTeams: newTeams,
                         },
                     },
                     variables: {
@@ -286,7 +308,6 @@ export default function UserHome() {
                 )}
             </Sidebar>
             <MainContent>
-                <Title>hello friend, {username}</Title>
                 <input value={teamName} onChange={e => setTeamName(e.target.value)} />
                 <AddTeamButton
                     type="button"
@@ -296,7 +317,7 @@ export default function UserHome() {
                     {mLoading ? 'loading' : 'Add team'}
                 </AddTeamButton>
                 <StarredBoardSection boards={stars} onStarClick={handleStar} />
-                <h2>Owned Teams</h2>
+                <MainSectionTitle>Owned Teams</MainSectionTitle>
                 {ownedTeams.map(team => (
                     <TeamSection
                         key={team.id}
@@ -311,7 +332,7 @@ export default function UserHome() {
                         onStarClick={handleStar}
                     />
                 ))}
-                <h2>Membership Teams</h2>
+                <MainSectionTitle>Membership Teams</MainSectionTitle>
                 {memberships.map(
                     membership =>
                         membership.role !== 'OWNER' && (

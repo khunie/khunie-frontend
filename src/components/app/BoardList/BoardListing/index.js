@@ -10,8 +10,8 @@ export default function BoardListing({ teamHref, team, board, starred, onStarCli
     return (
         <Link href={`${teamHref}${board.slug}`} passHref>
             <BoardLink starred={starred}>
-                <Title title="This is the board's title">{board.title}</Title>
-                {showTeam && <TeamName title="This is the board's team name">{team.name}</TeamName>}
+                <Title title={board.title}>{board.title}</Title>
+                {showTeam && <TeamName title={team.name}>{team.name}</TeamName>}
                 <StarContainer
                     title={`Click to ${starred ? 'unstar' : 'star'} this board`}
                     starred={starred}
