@@ -4,7 +4,8 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Link from 'next/link';
 import Head from 'next/head';
-import { useReactiveVar } from '@apollo/client';
+import { useReactiveVar, useQuery } from '@apollo/client';
+import { GET_USER_QUERY } from 'gql/user/queries';
 import { authVar, userVar } from 'client/cache';
 import { useLogout } from 'shared/hooks/auth';
 import { USER_URL } from 'shared/constants';
@@ -104,11 +105,20 @@ const NavButton = styled(IconButton)`
 
 export default function Navbar() {
     const router = useRouter();
-    const user = useReactiveVar(userVar);
+    const { username } = useReactiveVar(userVar);
+    const {
+        data: uData,
+        loading: uLoading,
+        error: uError,
+    } = useQuery(GET_USER_QUERY, {
+        variables: { username },
+    });
     const { logout, error } = useLogout();
     const [showAddMenu, setShowAddMenu] = useState(false);
     const [showNotificationMenu, setShowNotificationMenu] = useState(false);
     const [showAccountMenu, setShowAccountMenu] = useState(false);
+
+    const { getUser: user } = uData || {};
 
     const isHome =
         router.pathname === '/user/[username]' && user?.username === router.query?.username;
@@ -157,7 +167,17 @@ export default function Navbar() {
                 )}
                 {showAccountMenu && (
                     <Dropdown title="Account" close={() => setShowAccountMenu(false)}>
-                        <ProfileCard username={user?.username} email={user?.email} />
+                        <ProfileCard
+                            username={user?.username}
+                            email={user?.email}
+                            avatar={user?.profile.pic}
+                            onClick={() =>
+                                router.push({
+                                    pathname: '/user/[username]/profile',
+                                    query: { username: user?.username },
+                                })
+                            }
+                        />
                         <DropdownMenu>
                             <DropdownMenuButton type="button">Settings</DropdownMenuButton>
                             <DropdownMenuButton type="button">Help</DropdownMenuButton>

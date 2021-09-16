@@ -6,6 +6,7 @@ export const CREATE_TEAM_MUTATION = gql`
             id
             name
             slug
+            pic
             members {
                 user {
                     username
