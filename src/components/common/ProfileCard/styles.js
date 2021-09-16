@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { noSelect } from 'shared/styles';
 
 export const Container = styled.div`
     padding: 16px;
@@ -19,6 +20,7 @@ export const ProfilePicture = styled.img`
     height: 48px;
     border-radius: 24px;
     margin-right: 16px;
+    ${noSelect}
 `;
 
 export const Column = styled.div`
@@ -29,6 +31,7 @@ export const Column = styled.div`
 export const Username = styled.span`
     font-weight: bold;
     font-size: 18px;
+    ${noSelect}
 `;
 
 export const Email = styled.span`

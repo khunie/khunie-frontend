@@ -10,8 +10,8 @@ import icons from 'shared/styles/fontAwesome';
 import Layout from 'components/layout/Layout';
 import DefaultLayout from 'components/layout/DefaultLayout';
 import { useApollo } from 'client';
-import { authVar, userVar } from 'client/cache';
-import { AUTH_TOKEN, CURRENT_USER } from 'shared/constants';
+import { userVar } from 'client/cache';
+import { CURRENT_USER } from 'shared/constants';
 
 config.autoAddCss = false;
 
@@ -63,13 +63,10 @@ export default function App({ Component, pageProps }) {
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER));
-            const authToken = localStorage.getItem(AUTH_TOKEN);
-
             userVar(currentUser || null);
-            authVar(authToken || null);
 
             /* console.log(`APP: USER REACTIVE ${JSON.stringify(userVar(), null, 4)}`);
-            console.log(`APP: AUTH_TOKEN REACTIVE ${authVar()}`); */
+             */
         }
     }, []);
 

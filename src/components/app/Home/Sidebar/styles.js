@@ -7,5 +7,4 @@ export const Container = styled(StickyBox)`
 
 export const Content = styled.div`
     padding: 8px;
-    margin: 8px;
 `;

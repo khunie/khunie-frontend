@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useMutation } from '@apollo/client';
+import { useMutation, useApolloClient } from '@apollo/client';
 import { GET_USER_QUERY } from 'gql/user/queries';
 import { LOGIN_MUTATION, SIGNUP_MUTATION } from 'gql/user/mutations';
-import { authVar, userVar } from 'client/cache';
+import { userVar } from 'client/cache';
 import { AUTH_TOKEN, CURRENT_USER, USER_URL } from 'shared/constants';
 
 export function useLogin() {
@@ -26,12 +26,10 @@ export function useLogin() {
             });
         },
         onCompleted({ login: { token, user } }) {
-            localStorage.setItem(AUTH_TOKEN, token);
-            localStorage.setItem(CURRENT_USER, JSON.stringify(user));
-            userVar(user);
-            authVar(token);
-
             const { username } = user;
+            localStorage.setItem(AUTH_TOKEN, token);
+            localStorage.setItem(CURRENT_USER, JSON.stringify(username));
+            userVar(username);
 
             if (typeof window !== 'undefined') {
                 if (username) {
@@ -79,12 +77,10 @@ export function useSignup() {
             });
         },
         onCompleted({ signup: { token, user } }) {
-            localStorage.setItem(AUTH_TOKEN, token);
-            localStorage.setItem(CURRENT_USER, JSON.stringify(user));
-            userVar(user);
-            authVar(token);
-
             const { username } = user;
+            localStorage.setItem(AUTH_TOKEN, token);
+            localStorage.setItem(CURRENT_USER, JSON.stringify(username));
+            userVar(username);
 
             if (typeof window !== 'undefined') {
                 if (username) {
@@ -115,19 +111,20 @@ export function useSignup() {
 
 export function useLogout() {
     const router = useRouter();
+    const client = useApolloClient();
     const [error, setError] = useState(null);
 
     const logout = () => {
-        localStorage.removeItem(AUTH_TOKEN);
-        localStorage.removeItem(CURRENT_USER);
-        userVar(null);
-        authVar(null);
-
         if (typeof window !== 'undefined') {
             router.replace({
                 pathname: '/login',
             });
         }
+
+        localStorage.removeItem(AUTH_TOKEN);
+        localStorage.removeItem(CURRENT_USER);
+        userVar(null);
+        client.cache.reset();
     };
 
     return { logout, error };

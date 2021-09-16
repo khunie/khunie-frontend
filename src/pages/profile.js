@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useQuery, useMutation, useReactiveVar } from '@apollo/client';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { userVar } from 'client/cache';
 import { GET_USER_QUERY } from 'gql/user/queries';
 import { UPLOAD_PROFILE_PIC } from 'gql/profile/mutations';
 import AppLayout from 'components/layout/AppLayout';
@@ -21,7 +22,14 @@ export default function Profile() {
     const [selectedImage, setSelectedImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
 
-    const { username } = router.query;
+    const username = useReactiveVar(userVar) || '';
+    const {
+        data: uData,
+        loading: uLoading,
+        error: uError,
+    } = useQuery(GET_USER_QUERY, {
+        variables: { username },
+    });
 
     const { data, loading, error } = useQuery(GET_USER_QUERY, {
         variables: { username },
@@ -47,25 +55,25 @@ export default function Profile() {
             onError() {},
         });
 
-    const handleSubmit = async e => {
+    const handleSubmit = e => {
         e.preventDefault();
-        const data = await blobToBase64(selectedImage);
         uploadProfilePicMutation({
             variables: {
-                image: data,
+                image: selectedImage,
             },
         });
     };
 
-    const handleSelectImage = e => {
-        setSelectedImage(e.target.files[0]);
-        setImagePreview(URL.createObjectURL(e.target.files[0]));
+    const handleSelectImage = async e => {
+        const data = await blobToBase64(e.target.files[0]);
+
+        setSelectedImage(data);
     };
 
     return (
         <Container>
             <form onSubmit={handleSubmit}>
-                <ImagePreview src={imagePreview} alt="Upload preview" />
+                <ImagePreview src={selectedImage} alt="Upload preview" />
                 <input type="file" accept=".jpg, .png" onChange={handleSelectImage} />
                 <button type="submit" disabled={!selectedImage}>
                     Upload

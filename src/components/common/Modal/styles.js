@@ -17,8 +17,9 @@ export const Overlay = styled.div`
 `;
 
 export const Container = styled.div`
-    width: 400px;
-    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
     background-color: white;
     border-radius: 4px;
     padding: 32px;

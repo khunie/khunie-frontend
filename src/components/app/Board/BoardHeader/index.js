@@ -10,9 +10,9 @@ export default function BoardHeader({
     return (
         <Container>
             <LeftSection>
-                <BoardHeaderButton>{title}</BoardHeaderButton>
-                <BoardHeaderButton>{teamName}</BoardHeaderButton>
-                <BoardHeaderButton>Visibility: {visibility}</BoardHeaderButton>
+                <BoardHeaderButton title="Board Title">{title}</BoardHeaderButton>
+                <BoardHeaderButton title="Team Name">{teamName}</BoardHeaderButton>
+                <BoardHeaderButton title="Board Visibility">{visibility}</BoardHeaderButton>
             </LeftSection>
             <RightSection>
                 <BoardHeaderButton>{teamName}</BoardHeaderButton>

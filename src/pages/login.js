@@ -115,7 +115,6 @@ Login.layout = AuthLayout;
             console.log(token);
             console.log(JSON.stringify(user, null, 2));
             userVar(user);
-            authVar(token);
             localStorage.setItem(AUTH_TOKEN, token);
             localStorage.setItem(CURRENT_USER, JSON.stringify(user));
 

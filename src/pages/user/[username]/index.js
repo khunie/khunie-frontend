@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
-import { useQuery, useMutation, useReactiveVar, useApolloClient } from '@apollo/client';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { useQuery, useMutation, useApolloClient } from '@apollo/client';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { GET_AUTH_TOKEN, GET_CURRENT_USER } from 'gql/queries/getAuthToken';
 import { GET_USER_QUERY } from 'gql/user/queries';
 import { CREATE_TEAM_MUTATION } from 'gql/team/mutations';
 import {
@@ -10,13 +9,12 @@ import {
     STAR_BOARD_MUTATION,
     UNSTAR_BOARD_MUTATION,
 } from 'gql/board/mutations';
-import { authVar, userVar } from 'client/cache';
-import { AUTH_TOKEN } from 'shared/constants';
 import AppLayout from 'components/layout/AppLayout';
 import TeamSection from 'components/app/TeamSection';
 import Sidebar from 'components/app/Home/Sidebar';
 import TeamAccordion from 'components/app/Home/Sidebar/TeamAccordion';
 import StarredBoardSection from 'components/app/Home/StarredBoardSection';
+import CreateTeamModal from 'components/app/Home/CreateTeamModal';
 import { Modal } from 'components/common';
 
 const Container = styled.div`
@@ -30,8 +28,8 @@ const Container = styled.div`
 
 const MainContent = styled.div`
     padding: 16px;
+    margin-top: 32px;
     box-sizing: border-box;
-    border-radius: 16px;
     flex: 1;
 `;
 
@@ -40,37 +38,33 @@ const Title = styled.h1`
     font-weight: bold;
 `;
 
-const AddTeamButton = styled.button`
-    width: 96px;
-    height: 96px;
-    border-radius: 16px;
-    box-shadow: none;
-    border-color: transparent;
-    background-color: #4643da;
-    color: white;
-    margin: 8px;
-
-    &:disabled {
-        background-color: #9291cf;
-    }
-
-    &:hover:enabled {
-        cursor: pointer;
-        background-color: #3835ce;
-    }
-
-    &:active:enabled {
-        background-color: #2e2bc5;
-    }
+const MainSectionHeader = styled.div`
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
 `;
 
 const MainSectionTitle = styled.h2`
     font-weight: bold;
     font-size: 16px;
-    margin-bottom: 4px;
     text-indent: 4px;
     color: #6f87bd;
     text-transform: uppercase;
+    margin-right: 8px;
+    height: 16px;
+`;
+
+const CreateTeamButton = styled.button`
+    font-size: 16px;
+    font-weight: bold;
+    background-color: transparent;
+    text-transform: uppercase;
+    color: #6f87bd;
+    margin-left: 4px;
+
+    &:hover {
+        background-color: #eee;
+    }
 `;
 export default function UserHome() {
     const router = useRouter();
@@ -112,6 +106,9 @@ export default function UserHome() {
                         username,
                     },
                 });
+            },
+            onCompleted: () => {
+                setTeamName('');
             },
         }
     );
@@ -223,6 +220,7 @@ export default function UserHome() {
 
     const [teamName, setTeamName] = useState('');
     const [isModalVisible, setModalVisible] = useState(false);
+    const [isCreateTeamModalVisible, setCreateTeamModalVisible] = useState(false);
     const [currentTeam, setCurrentTeam] = useState(null);
     const [boardTitle, setBoardTitle] = useState('');
 
@@ -232,18 +230,14 @@ export default function UserHome() {
         }
     }, [isModalVisible]);
 
-    const handleAddTeamClick = () => {
-        if (teamName.length > 0) {
-            createTeam({ name: teamName });
+    const createTeam = name => {
+        if (name.length > 0) {
+            createTeamMutation({
+                variables: {
+                    name,
+                },
+            });
         }
-    };
-
-    const createTeam = ({ name }) => {
-        createTeamMutation({
-            variables: {
-                name,
-            },
-        });
     };
 
     const ownedTeams = data?.getUser?.ownedTeams || [];
@@ -255,8 +249,8 @@ export default function UserHome() {
         setCurrentTeam(team);
     };
 
-    const handleCreateBoard = ({ team }) => {
-        createBoardMutation({ variables: { teamId: team.id, title: boardTitle } });
+    const handleCreateBoard = ({ teamId, title }) => {
+        createBoardMutation({ variables: { teamId, title } });
     };
 
     const showModal = () => {
@@ -267,6 +261,11 @@ export default function UserHome() {
         setCurrentTeam(null);
         setModalVisible(false);
         setBoardTitle('');
+    };
+
+    const handleTeamSubmit = e => {
+        e.preventDefault();
+        createTeam(teamName);
     };
 
     const handleStar = ({ team, board, starred }) => {
@@ -299,6 +298,10 @@ export default function UserHome() {
         }
     };
 
+    const handleAddTeamClick = () => {
+        setCreateTeamModalVisible(true);
+    };
+
     return (
         <Container>
             <Sidebar>
@@ -327,16 +330,15 @@ export default function UserHome() {
                 )}
             </Sidebar>
             <MainContent>
-                <input value={teamName} onChange={e => setTeamName(e.target.value)} />
-                <AddTeamButton
-                    type="button"
-                    onClick={handleAddTeamClick}
-                    disabled={teamName.length === 0}
-                >
-                    {mLoading ? 'loading' : 'Add team'}
-                </AddTeamButton>
                 <StarredBoardSection boards={stars} onStarClick={handleStar} />
-                <MainSectionTitle>Owned Teams</MainSectionTitle>
+                <MainSectionHeader>
+                    <CreateTeamButton
+                        title="Click to create a new Team"
+                        onClick={handleAddTeamClick}
+                    >
+                        Owned Teams +
+                    </CreateTeamButton>
+                </MainSectionHeader>
                 {ownedTeams.map(team => (
                     <TeamSection
                         key={team.id}
@@ -348,11 +350,13 @@ export default function UserHome() {
                         userStars={stars}
                         boards={team.boards}
                         members={team.members}
-                        onAddBoardClick={() => handleAddBoard({ team })}
+                        onAddBoardClick={handleAddBoard}
                         onStarClick={handleStar}
                     />
                 ))}
-                <MainSectionTitle>Membership Teams</MainSectionTitle>
+                <MainSectionTitle title="These are teams that you are a member of and do not own">
+                    Membership Teams
+                </MainSectionTitle>
                 {memberships.map(
                     membership =>
                         membership.role !== 'OWNER' && (
@@ -378,13 +382,22 @@ export default function UserHome() {
                 <pre>{bData && JSON.stringify(bData, null, 4)}</pre>
                 <pre>{bError && JSON.stringify(bError, null, 4)}</pre>
             </div> */}
+            <CreateTeamModal
+                isVisible={isCreateTeamModalVisible}
+                close={() => setCreateTeamModalVisible(false)}
+                loading={mLoading}
+                createTeam={createTeam}
+            />
             <Modal isVisible={isModalVisible} close={closeModal}>
                 <input
                     value={boardTitle}
                     onChange={e => setBoardTitle(e.target.value)}
                     ref={modalInputRef}
                 />
-                <button type="button" onClick={() => handleCreateBoard({ team: currentTeam })}>
+                <button
+                    type="button"
+                    onClick={() => handleCreateBoard({ teamId: currentTeam.id, title: boardTitle })}
+                >
                     Create Board
                 </button>
             </Modal>

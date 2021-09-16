@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Button, TextArea } from 'components/common';
-import { AddListButton as AddButton, CancelButton } from '../../AddListForm/styles';
+import { CancelButton } from '../../AddListForm/styles';
 
 export const Container = styled.div`
     padding: 2px 4px 10px 8px;
@@ -22,14 +22,24 @@ export const CardTitleInput = styled(TextArea)`
     }
 `;
 
-export const AddCardButton = styled(AddButton)`
+export const AddCardButton = styled.button`
     width: 264px;
     height: 36px;
     border-radius: 4px;
     color: #666;
+    padding: 8px;
+    box-sizing: border-box;
+    font-weight: bold;
+    font-size: 14px;
+    outline: none;
+    background-color: transparent;
 
     &:hover {
         background-color: #ddd;
+    }
+
+    &:focus {
+        box-shadow: 0px 0px 0px 2px #4a5297;
     }
 `;
 

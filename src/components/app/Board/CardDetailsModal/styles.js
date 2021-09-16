@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const ModalBody = styled.div`
     display: flex;
     flex-direction: column;
+    height: 1800px;
 `;
 
 export const SectionTitle = styled.h3`

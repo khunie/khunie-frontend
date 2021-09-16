@@ -5,7 +5,7 @@ import ReactMde from 'react-mde';
 import ReactMarkdown from 'react-markdown';
 import 'react-mde/lib/styles/css/react-mde-all.css';
 import { GET_CARD_QUERY } from 'gql/card/queries';
-import Modal from 'components/common/Modal';
+import { Modal } from 'components/common';
 import { ModalBody, Section, SectionHeader, SectionTitle } from './styles';
 
 export default function CardDetailsModal({ isVisible, close }) {

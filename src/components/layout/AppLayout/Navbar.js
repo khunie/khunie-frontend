@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 import { useReactiveVar, useQuery } from '@apollo/client';
 import { GET_USER_QUERY } from 'gql/user/queries';
-import { authVar, userVar } from 'client/cache';
+import { userVar } from 'client/cache';
 import { useLogout } from 'shared/hooks/auth';
 import { USER_URL } from 'shared/constants';
 import ProfileCard from 'components/common/ProfileCard';
@@ -105,7 +105,7 @@ const NavButton = styled(IconButton)`
 
 export default function Navbar() {
     const router = useRouter();
-    const { username } = useReactiveVar(userVar);
+    const username = useReactiveVar(userVar) || '';
     const {
         data: uData,
         loading: uLoading,
@@ -173,8 +173,7 @@ export default function Navbar() {
                             avatar={user?.profile.pic}
                             onClick={() =>
                                 router.push({
-                                    pathname: '/user/[username]/profile',
-                                    query: { username: user?.username },
+                                    pathname: '/profile',
                                 })
                             }
                         />

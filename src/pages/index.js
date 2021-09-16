@@ -1,15 +1,13 @@
 import { useEffect } from 'react';
 import { useQuery, useReactiveVar } from '@apollo/client';
 import { useRouter } from 'next/router';
-import { GET_AUTH_TOKEN, GET_CURRENT_USER } from 'gql/queries/getAuthToken';
-import { authVar, userVar } from 'client/cache';
-import { AUTH_TOKEN, USER_URL } from 'shared/constants';
+import { GET_CURRENT_USER } from 'gql/queries/getAuthToken';
+import { userVar } from 'client/cache';
+import { USER_URL } from 'shared/constants';
 
 export default function RedirectHome() {
-    const currentUser = useReactiveVar(userVar);
-    const authToken = useReactiveVar(authVar);
+    const username = useReactiveVar(userVar);
     const router = useRouter();
-    const username = currentUser?.username;
     console.log(username);
 
     useEffect(() => {
