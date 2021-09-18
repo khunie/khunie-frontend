@@ -4,7 +4,16 @@ import useEscape from 'shared/hooks/useEscape';
 import useOutsideClick from 'shared/hooks/useOutsideClick';
 import { Overlay, Container, ModalHeader, ModalTitle, ModalBody, CloseButton } from './styles';
 
-function Modal({ isVisible, close, title, children }) {
+function Modal({
+    isVisible,
+    close,
+    title,
+    children,
+    padding,
+    titleStyle,
+    containerStyle,
+    closeButtonStyle,
+}) {
     const [mouseDown, setMouseDown] = useState(false);
     const containerRef = useRef(null);
 
@@ -34,10 +43,16 @@ function Modal({ isVisible, close, title, children }) {
     return (
         <Overlay onMouseUp={handleMouseUp}>
             <FocusTrap>
-                <Container ref={containerRef}>
+                <Container ref={containerRef} padding={padding} style={containerStyle}>
                     <ModalHeader>
-                        <ModalTitle>{title}</ModalTitle>
-                        <CloseButton type="button" onClick={close}>
+                        <ModalTitle style={titleStyle}>{title}</ModalTitle>
+                        <CloseButton
+                            type="button"
+                            icon="times"
+                            onClick={close}
+                            style={closeButtonStyle}
+                            size={24}
+                        >
                             x
                         </CloseButton>
                     </ModalHeader>

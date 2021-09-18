@@ -88,6 +88,10 @@ export default function App({ Component, pageProps }) {
                         href="https://fonts.googleapis.com/css?family=Roboto:400,700&amp;display=swap"
                         rel="stylesheet"
                     />
+                    <link
+                        href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap"
+                        rel="stylesheet"
+                    />
                 </Head>
                 <Layout show={showMainLayout}>
                     <PageLayout>

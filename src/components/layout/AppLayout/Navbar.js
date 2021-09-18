@@ -10,7 +10,7 @@ import { userVar } from 'client/cache';
 import { useLogout } from 'shared/hooks/auth';
 import { USER_URL } from 'shared/constants';
 import ProfileCard from 'components/common/ProfileCard';
-import IconButton, { Icon } from 'components/common/IconButton';
+import IconButton from 'components/common/IconButton';
 import Dropdown, { DropdownMenu, DropdownMenuButton, Divider } from './Dropdown';
 
 const NavBar = styled.div`
@@ -97,10 +97,6 @@ const NavButton = styled(IconButton)`
     &:active:enabled {
         background-color: #7642f0;
     }
-
-    ${Icon} {
-        font-size: 16px;
-    }
 `;
 
 export default function Navbar() {
@@ -129,8 +125,7 @@ export default function Navbar() {
             <NavContent>
                 <LeftSection>
                     <Link
-                        href={`/${USER_URL}/${user?.username}`}
-                        as={`/${USER_URL}/${user?.username}`}
+                        href={user?.username ? `/${USER_URL}/${user?.username}` : '/home'}
                         passHref
                     >
                         <Anchor
@@ -144,13 +139,19 @@ export default function Navbar() {
                 </LeftSection>
                 {user && (
                     <RightSection>
-                        <NavButton icon="plus" onClick={() => setShowAddMenu(!showAddMenu)} />
+                        <NavButton
+                            icon="plus"
+                            size={16}
+                            onClick={() => setShowAddMenu(!showAddMenu)}
+                        />
                         <NavButton
                             icon="bell"
+                            size={16}
                             onClick={() => setShowNotificationMenu(!showAddMenu)}
                         />
                         <NavButton
                             icon="user"
+                            size={16}
                             onClick={() => setShowAccountMenu(!showAccountMenu)}
                         />
                     </RightSection>

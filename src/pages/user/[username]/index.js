@@ -15,14 +15,14 @@ import Sidebar from 'components/app/Home/Sidebar';
 import TeamAccordion from 'components/app/Home/Sidebar/TeamAccordion';
 import StarredBoardSection from 'components/app/Home/StarredBoardSection';
 import CreateTeamModal from 'components/app/Home/CreateTeamModal';
-import { Modal } from 'components/common';
+import CreateBoardModal from 'components/app/TeamSection/CreateBoardModal';
 
 const Container = styled.div`
     background-color: #fff;
     margin: 0 auto;
     display: flex;
     align-items: flex-start;
-    min-height: 100vh;
+    min-height: calc(100vh - 48px);
     max-width: 1280px;
 `;
 
@@ -47,7 +47,7 @@ const MainSectionHeader = styled.div`
 const MainSectionTitle = styled.h2`
     font-weight: bold;
     font-size: 16px;
-    text-indent: 4px;
+    text-indent: 8px;
     color: #6f87bd;
     text-transform: uppercase;
     margin-right: 8px;
@@ -68,7 +68,6 @@ const CreateTeamButton = styled.button`
 `;
 export default function UserHome() {
     const router = useRouter();
-    const modalInputRef = useRef(null);
 
     const { username } = router.query;
     /* const client = useApolloClient();
@@ -108,7 +107,7 @@ export default function UserHome() {
                 });
             },
             onCompleted: () => {
-                setTeamName('');
+                setCreateTeamModalVisible(false);
             },
         }
     );
@@ -148,7 +147,7 @@ export default function UserHome() {
                 });
             },
             onCompleted() {
-                closeModal();
+                setCurrentTeam(null);
             },
             onError() {},
         }
@@ -218,23 +217,19 @@ export default function UserHome() {
             onError() {},
         });
 
-    const [teamName, setTeamName] = useState('');
-    const [isModalVisible, setModalVisible] = useState(false);
+    const [currentTeam, setCurrentTeam] = useState(false);
     const [isCreateTeamModalVisible, setCreateTeamModalVisible] = useState(false);
-    const [currentTeam, setCurrentTeam] = useState(null);
-    const [boardTitle, setBoardTitle] = useState('');
 
-    useEffect(() => {
-        if (isModalVisible) {
-            modalInputRef.current.focus();
-        }
-    }, [isModalVisible]);
+    const handleAddTeamClick = () => {
+        setCreateTeamModalVisible(true);
+    };
 
-    const createTeam = name => {
+    const createTeam = ({ name, description }) => {
         if (name.length > 0) {
             createTeamMutation({
                 variables: {
                     name,
+                    description,
                 },
             });
         }
@@ -244,28 +239,8 @@ export default function UserHome() {
     const memberships = data?.getUser?.memberships || [];
     const stars = data?.getUser?.stars || [];
 
-    const handleAddBoard = ({ team }) => {
-        showModal();
-        setCurrentTeam(team);
-    };
-
-    const handleCreateBoard = ({ teamId, title }) => {
+    const createBoard = ({ teamId, title, description }) => {
         createBoardMutation({ variables: { teamId, title } });
-    };
-
-    const showModal = () => {
-        setModalVisible(true);
-    };
-
-    const closeModal = () => {
-        setCurrentTeam(null);
-        setModalVisible(false);
-        setBoardTitle('');
-    };
-
-    const handleTeamSubmit = e => {
-        e.preventDefault();
-        createTeam(teamName);
     };
 
     const handleStar = ({ team, board, starred }) => {
@@ -298,10 +273,6 @@ export default function UserHome() {
         }
     };
 
-    const handleAddTeamClick = () => {
-        setCreateTeamModalVisible(true);
-    };
-
     return (
         <Container>
             <Sidebar>
@@ -330,7 +301,9 @@ export default function UserHome() {
                 )}
             </Sidebar>
             <MainContent>
-                <StarredBoardSection boards={stars} onStarClick={handleStar} />
+                {stars.length > 0 && (
+                    <StarredBoardSection boards={stars} onStarClick={handleStar} />
+                )}
                 <MainSectionHeader>
                     <CreateTeamButton
                         title="Click to create a new Team"
@@ -350,57 +323,48 @@ export default function UserHome() {
                         userStars={stars}
                         boards={team.boards}
                         members={team.members}
-                        onAddBoardClick={handleAddBoard}
+                        onAddBoardClick={setCurrentTeam}
                         onStarClick={handleStar}
                     />
                 ))}
-                <MainSectionTitle title="These are teams that you are a member of and do not own">
-                    Membership Teams
-                </MainSectionTitle>
-                {memberships.map(
-                    membership =>
-                        membership.role !== 'OWNER' && (
-                            <TeamSection
-                                key={membership.team.id}
-                                id={membership.team.id}
-                                name={membership.team.name}
-                                slug={membership.team.slug}
-                                avatar={membership.team.pic}
-                                userRole={membership.role}
-                                userStars={stars}
-                                boards={membership.team.boards}
-                                members={membership.team.members}
-                                onStarClick={handleStar}
-                            />
-                        )
+                {memberships?.filter(membership => membership.role !== 'OWNER').length > 0 && (
+                    <>
+                        <MainSectionTitle title="These are teams that you are a member of and do not own">
+                            Membership Teams
+                        </MainSectionTitle>
+                        {memberships.map(
+                            membership =>
+                                membership.role !== 'OWNER' && (
+                                    <TeamSection
+                                        key={membership.team.id}
+                                        id={membership.team.id}
+                                        name={membership.team.name}
+                                        slug={membership.team.slug}
+                                        avatar={membership.team.pic}
+                                        userRole={membership.role}
+                                        userStars={stars}
+                                        boards={membership.team.boards}
+                                        members={membership.team.members}
+                                        onStarClick={handleStar}
+                                    />
+                                )
+                        )}
+                    </>
                 )}
             </MainContent>
-            {/* <div>
-                <pre>{data && JSON.stringify(data, null, 4)}</pre>
-                <pre>{mData && JSON.stringify(mData, null, 4)}</pre>
-                <pre>{mError && JSON.stringify(mError, null, 4)}</pre>
-                <pre>{bData && JSON.stringify(bData, null, 4)}</pre>
-                <pre>{bError && JSON.stringify(bError, null, 4)}</pre>
-            </div> */}
             <CreateTeamModal
                 isVisible={isCreateTeamModalVisible}
                 close={() => setCreateTeamModalVisible(false)}
                 loading={mLoading}
                 createTeam={createTeam}
             />
-            <Modal isVisible={isModalVisible} close={closeModal}>
-                <input
-                    value={boardTitle}
-                    onChange={e => setBoardTitle(e.target.value)}
-                    ref={modalInputRef}
-                />
-                <button
-                    type="button"
-                    onClick={() => handleCreateBoard({ teamId: currentTeam.id, title: boardTitle })}
-                >
-                    Create Board
-                </button>
-            </Modal>
+            <CreateBoardModal
+                isVisible={!!currentTeam}
+                close={() => setCurrentTeam(null)}
+                teamId={currentTeam?.id}
+                loading={bLoading}
+                createBoard={createBoard}
+            />
         </Container>
     );
 }

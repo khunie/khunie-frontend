@@ -26,7 +26,6 @@ export const USER_FRAGMENT = gql`
                 id
                 title
                 slug
-                description
                 background
             }
         }
@@ -45,7 +44,6 @@ export const USER_FRAGMENT = gql`
                     id
                     title
                     slug
-                    description
                     background
                 }
             }
@@ -55,7 +53,6 @@ export const USER_FRAGMENT = gql`
             id
             title
             slug
-            description
             background
             team {
                 id

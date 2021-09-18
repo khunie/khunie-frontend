@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const StyledButton = styled.button`
     display: flex;
@@ -9,18 +10,23 @@ export const StyledButton = styled.button`
     padding: 10px;
     border-radius: 4px;
     font-weight: bold;
-    font-size: 14px;
     outline: none;
 
     &:hover:enabled {
-        background-color: #ddd;
+        background-color: #eee;
     }
 
     &:active:enabled {
-        background-color: #ccc;
+        background-color: #ddd;
     }
     
     &:focus {
         box-shadow: 0px 0px 0px 2px #4a5297;
     }
+`;
+
+export const Icon = styled(FontAwesomeIcon)`
+    font-size: ${({ size }) => (size ? `${size}px` : '20px')};
+
+    ${({ style }) => (style && style)}
 `;

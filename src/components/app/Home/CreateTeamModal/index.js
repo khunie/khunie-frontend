@@ -1,39 +1,67 @@
 import { useState, useEffect, useRef } from 'react';
-import { Modal } from 'components/common';
-import { ModalBody, TeamForm, Label, TeamInput, CreateTeamButton } from './styles';
+import { Label, Modal, TextInput } from 'components/common';
+import { ModalBody, Subheading, Form, DescriptionInput, SubmitButton } from './styles';
 
 export default function CreateTeamModal({ isVisible, createTeam, close, loading }) {
     const [teamName, setTeamName] = useState('');
-    const inputRef = useRef(null);
+    const [teamDescription, setTeamDescription] = useState('');
+    const nameInputRef = useRef(null);
 
     const handleTeamSubmit = e => {
         e.preventDefault();
-        createTeam(teamName);
-        close();
+        createTeam({ name: teamName, description: teamDescription });
     };
 
     useEffect(() => {
-        if (isVisible) inputRef.current.focus();
+        if (isVisible) {
+            nameInputRef.current.focus();
+        } else {
+            setTeamName('');
+            setTeamDescription('');
+        }
     }, [isVisible]);
 
     return (
-        <Modal isVisible={isVisible} close={close} title="Create a Team">
+        <Modal
+            isVisible={isVisible}
+            close={close}
+            title="Let's create your Team"
+            containerStyle={{ padding: '64px 96px' }}
+            titleStyle={{ color: '#6b69ee' }}
+            closeButtonStyle={{ position: 'absolute', top: '32px', right: '32px' }}
+        >
             <ModalBody>
-                <TeamForm onSubmit={handleTeamSubmit}>
+                <Form onSubmit={handleTeamSubmit}>
+                    <Subheading>A team is a space for you to organize your boards</Subheading>
                     <Label htmlFor="team-name">Team Name</Label>
-                    <TeamInput
+                    <TextInput
                         id="team-name"
                         name="team-name"
                         value={teamName}
-                        placeholder="Enter a name for your new team"
+                        placeholder="e.g. Kopa"
                         onChange={e => setTeamName(e.target.value)}
                         maxLength={35}
-                        ref={inputRef}
+                        forwardRef={nameInputRef}
+                        autoCorrect={false}
+                        autoComplete="off"
+                        spellCheck={false}
                     />
-                    <CreateTeamButton type="submit" disabled={teamName.length === 0}>
-                        {loading ? 'loading' : 'Add team'}
-                    </CreateTeamButton>
-                </TeamForm>
+                    <Label htmlFor="team-description">Description (optional)</Label>
+                    <DescriptionInput
+                        id="team-description"
+                        name="team-description"
+                        value={teamDescription}
+                        placeholder="You can enter a short description if you want to let your other team members know what it's all about!"
+                        onChange={e => setTeamDescription(e.target.value)}
+                        maxLength={500}
+                        autoCorrect={false}
+                        spellCheck={false}
+                    />
+
+                    <SubmitButton type="submit" disabled={teamName.length === 0}>
+                        {loading ? 'loading' : 'Create Team'}
+                    </SubmitButton>
+                </Form>
             </ModalBody>
         </Modal>
     );

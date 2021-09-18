@@ -6,7 +6,6 @@ export const CREATE_BOARD_MUTATION = gql`
             id
             title
             slug
-            description
             background
             team {
                 id
@@ -21,7 +20,6 @@ export const STAR_BOARD_MUTATION = gql`
             id
             title
             slug
-            description
             background
             team {
                 id
@@ -38,7 +36,6 @@ export const UNSTAR_BOARD_MUTATION = gql`
             id
             title
             slug
-            description
             background
             team {
                 id

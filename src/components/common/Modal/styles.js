@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { IconButton } from 'components/common';
 
 export const Overlay = styled.div`
     position: fixed;
@@ -22,7 +23,7 @@ export const Container = styled.div`
     align-self: flex-start;
     background-color: white;
     border-radius: 4px;
-    padding: 32px;
+    padding: ${({ padding }) => (padding ? `${padding}px` : '32px')};
     position: relative;
 
     &:after {
@@ -32,11 +33,14 @@ export const Container = styled.div`
         width: 1px;
         height: 1px;
     }
+
+    ${({ style }) => (style && style)}
 `;
 
 export const ModalTitle = styled.h2`
     font-weight: bold;
     font-size: 24px;
+    ${({ style }) => (style && style)}
 `;
 
 export const ModalHeader = styled.div`
@@ -44,9 +48,11 @@ export const ModalHeader = styled.div`
     justify-content: space-between;
 `;
 
-export const CloseButton = styled.button`
-    width: 36px;
-    height: 36px;
+export const CloseButton = styled(IconButton)`
+    background-color: transparent;
+    color: #555;
+
+    ${({ style }) => (style && style)}
 `;
 
 export const ModalBody = styled.div`
