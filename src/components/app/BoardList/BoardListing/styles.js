@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Icon } from 'components/common';
 
 export const BoardListItem = styled.li`
     margin: 0 4px 16px 4px;
@@ -56,7 +56,8 @@ export const StarContainer = styled.div`
     }
 `;
 
-export const Star = styled(FontAwesomeIcon)`
+export const Star = styled(Icon)`
+    font-size: 16px;
     transition: transform .2s;
     &:hover {
         transform: scale(1.5);

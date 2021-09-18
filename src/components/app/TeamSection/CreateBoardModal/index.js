@@ -9,7 +9,7 @@ export default function CreateBoardModal({ isVisible, teamId, createBoard, close
 
     const handleTeamSubmit = e => {
         e.preventDefault();
-        createBoard({ teamId, title: boardTitle, description: setBoardDescription });
+        createBoard({ teamId, title: boardTitle, description: boardDescription });
     };
 
     useEffect(() => {

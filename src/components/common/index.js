@@ -1,6 +1,7 @@
 import Accordion from './Accordion';
 import Avatar from './Avatar';
 import Button from './Button';
+import Icon from './Icon';
 import IconButton from './IconButton';
 import Label from './Label';
 import Modal from './Modal';
@@ -13,6 +14,7 @@ export {
     Accordion,
     Avatar,
     Button,
+    Icon,
     IconButton,
     Label,
     Modal,

@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
 import { Button, TextArea } from 'components/common';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const EditingOverlay = styled.div`
     background-color: #000000bb;
@@ -83,8 +82,4 @@ export const SubmitButton = styled(Button)`
     &:disabled {
         background-color: #6ebb75;
     }
-`;
-
-export const Icon = styled(FontAwesomeIcon)`
-    font-size: 20px;
 `;

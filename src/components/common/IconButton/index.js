@@ -1,4 +1,5 @@
-import { StyledButton, Icon } from './styles';
+import { Icon } from 'components/common';
+import { StyledButton } from './styles';
 
 export default function IconButton(props) {
     const { forwardRef, icon, disabled, loading, className, size, iconStyle, ...rest } = props;

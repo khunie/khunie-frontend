@@ -1,6 +1,4 @@
 import styled, { keyframes, css } from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 const Background = styled.div`
     width: 100%;
@@ -94,11 +92,6 @@ const Row = styled.div`
     display: flex;
     justify-content: center;
     margin-bottom: 16px;
-`;
-
-const Icon = styled(FontAwesomeIcon)`
-    font-size: 24px;
-    color: pink;
 `;
 
 export default function Hero() {

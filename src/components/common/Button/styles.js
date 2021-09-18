@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const StyledButton = styled.button`
     display: flex;
@@ -45,17 +44,4 @@ export const Title = styled.p`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-`;
-
-export const LeftIcon = styled(FontAwesomeIcon)`
-    font-size: ${({ $size }) => ($size ? `${$size}px` : '20px')};
-    margin-right: 4px;
-    min-width: ${({ $minWidth }) => ($minWidth ? `${$minWidth}px` : '20px')};
-    color: ${({ $color }) => ($color && `${$color}`)};
-`;
-
-export const RightIcon = styled(FontAwesomeIcon)`
-    font-size: 14px;
-    margin-left: auto;
-    min-width: 20px;
 `;

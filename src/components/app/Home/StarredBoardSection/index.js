@@ -7,14 +7,14 @@ import {
     HeaderButton,
     Title,
 } from 'components/app/BoardSection';
-import { Icon } from './styles';
+import { StyledIcon } from './styles';
 
 export default function StarredBoardSection({ boards, onStarClick }) {
     return (
         <Container>
             <Header>
                 <HeaderLeft>
-                    <Icon icon="star" />
+                    <StyledIcon icon="star" />
                     <Title title="Boards you star will appear here for quick access">
                         Starred Boards
                     </Title>

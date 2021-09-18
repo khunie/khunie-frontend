@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const StyledButton = styled.button`
     display: flex;
@@ -23,10 +22,4 @@ export const StyledButton = styled.button`
     &:focus {
         box-shadow: 0px 0px 0px 2px #4a5297;
     }
-`;
-
-export const Icon = styled(FontAwesomeIcon)`
-    font-size: ${({ size }) => (size ? `${size}px` : '20px')};
-
-    ${({ style }) => (style && style)}
 `;

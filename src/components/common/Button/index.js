@@ -1,4 +1,5 @@
-import { StyledButton, Content, Title, LeftIcon, RightIcon } from './styles';
+import { Icon } from 'components/common';
+import { StyledButton, Content, Title } from './styles';
 
 export default function Button({
     forwardRef,
@@ -8,12 +9,17 @@ export default function Button({
     center,
     type,
     icon,
-    rightIcon,
     iconName,
-    rightIconName,
     iconMinWidth,
     iconSize,
     iconColor,
+    iconStyle,
+    rightIcon,
+    rightIconName,
+    rightIconSize,
+    rightIconColor,
+    rightIconStyle,
+    rightIconMinWidth,
     titleMaxWidth,
     ...rest
 }) {
@@ -21,11 +27,12 @@ export default function Button({
         if (icon) return icon();
         if (iconName)
             return (
-                <LeftIcon
+                <Icon
                     icon={iconName}
-                    $minWidth={iconMinWidth}
-                    $size={iconSize}
-                    $color={iconColor}
+                    size={iconSize}
+                    color={iconColor}
+                    $minWidth={iconMinWidth || 20}
+                    style={{ marginRight: '4px', ...iconStyle }}
                 />
             );
         return null;
@@ -33,7 +40,16 @@ export default function Button({
 
     const renderRightIcon = () => {
         if (rightIcon) return rightIcon();
-        if (rightIconName) return <RightIcon icon={rightIconName} />;
+        if (rightIconName)
+            return (
+                <Icon
+                    icon={rightIconName}
+                    style={{ marginLeft: 'auto', ...rightIconStyle }}
+                    size={rightIconSize || 14}
+                    color={rightIconColor}
+                    $minWidth={rightIconMinWidth || 20}
+                />
+            );
         return null;
     };
 
