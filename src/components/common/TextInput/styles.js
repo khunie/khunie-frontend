@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 
 export const Input = styled.input`
-    border-radius: 4px;
-    font-size: 16px;
     padding: 8px;
     box-sizing: border-box;
-    margin-bottom: 16px;
+    border-radius: 4px;
     border: 2px solid #dddeeb;
+    font-size: 16px;
     outline: none;
     transition: background-color .2s;
     

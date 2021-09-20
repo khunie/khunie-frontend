@@ -3,7 +3,7 @@ import { useQuery, useMutation, useApolloClient } from '@apollo/client';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { GET_USER_QUERY } from 'gql/user/queries';
-import { CREATE_TEAM_MUTATION } from 'gql/team/mutations';
+import { CREATE_TEAM_MUTATION, INVITE_TEAM_MEMBER_MUTATION } from 'gql/team/mutations';
 import {
     CREATE_BOARD_MUTATION,
     STAR_BOARD_MUTATION,
@@ -15,14 +15,13 @@ import Sidebar from 'components/app/Home/Sidebar';
 import TeamAccordion from 'components/app/Home/Sidebar/TeamAccordion';
 import StarredBoardSection from 'components/app/Home/StarredBoardSection';
 import CreateTeamModal from 'components/app/Home/CreateTeamModal';
+import InviteTeamMemberModal from 'components/app/TeamSection/InviteTeamMemberModal';
 import CreateBoardModal from 'components/app/TeamSection/CreateBoardModal';
 
 const Container = styled.div`
-    background-color: #fff;
     margin: 0 auto;
     display: flex;
     align-items: flex-start;
-    min-height: calc(100vh - 48px);
     max-width: 1280px;
 `;
 
@@ -147,7 +146,7 @@ export default function UserHome() {
                 });
             },
             onCompleted() {
-                setCurrentTeam(null);
+                closeCreateBoardModal();
             },
             onError() {},
         }
@@ -217,8 +216,44 @@ export default function UserHome() {
             onError() {},
         });
 
-    const [currentTeam, setCurrentTeam] = useState(false);
+    const [inviteTeamMemberMutation, { data: iData, loading: iLoading, error: iError }] =
+        useMutation(INVITE_TEAM_MEMBER_MUTATION, {
+            update(cache, { data: { inviteTeamMember } }) {
+                const cachedUser = cache.readQuery({
+                    query: GET_USER_QUERY,
+                    variables: {
+                        username,
+                    },
+                });
+                /* 
+                    const { getUser } = cachedUser;
+                    const { stars } = getUser;
+                    const newStars = [...stars, starBoard];
+    
+                    cache.writeQuery({
+                        query: GET_USER_QUERY,
+                        data: {
+                            getUser: {
+                                ...getUser,
+                                stars: newStars,
+                            },
+                        },
+                        variables: {
+                            username,
+                        },
+                    }); */
+            },
+            onCompleted() {
+                closeInviteModal();
+            },
+            onError() {},
+        });
+
+    // TODO: replace these simple states with a reducer
+    const [currentTeamId, setCurrentTeamId] = useState(null);
     const [isCreateTeamModalVisible, setCreateTeamModalVisible] = useState(false);
+    const [isCreateBoardModalVisible, setCreateBoardModalVisible] = useState(false);
+    const [isInviteModalVisible, setInviteModalVisible] = useState(false);
 
     const handleAddTeamClick = () => {
         setCreateTeamModalVisible(true);
@@ -241,6 +276,10 @@ export default function UserHome() {
 
     const createBoard = ({ teamId, title, description }) => {
         createBoardMutation({ variables: { teamId, title } });
+    };
+
+    const inviteMember = ({ teamId, input }) => {
+        inviteTeamMemberMutation({ variables: { teamId, input } });
     };
 
     const handleStar = ({ team, board, starred }) => {
@@ -271,6 +310,26 @@ export default function UserHome() {
                 },
             });
         }
+    };
+
+    const openCreateBoardModal = teamId => {
+        setCreateBoardModalVisible(true);
+        setCurrentTeamId(teamId);
+    };
+
+    const closeCreateBoardModal = () => {
+        setCreateBoardModalVisible(false);
+        setCurrentTeamId(null);
+    };
+
+    const openInviteModal = teamId => {
+        setInviteModalVisible(true);
+        setCurrentTeamId(teamId);
+    };
+
+    const closeInviteModal = () => {
+        setInviteModalVisible(false);
+        setCurrentTeamId(null);
     };
 
     return (
@@ -323,7 +382,8 @@ export default function UserHome() {
                         userStars={stars}
                         boards={team.boards}
                         members={team.members}
-                        onAddBoardClick={setCurrentTeam}
+                        onAddBoardClick={openCreateBoardModal}
+                        onInviteClick={openInviteModal}
                         onStarClick={handleStar}
                     />
                 ))}
@@ -359,11 +419,19 @@ export default function UserHome() {
                 createTeam={createTeam}
             />
             <CreateBoardModal
-                isVisible={!!currentTeam}
-                close={() => setCurrentTeam(null)}
-                teamId={currentTeam?.id}
+                isVisible={isCreateBoardModalVisible}
+                close={closeCreateBoardModal}
+                teamId={currentTeamId}
                 loading={bLoading}
                 createBoard={createBoard}
+            />
+            <InviteTeamMemberModal
+                isVisible={isInviteModalVisible}
+                close={closeInviteModal}
+                teamId={currentTeamId}
+                loading={iLoading}
+                error={iError}
+                inviteMember={inviteMember}
             />
         </Container>
     );

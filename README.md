@@ -1,6 +1,6 @@
 # Khunie Frontend
 
-## Kanban board app made with next.js, apollo, styled-components, and react-beautiful-dnd
+## Kanban board app made with next.js, apollo client for gql and state management, styled components, and react beautiful dnd
 
 You can visit the site deployed at www.khunie.com or run it locally
 
@@ -14,4 +14,4 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the app.

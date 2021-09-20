@@ -12,7 +12,7 @@ export const Overlay = styled.div`
     justify-content: center;
     z-index: 9999;
     overflow-y: auto;
-    padding: 64px;
+    padding: 96px;
     box-sizing: border-box;
     /* visibility: ${props => (props.isVisible ? 'visible' : 'hidden')}; */
 `;

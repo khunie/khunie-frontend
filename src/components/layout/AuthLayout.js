@@ -12,7 +12,6 @@ const Container = styled.div`
     top: 0;
     left: 0;
     width: 100vw;
-    overflow-y: scroll;
 `;
 
 const FormContainer = styled.div`

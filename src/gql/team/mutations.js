@@ -21,3 +21,16 @@ export const CREATE_TEAM_MUTATION = gql`
         }
     }
 `;
+
+export const INVITE_TEAM_MEMBER_MUTATION = gql`
+    mutation inviteTeamMemberMutation($teamId: String!, $input: String!) {
+        inviteTeamMember(teamId: $teamId, input: $input) {
+            user {
+                username
+                profile {
+                    pic
+                }
+            }
+        }
+    }
+`;
