@@ -41,3 +41,12 @@ export const REPOSITION_CARD_MUTATION = gql`
         }
     }
 `;
+
+export const DELETE_CARD_MUTATION = gql`
+    mutation DeleteCardMutation($id: String!) {
+        deleteCard(id: $id) {
+            id
+            title
+        }
+    }
+`;

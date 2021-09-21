@@ -13,7 +13,7 @@ export default function Card({ id, listId, title, index, trueIndex, onClick, onC
         e.preventDefault();
         containerRef.current.scrollIntoView({ block: 'nearest' });
         const offset = containerRef.current.getBoundingClientRect();
-        onClick({ layout: offset, cardTitle: title });
+        onClick({ layout: offset, id, title });
     };
 
     function getStyle(style, snapshot) {

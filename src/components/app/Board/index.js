@@ -23,6 +23,7 @@ export default function Board({
     onMoveCard,
     onOpenCard,
     onCloseCard,
+    onDeleteCard,
     cardDetails,
 }) {
     const [editCard, setEditCard] = useState(null);
@@ -31,8 +32,8 @@ export default function Board({
     const [isRightSidebarVisible, setRightSidebarVisible] = useState(false);
     const [lastDraggedCard, setLastDraggedCard] = useState(null);
 
-    const handleSelectCardForEdit = ({ layout, cardTitle }) => {
-        setEditCard({ layout, cardTitle });
+    const handleSelectCardForEdit = ({ layout, id, title }) => {
+        setEditCard({ layout, id, title });
     };
 
     const openCardDetails = ({ id, listId }) => {
@@ -45,7 +46,7 @@ export default function Board({
         onCloseCard();
     };
 
-    const cancelEditCard = () => {
+    const closeEditCard = () => {
         setEditCard(null);
     };
 
@@ -170,8 +171,10 @@ export default function Board({
             {editCard && (
                 <EditCardForm
                     layout={editCard.layout}
-                    cardTitle={editCard.cardTitle}
-                    cancelEdit={cancelEditCard}
+                    id={editCard.id}
+                    title={editCard.title}
+                    close={closeEditCard}
+                    deleteCard={onDeleteCard}
                 />
             )}
             {cardDetails && <CardDetailsModal isVisible={!!cardDetails} close={closeCardDetails} />}

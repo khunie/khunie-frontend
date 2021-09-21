@@ -31,7 +31,7 @@ export default function Button({
                     icon={iconName}
                     size={iconSize}
                     color={iconColor}
-                    $minWidth={iconMinWidth || 20}
+                    minWidth={iconMinWidth || 20}
                     style={{ marginRight: '4px', ...iconStyle }}
                 />
             );
@@ -47,7 +47,7 @@ export default function Button({
                     style={{ marginLeft: 'auto', ...rightIconStyle }}
                     size={rightIconSize || 14}
                     color={rightIconColor}
-                    $minWidth={rightIconMinWidth || 20}
+                    minWidth={rightIconMinWidth || 20}
                 />
             );
         return null;

@@ -14,8 +14,8 @@ import {
     SubmitButton,
 } from './styles';
 
-export default function EditCardForm({ layout, cardTitle, cancelEdit }) {
-    const [newCardTitle, setNewCardTitle] = useState(cardTitle);
+export default function EditCardForm({ layout, id, title, close, deleteCard }) {
+    const [newTitle, setNewTitle] = useState(title);
     const [mouseDown, setMouseDown] = useState(false);
     const cardTitleInputRef = useRef(null);
     const formRef = useRef(null);
@@ -30,7 +30,7 @@ export default function EditCardForm({ layout, cardTitle, cancelEdit }) {
         cardTitleInputRef.current.focus();
     }, []);
 
-    useEscape(() => cancelEdit());
+    useEscape(() => close());
 
     useOutsideClick(containerRef, () => {
         setMouseDown(true);
@@ -39,13 +39,13 @@ export default function EditCardForm({ layout, cardTitle, cancelEdit }) {
     const handleEditOverlayClick = () => {
         if (mouseDown) {
             setMouseDown(false);
-            cancelEdit();
+            close();
         }
     };
 
     const handleSubmit = e => {
         e.preventDefault();
-        cancelEdit();
+        close();
     };
 
     const handleFocus = () => {
@@ -59,12 +59,17 @@ export default function EditCardForm({ layout, cardTitle, cancelEdit }) {
             formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
         } else if (e.keyCode === 27) {
             e.preventDefault();
-            cancelEdit();
+            close();
         }
     };
 
     const handleCancelClick = () => {
-        cancelEdit();
+        close();
+    };
+
+    const handleDeleteClick = () => {
+        deleteCard(id);
+        close();
     };
 
     /* Fix for off by 1 padding-top on TextareaAutosize in Firefox */
@@ -80,8 +85,8 @@ export default function EditCardForm({ layout, cardTitle, cancelEdit }) {
                 <FormWrapper ref={setReferenceElement}>
                     <Form ref={formRef} onSubmit={handleSubmit}>
                         <CardTitleInput
-                            value={newCardTitle}
-                            onChange={e => setNewCardTitle(e.target.value)}
+                            value={newTitle}
+                            onChange={e => setNewTitle(e.target.value)}
                             ref={cardTitleInputRef}
                             placeholder="Enter a title"
                             onFocus={handleFocus}
@@ -90,7 +95,7 @@ export default function EditCardForm({ layout, cardTitle, cancelEdit }) {
                             paddingtop={sBrowser === 'Firefox' ? 9 : 10}
                         />
                         <ActionRow>
-                            <SubmitButton type="submit" disabled={newCardTitle.length === 0}>
+                            <SubmitButton type="submit" disabled={newTitle.length === 0}>
                                 Save
                             </SubmitButton>
                         </ActionRow>
@@ -98,7 +103,7 @@ export default function EditCardForm({ layout, cardTitle, cancelEdit }) {
                 </FormWrapper>
                 <PopMenu ref={setPopperElement} style={styles.popper} {...attributes.popper}>
                     <MenuButton iconName={['fab', 'github']}>Open Card Details</MenuButton>
-                    <MenuButton iconName="times" negative>
+                    <MenuButton iconName="times" negative onClick={handleDeleteClick}>
                         Delete Card
                     </MenuButton>
                 </PopMenu>

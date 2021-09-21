@@ -8,6 +8,7 @@ import {
     CREATE_CARD_MUTATION,
     UPDATE_CARD_MUTATION,
     REPOSITION_CARD_MUTATION,
+    DELETE_CARD_MUTATION,
 } from 'gql/card/mutations';
 import { compare } from 'shared/utils';
 import AppLayout from 'components/layout/AppLayout';
@@ -219,6 +220,21 @@ export default function BoardPage() {
         }
     );
 
+    const [deleteCardMutation, { data: dData, loading: dLoading, error: dError }] = useMutation(
+        DELETE_CARD_MUTATION,
+        {
+            update(cache, { data: { deleteCard } }) {
+                const normalizedId = cache.identify({ id: deleteCard.id, __typename: 'Card' });
+                cache.evict({ id: normalizedId });
+                cache.gc();
+            },
+            onError: e => {
+                toast.error('Failed to delete card');
+                console.log(e);
+            },
+        }
+    );
+
     useEffect(() => {
         console.log(JSON.stringify(uError, null, 4));
     }, [uError]);
@@ -245,7 +261,7 @@ export default function BoardPage() {
             optimisticResponse: {
                 createList: {
                     __typename: 'List',
-                    id: 'temp-list-id',
+                    id: `temp-list-${index}`,
                     title: listTitle,
                     index,
                     cards: [],
@@ -282,7 +298,7 @@ export default function BoardPage() {
             optimisticResponse: {
                 createCard: {
                     __typename: 'Card',
-                    id: 'temp-card-id',
+                    id: `temp-card-${index}`,
                     title: cardTitle,
                     description: '',
                     index,
@@ -315,6 +331,20 @@ export default function BoardPage() {
         });
     };
 
+    const handleDeleteCard = id => {
+        deleteCardMutation({
+            variables: {
+                id,
+            },
+            optimisticResponse: {
+                deleteCard: {
+                    __typename: 'Card',
+                    id,
+                },
+            },
+        });
+    };
+
     const handleOpenCard = ({ cardId }) => {
         router.push(`/team/${teamSlug}/${boardSlug}/?c=${cardId}`, undefined, { shallow: true });
     };
@@ -338,6 +368,7 @@ export default function BoardPage() {
             onMoveList={handleMoveList}
             onAddCardClick={handleAddCard}
             onMoveCard={handleMoveCard}
+            onDeleteCard={handleDeleteCard}
             onOpenCard={handleOpenCard}
             onCloseCard={handleCloseCard}
             cardDetails={cardDetails}
