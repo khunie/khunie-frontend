@@ -228,9 +228,11 @@ export default function BoardPage() {
                 cache.evict({ id: normalizedId });
                 cache.gc();
             },
+            onCompleted: () => {
+                toast.success('Card deleted');
+            },
             onError: e => {
                 toast.error('Failed to delete card');
-                console.log(e);
             },
         }
     );

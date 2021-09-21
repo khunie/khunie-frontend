@@ -17,6 +17,14 @@ function Modal({
     const [mouseDown, setMouseDown] = useState(false);
     const containerRef = useRef(null);
 
+    useEffect(() => {
+        if (isVisible) {
+            document.body.style.overflowY = 'hidden';
+        } else {
+            document.body.style.overflowY = 'unset';
+        }
+    }, [isVisible]);
+
     useEscape(() => close());
 
     useOutsideClick(containerRef, () => {

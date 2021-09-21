@@ -3,8 +3,6 @@ import Navbar from './Navbar';
 
 const Container = styled.div`
     min-height: 100vh;
-    max-height: 100vh;
-    overflow-y: auto;
     box-sizing: border-box;
 `;
 
