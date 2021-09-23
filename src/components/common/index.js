@@ -6,6 +6,7 @@ import IconButton from './IconButton';
 import Label from './Label';
 import Modal from './Modal';
 import ProfileCard from './ProfileCard';
+import Stack from './Stack';
 import TeamAvatar from './TeamAvatar';
 import TextArea from './TextArea';
 import TextInput from './TextInput';
@@ -19,6 +20,7 @@ export {
     Label,
     Modal,
     ProfileCard,
+    Stack,
     TeamAvatar,
     TextArea,
     TextInput,

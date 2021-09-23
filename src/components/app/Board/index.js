@@ -161,13 +161,11 @@ export default function Board({
                     <AddListForm onAddListSubmit={onAddListClick} />
                 </BoardContent>
             </MainSection>
-            {isRightSidebarVisible && (
-                <Sidebar
-                    isVisible={isRightSidebarVisible}
-                    close={() => setRightSidebarVisible(false)}
-                    data={lastDraggedCard || {}}
-                />
-            )}
+            <Sidebar
+                isVisible={isRightSidebarVisible}
+                close={() => setRightSidebarVisible(false)}
+                data={lastDraggedCard || {}}
+            />
             {editCard && (
                 <EditCardForm
                     layout={editCard.layout}

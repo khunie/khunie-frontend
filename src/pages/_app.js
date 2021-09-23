@@ -26,6 +26,10 @@ const GlobalStyle = createGlobalStyle`
         background-color: white;
         color: #333;
     }
+    
+    div {
+        box-sizing: border-box;
+    }
 
     h1,h2,h3 {
         font-family: Roboto;

@@ -1,16 +1,16 @@
 import styled from 'styled-components';
+import { IconButton } from 'components/common';
 import { containerScrollbar } from 'shared/styles';
 
 export const Container = styled.div`
     background-color: white;
-    height: calc(100vh - 48px);
-    width: 360px;
+    width: 100%;
+    height: 100%;
     word-wrap: break-word;
     box-sizing: border-box;
     overflow-y: hidden;
     box-shadow: 0px 0px 0px 1px #babedf;
     z-index: 99;
-    display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
 `;
 
 export const Header = styled.div`
@@ -24,6 +24,12 @@ export const Header = styled.div`
     position: relative;
 `;
 
+export const BackButton = styled(IconButton)`
+    position: absolute;
+    left: 4px;
+    background-color: transparent;
+`;
+
 export const Title = styled.h3`
     font-weight: bold;
 `;
@@ -34,13 +40,6 @@ export const Body = styled.div`
     box-sizing: border-box;
 
     ${containerScrollbar}
-`;
-
-export const Content = styled.div`
-    height: 2000px;
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
 `;
 
 export const CloseButton = styled.button`
