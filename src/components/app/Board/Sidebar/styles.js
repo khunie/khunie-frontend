@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { containerScrollbar } from 'shared/styles';
+import { IconButton } from 'components/common';
 
 export const Container = styled.div`
     background-color: white;
@@ -8,46 +8,16 @@ export const Container = styled.div`
     word-wrap: break-word;
     box-sizing: border-box;
     overflow-y: hidden;
-    box-shadow: 0px 0px 0px 1px #babedf;
+    box-shadow: 0px 0px 0px 1px #babedf, 0px 0px 4px #aaa;
     z-index: 99;
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
 `;
 
-export const Header = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 48px;
-    padding: 8px;
-    box-sizing: border-box;
-    border-bottom: 1px solid #cccccc;
-    position: relative;
-`;
-
-export const Title = styled.h3`
-    font-weight: bold;
-`;
-
-export const Body = styled.div`
-    overflow-y: auto;
-    height: 100%;
-    box-sizing: border-box;
-
-    ${containerScrollbar}
-`;
-
-export const Content = styled.div`
-    height: 2000px;
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-`;
-
-export const CloseButton = styled.button`
+export const CloseButton = styled(IconButton)`
     position: absolute;
     right: 8px;
     top: 8px;
     width: 32px;
     height: 32px;
-    margin-left: auto;
+    background-color: transparent;
 `;

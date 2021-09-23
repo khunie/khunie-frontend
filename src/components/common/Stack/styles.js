@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { IconButton } from 'components/common';
 import { containerScrollbar } from 'shared/styles';
 
@@ -26,8 +26,13 @@ export const Header = styled.div`
 
 export const BackButton = styled(IconButton)`
     position: absolute;
-    left: 4px;
+    left: -40px;
     background-color: transparent;
+    transition: transform .2s;
+
+    ${({ show }) => (show && css`
+        transform: translateX(44px);
+    `)}
 `;
 
 export const Title = styled.h3`
@@ -40,13 +45,4 @@ export const Body = styled.div`
     box-sizing: border-box;
 
     ${containerScrollbar}
-`;
-
-export const CloseButton = styled.button`
-    position: absolute;
-    right: 8px;
-    top: 8px;
-    width: 32px;
-    height: 32px;
-    margin-left: auto;
 `;
