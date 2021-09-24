@@ -57,7 +57,15 @@ export default function BoardPage() {
         UPDATE_BOARD_MUTATION,
         {
             update(cache, { data: { updateBoard } }) {
-                console.log(JSON.stringify(updateBoard, null, 2));
+                const { getBoard } = cache.readQuery({
+                    query: GET_BOARD_QUERY,
+                    variables: {
+                        teamSlug,
+                        boardSlug,
+                    },
+                });
+
+                const { lists } = getBoard;
 
                 cache.writeQuery({
                     query: GET_BOARD_QUERY,
@@ -68,6 +76,7 @@ export default function BoardPage() {
                     data: {
                         getBoard: {
                             ...updateBoard,
+                            lists,
                         },
                     },
                 });
@@ -76,6 +85,7 @@ export default function BoardPage() {
             onError: () => {
                 toast.error('Failed to update board');
             },
+            fetchPolicy: 'no-cache',
         }
     );
 
@@ -127,12 +137,8 @@ export default function BoardPage() {
 
                 const newLists = [...lists];
                 const oldIndex = newLists.findIndex(item => item.id === updateList.id);
-                // TODO: why does just taking the cards from the old list item not keep them sorted? clearly did something wrong, figure it out!!!
-                const sortedCards = [...lists[oldIndex].cards].sort((first, second) =>
-                    compare(first.index, second.index)
-                );
 
-                const newItem = { ...updateList, cards: sortedCards };
+                const newItem = { ...updateList, cards: lists[oldIndex].cards };
                 newLists.splice(oldIndex, 1);
                 let newIndex = newLists.findIndex(item => item.index > newItem.index);
                 newIndex = newIndex === -1 ? lists.length : newIndex;
@@ -155,6 +161,7 @@ export default function BoardPage() {
             onError: () => {
                 toast.error('Failed to move list');
             },
+            fetchPolicy: 'no-cache',
         }
     );
 
