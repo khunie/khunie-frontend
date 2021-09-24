@@ -22,7 +22,7 @@ const NavBar = styled.div`
     background-color: #6e5fc5;
     background: ${({ isBoard }) =>
         isBoard
-            ? 'linear-gradient(to right, #6350c9ee, #5e32d8ee)'
+            ? 'linear-gradient(to right, #2b274299, #251d3a99)'
             : 'linear-gradient(to right, #6350c9, #5e32d8)'};
 `;
 

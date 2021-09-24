@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useQuery, useMutation, gql, useApolloClient } from '@apollo/client';
 import { toast } from 'react-toastify';
 import { GET_BOARD_QUERY } from 'gql/board/queries';
+import { UPDATE_BOARD_MUTATION } from 'gql/board/mutations';
 import { CREATE_LIST_MUTATION, UPDATE_LIST_MUTATION } from 'gql/list/mutations';
 import {
     CREATE_CARD_MUTATION,
@@ -51,6 +52,32 @@ export default function BoardPage() {
             });
         },
     });
+
+    const [updateBoardMutation, { data: ubData, loading: ubLoading, error: ubError }] = useMutation(
+        UPDATE_BOARD_MUTATION,
+        {
+            update(cache, { data: { updateBoard } }) {
+                console.log(JSON.stringify(updateBoard, null, 2));
+
+                cache.writeQuery({
+                    query: GET_BOARD_QUERY,
+                    variables: {
+                        teamSlug,
+                        boardSlug,
+                    },
+                    data: {
+                        getBoard: {
+                            ...updateBoard,
+                        },
+                    },
+                });
+            },
+            onCompleted: () => {},
+            onError: () => {
+                toast.error('Failed to update board');
+            },
+        }
+    );
 
     const [createListMutation, { data: mData, loading: mLoading, error: mError }] = useMutation(
         CREATE_LIST_MUTATION,
@@ -356,6 +383,17 @@ export default function BoardPage() {
         setCardDetails(null);
     };
 
+    const handleChangeBoardBackground = background => {
+        updateBoardMutation({
+            variables: {
+                input: {
+                    id: boardId,
+                    background,
+                },
+            },
+        });
+    };
+
     return (
         <Board
             id={boardId}
@@ -374,6 +412,7 @@ export default function BoardPage() {
             onOpenCard={handleOpenCard}
             onCloseCard={handleCloseCard}
             cardDetails={cardDetails}
+            changeBackground={handleChangeBoardBackground}
         />
     );
 }

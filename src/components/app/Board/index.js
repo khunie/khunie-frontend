@@ -24,13 +24,13 @@ export default function Board({
     onOpenCard,
     onCloseCard,
     onDeleteCard,
+    changeBackground,
     cardDetails,
 }) {
     const [editCard, setEditCard] = useState(null);
     const [editList, setEditList] = useState(null);
     const [isModalVisible, setModalVisible] = useState(false);
     const [isRightSidebarVisible, setRightSidebarVisible] = useState(false);
-    const [lastDraggedCard, setLastDraggedCard] = useState(null);
 
     const handleSelectCardForEdit = ({ layout, id, title }) => {
         setEditCard({ layout, id, title });
@@ -92,7 +92,6 @@ export default function Board({
         } else {
             // move to new list
         }
-        setLastDraggedCard(result);
     };
 
     const handleMoveList = result => {
@@ -164,7 +163,7 @@ export default function Board({
             <Sidebar
                 isVisible={isRightSidebarVisible}
                 close={() => setRightSidebarVisible(false)}
-                data={lastDraggedCard || {}}
+                onChangeBackground={changeBackground}
             />
             {editCard && (
                 <EditCardForm

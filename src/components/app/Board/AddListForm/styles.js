@@ -18,7 +18,7 @@ export const Container = styled.div`
     &:after {
         content: '';
         position: absolute;
-        right: -12px;
+        right: -8px;
         width: 1px;
         height: 1px;
     }
