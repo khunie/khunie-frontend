@@ -20,10 +20,12 @@ const NavBar = styled.div`
     top: 0;
     z-index: 9999;
     background-color: #6e5fc5;
-    background: ${({ isBoard }) =>
+    /*     background: ${({ isBoard }) =>
         isBoard
-            ? 'linear-gradient(to right, #2b274299, #251d3a99)'
-            : 'linear-gradient(to right, #6350c9, #5e32d8)'};
+            ? 'linear-gradient(to right, #2b274288, #251d3a88)'
+            : 'linear-gradient(to right, #6350c9, #5e32d8)'}; */
+    background-color: ${({ isBoard }) => (isBoard ? '#2b274299' : '#6350c9')};
+    transition: background-color 0.5s;
 `;
 
 const NavContent = styled.div`
@@ -70,12 +72,12 @@ const Logo = styled.img`
     transition: all 0.15s;
 
     &:hover {
-        filter: saturate(90%) brightness(0.96);
+        filter: saturate(98%) brightness(0.96);
         transform: scale(1.1);
     }
 
     &:active {
-        filter: saturate(80%) brightness(0.88);
+        filter: saturate(96%) brightness(0.88);
     }
 `;
 
@@ -88,7 +90,8 @@ const NavButton = styled(IconButton)`
     margin: 0 4px;
     border-radius: 3px;
     color: white;
-    background-color: #9060ff;
+    background-color: ${({ isBoard }) => (isBoard ? '#cccccc55' : '#9060ff')};
+    transition: background-color 0.5s;
 
     &:hover:enabled {
         background-color: #8452fa;
@@ -133,7 +136,13 @@ export default function Navbar() {
                                 e.preventDefault();
                             }}
                         >
-                            <Logo src="/img/khunie-icon-gradient-7.svg" />
+                            <Logo
+                                src={
+                                    isBoard
+                                        ? '/img/khunie-icon-desaturated-white.svg'
+                                        : '/img/khunie-icon-grad-bright.svg'
+                                }
+                            />
                         </Anchor>
                     </Link>
                 </LeftSection>
@@ -143,16 +152,19 @@ export default function Navbar() {
                             icon="plus"
                             size={16}
                             onClick={() => setShowAddMenu(!showAddMenu)}
+                            isBoard={isBoard}
                         />
                         <NavButton
                             icon="bell"
                             size={16}
                             onClick={() => setShowNotificationMenu(!showAddMenu)}
+                            isBoard={isBoard}
                         />
                         <NavButton
                             icon="user"
                             size={16}
                             onClick={() => setShowAccountMenu(!showAccountMenu)}
+                            isBoard={isBoard}
                         />
                     </RightSection>
                 )}

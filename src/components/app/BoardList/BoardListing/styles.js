@@ -2,13 +2,12 @@ import styled, { css } from 'styled-components';
 import { Icon } from 'components/common';
 
 export const BoardListItem = styled.li`
-    margin: 0 4px 16px 4px;
+
 `;
 
 export const ButtonStyle = css`
     display: block;
     height: 110px;
-    width: 180px;
     padding: 16px;
     border: transparent;
     border-radius: 6px;
@@ -86,6 +85,7 @@ export const BoardLink = styled.a`
 
 export const AddBoardButton = styled.button`
     ${ButtonStyle}
+    width: 100%;
     background-color: white;
     border: 4px dashed #ccc;
     color: #888;

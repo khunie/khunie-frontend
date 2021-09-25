@@ -26,10 +26,15 @@ const Container = styled.div`
 `;
 
 const MainContent = styled.div`
+    min-width: 300px;
     padding: 16px;
     margin-top: 32px;
     box-sizing: border-box;
     flex: 1;
+
+    @media (max-width: 600px) {
+        padding: 0px;
+    }
 `;
 
 const Title = styled.h1`

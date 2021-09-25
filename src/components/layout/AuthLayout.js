@@ -17,7 +17,7 @@ const Container = styled.div`
 const FormContainer = styled.div`
     max-width: 600px;
     background-color: #fff;
-    padding: 128px 128px 196px 128px;
+    padding: 128px 128px 128px 128px;
     margin: 0 auto;
     border-radius: 6px;
     /* box-shadow: 4px 4px 16px #ccc;

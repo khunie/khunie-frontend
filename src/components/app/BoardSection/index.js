@@ -3,6 +3,9 @@ import styled from 'styled-components';
 export const Container = styled.section`
     padding: 32px 8px;
     border-top: 1px solid #eee;
+    @media (max-width: 600px) {
+        padding: 8px;
+    }
 `;
 
 export const Header = styled.div`

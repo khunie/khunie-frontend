@@ -1,6 +1,6 @@
-import { Container, SearchInput, ImageOption } from './styles';
+import { Container, SearchInput, Content, ImageButton, Image } from './styles';
 
-const IMAGES = [
+const IMAGE_URLS = [
     'https://i.postimg.cc/h4RwXMv3/shenzhen-6.jpg',
     'https://i.postimg.cc/pP3BVrps/city-1.jpg',
     'https://i.postimg.cc/jt56zPf8/city-2.jpg',
@@ -17,9 +17,13 @@ export default function BackgroundImagePage({ navigation, onImageClick }) {
     return (
         <Container>
             <SearchInput placeholder="Search for an image" />
-            {IMAGES.map(image => (
-                <ImageOption src={image} alt="cityscape" onClick={() => onImageClick(image)} />
-            ))}
+            <Content>
+                {IMAGE_URLS.map(image => (
+                    <ImageButton onClick={() => onImageClick(image)} key={image}>
+                        <Image src={image} alt="cityscape" draggable={false} />
+                    </ImageButton>
+                ))}
+            </Content>
         </Container>
     );
 }
