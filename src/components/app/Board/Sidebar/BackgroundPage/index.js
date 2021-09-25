@@ -1,20 +1,15 @@
-import { Container, BackgroundImageButton, BackgroundColorButton } from './styles';
+import { Container, ImageButton, Image, ImageButtonTitle, ColorButton } from './styles';
 
 export default function BackgroundPage({ navigation }) {
     return (
         <Container>
-            <BackgroundImageButton
-                type="button"
-                onClick={() => navigation.navigate('BackgroundImage')}
-            >
-                Image
-            </BackgroundImageButton>
-            <BackgroundColorButton
-                type="button"
-                onClick={() => navigation.navigate('BackgroundColor')}
-            >
+            <ImageButton type="button" onClick={() => navigation.navigate('BackgroundImage')}>
+                <Image src="https://i.postimg.cc/h4RwXMv3/shenzhen-6.jpg" alt="Background Image" />
+                <ImageButtonTitle>Image</ImageButtonTitle>
+            </ImageButton>
+            <ColorButton type="button" onClick={() => navigation.navigate('BackgroundColor')}>
                 Color
-            </BackgroundColorButton>
+            </ColorButton>
         </Container>
     );
 }
