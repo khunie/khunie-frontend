@@ -28,6 +28,7 @@ export const ImageButton = styled.button`
     border-radius: 4px;
     overflow: hidden;      
 `;
+
 export const Image = styled.img`
     width: 100%;
     height: 100px;

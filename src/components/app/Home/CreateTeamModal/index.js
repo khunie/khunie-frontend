@@ -42,7 +42,7 @@ export default function CreateTeamModal({ isVisible, createTeam, close, loading 
                         onChange={e => setTeamName(e.target.value)}
                         maxLength={35}
                         forwardRef={nameInputRef}
-                        autoCorrect={false}
+                        autoCorrect="off"
                         autoComplete="off"
                         spellCheck={false}
                     />
@@ -54,11 +54,15 @@ export default function CreateTeamModal({ isVisible, createTeam, close, loading 
                         placeholder="You can enter a short description if you want to let your other team members know what it's all about!"
                         onChange={e => setTeamDescription(e.target.value)}
                         maxLength={500}
-                        autoCorrect={false}
+                        autoCorrect="off"
                         spellCheck={false}
                     />
 
-                    <SubmitButton type="submit" disabled={teamName.length === 0}>
+                    <SubmitButton
+                        type="submit"
+                        disabled={teamName.length === 0}
+                        title={teamName.length === 0 ? 'You must enter a Team Name' : ''}
+                    >
                         {loading ? 'loading' : 'Create Team'}
                     </SubmitButton>
                 </Form>

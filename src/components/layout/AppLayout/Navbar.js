@@ -38,6 +38,7 @@ const NavContent = styled.div`
 
 const LeftSection = styled.div`
     flex: 1;
+    display: flex;
 `;
 
 const RightSection = styled.div`
@@ -59,17 +60,13 @@ const NavAnchor = styled.a`
     cursor: pointer;
 `;
 
-const Logo = styled.img`
-    width: 36px;
-    height: 36px;
-    object-fit: contain;
-    padding: 6px;
+const LogoContainer = styled.div`
+    transition: all 0.15s;
     user-select: none;
     -moz-user-select: none;
     -webkit-user-drag: none;
     -webkit-user-select: none;
     -ms-user-select: none;
-    transition: all 0.15s;
 
     &:hover {
         filter: saturate(98%) brightness(0.96);
@@ -81,7 +78,27 @@ const Logo = styled.img`
     }
 `;
 
-const Anchor = styled.a``;
+const Logo = styled.img`
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+`;
+
+const LogoOverlay = styled.img`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+
+    transition: opacity 0.75s;
+    opacity: ${({ show }) => (show ? 1 : 0)};
+`;
+
+const Anchor = styled.a`
+    max-width: 36px;
+`;
 
 const NavButton = styled(IconButton)`
     width: 36px;
@@ -136,13 +153,13 @@ export default function Navbar() {
                                 e.preventDefault();
                             }}
                         >
-                            <Logo
-                                src={
-                                    isBoard
-                                        ? '/img/khunie-icon-desaturated-white.svg'
-                                        : '/img/khunie-icon-grad-bright.svg'
-                                }
-                            />
+                            <LogoContainer>
+                                <Logo src="/img/khunie-icon-desaturated-white.svg" />
+                                <LogoOverlay
+                                    src="/img/khunie-icon-grad-bright.svg"
+                                    show={!isBoard}
+                                />
+                            </LogoContainer>
                         </Anchor>
                     </Link>
                 </LeftSection>

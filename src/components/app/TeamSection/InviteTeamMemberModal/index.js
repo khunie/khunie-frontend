@@ -40,14 +40,14 @@ export default function InviteTeamMemberModal({ isVisible, teamId, inviteMember,
                         onChange={e => setInvitee(e.target.value)}
                         maxLength={254}
                         forwardRef={inputRef}
-                        autoCorrect={false}
+                        autoCorrect="off"
                         autoComplete="off"
                         spellCheck={false}
                     />
                     <SubmitButton
                         type="submit"
                         disabled={invitee.length === 0}
-                        title={invitee.length === 0 && 'Invitee cannot be empty'}
+                        title={invitee.length === 0 ? 'Invitee cannot be empty' : ''}
                     >
                         {loading ? 'loading' : 'Send Invite'}
                     </SubmitButton>

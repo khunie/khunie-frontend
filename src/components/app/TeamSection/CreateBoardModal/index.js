@@ -44,7 +44,7 @@ export default function CreateBoardModal({ isVisible, teamId, createBoard, close
                         onChange={e => setBoardTitle(e.target.value)}
                         maxLength={35}
                         forwardRef={titleInputRef}
-                        autoCorrect={false}
+                        autoCorrect="off"
                         autoComplete="off"
                         spellCheck={false}
                     />
@@ -56,13 +56,13 @@ export default function CreateBoardModal({ isVisible, teamId, createBoard, close
                         placeholder="You can enter a short description if you want to let your other team members know what this board is for"
                         onChange={e => setBoardDescription(e.target.value)}
                         maxLength={500}
-                        autoCorrect={false}
+                        autoCorrect="off"
                         spellCheck={false}
                     />
                     <SubmitButton
                         type="submit"
                         disabled={boardTitle.length === 0}
-                        title={boardTitle.length === 0 && 'You must enter a Board Title'}
+                        title={boardTitle.length === 0 ? 'You must enter a Board Title' : ''}
                     >
                         {loading ? 'loading' : 'Create Board'}
                     </SubmitButton>

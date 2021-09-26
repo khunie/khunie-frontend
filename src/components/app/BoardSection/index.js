@@ -10,6 +10,8 @@ export const Container = styled.section`
 
 export const Header = styled.div`
     display: flex;
+    width: 100%;
+    word-wrap: break-word;
 `;
 
 export const HeaderButton = styled.button`
