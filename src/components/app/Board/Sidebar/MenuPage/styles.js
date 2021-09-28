@@ -6,7 +6,6 @@ export const Container = styled.div`
     flex: 1;
     padding: 8px;
     overflow: hidden;
-    background-color: #f5f5f5;
     height: 100%;
 `;
 

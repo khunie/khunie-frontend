@@ -125,8 +125,8 @@ export default function Board({
         <Container background={background}>
             <MainSection>
                 <BoardHeader
-                    title={id}
-                    teamName={teamId}
+                    title={title}
+                    teamName={teamName}
                     visibility={visibility}
                     isRightSidebarVisible={isRightSidebarVisible}
                     openRightSidebar={() => setRightSidebarVisible(true)}

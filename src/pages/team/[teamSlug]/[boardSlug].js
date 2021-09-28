@@ -402,25 +402,27 @@ export default function BoardPage() {
     };
 
     return (
-        <Board
-            id={boardId}
-            teamId={team?.id}
-            title={title}
-            description={description}
-            teamName={team?.name}
-            visibility={visibility}
-            background={background}
-            lists={lists || []}
-            onAddListClick={handleAddList}
-            onMoveList={handleMoveList}
-            onAddCardClick={handleAddCard}
-            onMoveCard={handleMoveCard}
-            onDeleteCard={handleDeleteCard}
-            onOpenCard={handleOpenCard}
-            onCloseCard={handleCloseCard}
-            cardDetails={cardDetails}
-            changeBackground={handleChangeBoardBackground}
-        />
+        !loading && (
+            <Board
+                id={boardId}
+                teamId={team?.id}
+                title={title}
+                description={description}
+                teamName={team?.name}
+                visibility={visibility}
+                background={background}
+                lists={lists || []}
+                onAddListClick={handleAddList}
+                onMoveList={handleMoveList}
+                onAddCardClick={handleAddCard}
+                onMoveCard={handleMoveCard}
+                onDeleteCard={handleDeleteCard}
+                onOpenCard={handleOpenCard}
+                onCloseCard={handleCloseCard}
+                cardDetails={cardDetails}
+                changeBackground={handleChangeBoardBackground}
+            />
+        )
     );
 }
 

@@ -7,8 +7,8 @@ export default function MenuPage({ navigation }) {
             <MenuButton
                 onClick={() => navigation.navigate('Background')}
                 iconName="user"
+                iconSize={16}
                 iconStyle={{ marginLeft: '8px', marginRight: '8px' }}
-                subtitle="Click this to change the board background"
             >
                 Change Board Background
             </MenuButton>

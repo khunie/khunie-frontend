@@ -19,7 +19,10 @@ export default function Sidebar({ isVisible, close, onChangeBackground }) {
 
     return (
         <Container isVisible={isVisible}>
-            <Stack headerRight={() => <CloseButton icon="times" onClick={close} />}>
+            <Stack
+                headerRight={() => <CloseButton icon="times" onClick={close} />}
+                titleStyle={{ maxWidth: '250px' }}
+            >
                 <Stack.Screen name="Menu" title="Menu" component={MenuPage} />
                 <Stack.Screen
                     name="Background"

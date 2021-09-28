@@ -7,7 +7,7 @@ export const Container = styled.div`
     flex: 0 0 280px;
     flex-direction: column;
     align-self: flex-start;
-    background-color: #eeeeee;
+    background-color: #eaeaf1;
     margin: 2px 8px 4px 0px;
     max-height: calc(100vh - 128px);
     max-width: 280px;

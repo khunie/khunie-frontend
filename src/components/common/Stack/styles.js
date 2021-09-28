@@ -14,7 +14,7 @@ export const Header = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 48px;
+    min-height: 48px;
     padding: 8px;
     border-bottom: 1px solid #cccccc;
     position: relative;

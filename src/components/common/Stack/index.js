@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Container, Header, BackButton, Title, Body, ScreenContainer } from './styles';
 
-export default function Stack({ headerRight, headerStyle, children }) {
+export default function Stack({ headerRight, headerStyle, titleStyle, children }) {
     const [stack, setStack] = useState([children[0]]);
     const stackRef = useRef(stack);
     stackRef.current = stack;
@@ -71,7 +71,7 @@ export default function Stack({ headerRight, headerStyle, children }) {
         <Container>
             <Header style={headerStyle}>
                 {renderHeaderLeft()}
-                <Title>{stack[stack.length - 1].props.title}</Title>
+                <Title style={titleStyle}>{stack[stack.length - 1].props.title}</Title>
                 {renderHeaderRight()}
             </Header>
             <Body ref={bodyRef}>{React.cloneElement(stack[stack.length - 1], { navigation })}</Body>

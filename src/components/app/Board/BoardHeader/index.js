@@ -1,4 +1,10 @@
-import { Container, LeftSection, RightSection, BoardHeaderButton } from './styles';
+import {
+    Container,
+    LeftSection,
+    RightSection,
+    BoardHeaderButton,
+    BoardHeaderField,
+} from './styles';
 
 export default function BoardHeader({
     title,
@@ -10,7 +16,7 @@ export default function BoardHeader({
     return (
         <Container>
             <LeftSection>
-                <BoardHeaderButton title="Board Title">{title}</BoardHeaderButton>
+                <BoardHeaderField title="Board Title" initialValue={title} />
                 <BoardHeaderButton title="Team Name">{teamName}</BoardHeaderButton>
                 <BoardHeaderButton title="Board Visibility">{visibility}</BoardHeaderButton>
             </LeftSection>

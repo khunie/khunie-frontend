@@ -17,7 +17,6 @@ export const Container = styled.div`
 export const CloseButton = styled(IconButton)`
     position: absolute;
     right: 8px;
-    top: 8px;
     width: 32px;
     height: 32px;
     background-color: transparent;

@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import Button from 'components/common/Button';
+import { Button, EditableTextInput } from 'components/common';
 
 export const Container = styled.div`
     height: 52px;
@@ -37,4 +37,8 @@ export const BoardHeaderButton = styled(Button)`
     &:active:enabled {
         background-color: #e0e0e0;
     }
+`;
+
+export const BoardHeaderField = styled(EditableTextInput)`
+    margin-right: 8px;
 `;
