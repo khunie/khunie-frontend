@@ -29,7 +29,7 @@ export const BOARD_FRAGMENT = gql`
 `;
 
 export const BOARD_FRAGMENT_LITE = gql`
-    fragment BoardFragment on Board {
+    fragment BoardFragmentLite on Board {
         id
         title
         slug

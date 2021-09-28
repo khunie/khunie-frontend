@@ -1,11 +1,12 @@
 import { Icon } from 'components/common';
-import { StyledButton, Content, Title } from './styles';
+import { StyledButton, Content, TitleContainer, Title, Subtitle } from './styles';
 
 export default function Button({
     forwardRef,
     disabled,
     loading,
     children,
+    subtitle,
     center,
     type,
     icon,
@@ -64,9 +65,12 @@ export default function Button({
             {loading ? (
                 'Loading'
             ) : (
-                <Content center={center || (!icon && !iconName)}>
+                <Content center={center || (!icon && !iconName)} hasSubtitle={!!subtitle}>
                     {renderLeftIcon()}
-                    <Title $maxWidth={titleMaxWidth}>{children}</Title>
+                    <TitleContainer>
+                        <Title $maxWidth={titleMaxWidth}>{children}</Title>
+                        {subtitle && <Subtitle>{subtitle}</Subtitle>}
+                    </TitleContainer>
                     {renderRightIcon()}
                 </Content>
             )}

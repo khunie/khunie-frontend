@@ -12,6 +12,7 @@ import { USER_URL } from 'shared/constants';
 import ProfileCard from 'components/common/ProfileCard';
 import IconButton from 'components/common/IconButton';
 import Dropdown, { DropdownMenu, DropdownMenuButton, Divider } from './Dropdown';
+import { noSelect } from 'shared/styles';
 
 const NavBar = styled.div`
     width: 100%;
@@ -62,11 +63,7 @@ const NavAnchor = styled.a`
 
 const LogoContainer = styled.div`
     transition: all 0.15s;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-drag: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
+    ${noSelect}
 
     &:hover {
         filter: saturate(98%) brightness(0.96);
@@ -91,7 +88,6 @@ const LogoOverlay = styled.img`
     width: 36px;
     height: 36px;
     padding: 6px;
-
     transition: opacity 0.75s;
     opacity: ${({ show }) => (show ? 1 : 0)};
 `;

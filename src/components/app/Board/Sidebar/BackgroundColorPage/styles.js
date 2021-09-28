@@ -21,4 +21,8 @@ export const ColorOption = styled.button`
     &:hover:enabled { 
         box-shadow: 0px 0px 0px 2px #4c27a3 inset, 0px 0px 0px 4px white inset;
     }
+
+    &:active:enabled { 
+        filter: brightness(1.1);
+    }
 `;

@@ -37,4 +37,8 @@ export const Image = styled.img`
     &:hover { 
         filter: saturate(.95) brightness(1.1);
     }
+
+    &:active { 
+        filter: saturate(.92) brightness(1.15);
+    }
 `;

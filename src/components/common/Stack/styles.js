@@ -3,7 +3,6 @@ import { IconButton } from 'components/common';
 import { containerScrollbar } from 'shared/styles';
 
 export const Container = styled.div`
-    background-color: white;
     width: 100%;
     height: 100%;
     word-wrap: break-word;
@@ -19,6 +18,8 @@ export const Header = styled.div`
     padding: 8px;
     border-bottom: 1px solid #cccccc;
     position: relative;
+
+    ${({ style }) => style && style}
 `;
 
 export const BackButton = styled(IconButton)`

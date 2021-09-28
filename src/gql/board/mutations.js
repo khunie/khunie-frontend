@@ -5,7 +5,7 @@ export const CREATE_BOARD_MUTATION = gql`
     ${BOARD_FRAGMENT_LITE}
     mutation CreateBoardMutation($teamId: String!, $title: String!) {
         createBoard(teamId: $teamId, title: $title) {
-            ...BoardFragment
+            ...BoardFragmentLite
         }
     }
 `;
@@ -23,7 +23,7 @@ export const STAR_BOARD_MUTATION = gql`
     ${BOARD_FRAGMENT_LITE}
     mutation StarBoardMutation($id: String!) {
         starBoard(id: $id) {
-            ...BoardFragment
+            ...BoardFragmentLite
         }
     }
 `;
@@ -32,7 +32,7 @@ export const UNSTAR_BOARD_MUTATION = gql`
     ${BOARD_FRAGMENT_LITE}
     mutation UnstarBoardMutation($id: String!) {
         unstarBoard(id: $id) {
-            ...BoardFragment
+            ...BoardFragmentLite
         }
     }
 `;

@@ -5,7 +5,6 @@ export const SidebarButton = styled(Button)`
     justify-content: flex-start;
     width: 100%;
     padding: 10px 8px;
-    border-radius: 4px;
     margin: 8px 0;
     font-weight: bold;
     color: #3a2e66;
@@ -27,7 +26,6 @@ export const DropdownButton = styled(Button)`
     width: 100%;
     padding: 10px 16px;
     padding-left: 32px;
-    border-radius: 4px;
     margin-bottom: 4px;
     margin-top: 4px;
     font-weight: normal;

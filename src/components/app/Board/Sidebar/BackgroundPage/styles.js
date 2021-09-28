@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { noSelect } from 'shared/styles';
 
 export const Container = styled.div`
     position: relative;
@@ -12,6 +13,13 @@ export const Container = styled.div`
     row-gap: 8px;
 `;
 
+export const Image = styled.img`
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    display: block;
+`;
+
 export const ImageButton = styled.button`
     border: none;
     padding: 0;
@@ -21,16 +29,17 @@ export const ImageButton = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
-`;
 
-export const Image = styled.img`
-    position: absolute;
-    width: 100%;
-    height: 100px;
-    display: block;
-    
     &:hover { 
-        filter: saturate(.95) brightness(.9);
+        ${Image} {
+            filter: saturate(.95) brightness(1.1);
+        }
+    }
+
+    &:active {
+        ${Image} {
+            filter: saturate(.92) brightness(1.15);
+        }
     }
 `;
 
@@ -50,11 +59,11 @@ export const ColorButton = styled.button`
     font-weight: bold;
     font-size: 18px;
 
-    &:hover:enabled { 
-        background-color: #282091;
+    &:hover { 
+        background-color: #513ab6;
     }
 
     &:active { 
-        background-color: #211a86;
+        background-color: #5b44c0;
     }
 `;

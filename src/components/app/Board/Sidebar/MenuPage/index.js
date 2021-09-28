@@ -1,17 +1,17 @@
 import { useState } from 'react';
-import { Container } from './styles';
+import { Container, MenuButton } from './styles';
 
 export default function MenuPage({ navigation }) {
-    const [count, setCount] = useState(0);
-
     return (
         <Container>
-            This is the Sidebar Menu
-            <button onClick={() => navigation.navigate('Background')}>
+            <MenuButton
+                onClick={() => navigation.navigate('Background')}
+                iconName="user"
+                iconStyle={{ marginLeft: '8px', marginRight: '8px' }}
+                subtitle="Click this to change the board background"
+            >
                 Change Board Background
-            </button>
-            <div>{count}</div>
-            <button onClick={() => setCount(prev => prev + 1)}>Increment count</button>
+            </MenuButton>
         </Container>
     );
 }

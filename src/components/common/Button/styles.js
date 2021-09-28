@@ -11,7 +11,6 @@ export const StyledButton = styled.button`
     background-color: #453794;
     color: white;
     font-size: 14px;
-    font-weight: bold;
     outline: none;
     // align-self: flex-start; // makes it so each button has its own individual width dependent on its content
 
@@ -19,7 +18,7 @@ export const StyledButton = styled.button`
         background-color: #3c2e8b;
     }
 
-    &:active:enabled {
+    &:active {
         background-color: #352788;
     }
 
@@ -35,13 +34,27 @@ export const StyledButton = styled.button`
 export const Content = styled.span`
     display: flex;
     justify-content: ${({ center }) => (center && 'center')};
-    align-items: center;
+    align-items: ${({ hasSubtitle }) => (hasSubtitle ? 'flex-start' : 'center')};
     width: 100%;
 `;
 
-export const Title = styled.p`
+export const TitleContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+export const Title = styled.span`
     max-width: ${({ $maxWidth }) => ($maxWidth && `${$maxWidth}px`)};
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    word-wrap: break-word;
+    font-weight: bold; 
+    flex-wrap: wrap;
+    width: 100%;
+`;
+
+export const Subtitle = styled.p`
+    color: #888;
+    font-weight: normal;
 `;
