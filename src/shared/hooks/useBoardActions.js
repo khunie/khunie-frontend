@@ -10,6 +10,41 @@ import {
 } from 'gql/card/mutations';
 
 export default function useBoardActions({ teamSlug, boardSlug }) {
+    const [updateBoardMutation, { data: ubData, loading: ubLoading, error: ubError }] = useMutation(
+        UPDATE_BOARD_MUTATION,
+        {
+            update(cache, { data: { updateBoard } }) {
+                const { getBoard } = cache.readQuery({
+                    query: GET_BOARD_QUERY,
+                    variables: {
+                        teamSlug,
+                        boardSlug,
+                    },
+                });
+
+                const { lists } = getBoard;
+
+                cache.writeQuery({
+                    query: GET_BOARD_QUERY,
+                    variables: {
+                        teamSlug,
+                        boardSlug,
+                    },
+                    data: {
+                        getBoard: {
+                            ...updateBoard,
+                            lists,
+                        },
+                    },
+                });
+            },
+            onCompleted: () => {},
+            onError: () => {
+                toast.error('Failed to update board');
+            },
+            fetchPolicy: 'no-cache',
+        }
+    );
     const [createListMutation, { data: mData, loading: mLoading, error: mError }] = useMutation(
         CREATE_LIST_MUTATION,
         {
@@ -192,5 +227,110 @@ export default function useBoardActions({ teamSlug, boardSlug }) {
         }
     );
 
-    return { data, loading, error };
+    const addList = ({ boardId, listTitle, index }) => {
+        createListMutation({
+            variables: {
+                boardId,
+                title: listTitle,
+                index,
+            },
+            optimisticResponse: {
+                createList: {
+                    __typename: 'List',
+                    id: `temp-list-${index}`,
+                    title: listTitle,
+                    index,
+                    cards: [],
+                },
+            },
+        });
+    };
+
+    const moveList = ({ list, index }) => {
+        updateListMutation({
+            variables: {
+                input: {
+                    id: list.id,
+                    index,
+                },
+            },
+            optimisticResponse: {
+                updateList: {
+                    __typename: 'List',
+                    ...list,
+                    index,
+                },
+            },
+        });
+    };
+
+    const addCard = ({ listId, cardTitle, index }) => {
+        createCardMutation({
+            variables: {
+                listId,
+                title: cardTitle,
+                index,
+            },
+            optimisticResponse: {
+                createCard: {
+                    __typename: 'Card',
+                    id: `temp-card-${index}`,
+                    title: cardTitle,
+                    description: '',
+                    index,
+                    list: {
+                        id: listId,
+                    },
+                },
+            },
+        });
+    };
+
+    const moveCard = ({ id, listId, index, card }) => {
+        updateCardMutation({
+            variables: {
+                input: {
+                    id,
+                    index,
+                },
+            },
+            optimisticResponse: {
+                updateCard: {
+                    ...card,
+                    __typename: 'Card',
+                    index,
+                    list: {
+                        id: listId,
+                    },
+                },
+            },
+        });
+    };
+
+    const deleteCard = id => {
+        deleteCardMutation({
+            variables: {
+                id,
+            },
+            optimisticResponse: {
+                deleteCard: {
+                    __typename: 'Card',
+                    id,
+                },
+            },
+        });
+    };
+
+    const updateBoardBackground = ({ id, background }) => {
+        updateBoardMutation({
+            variables: {
+                input: {
+                    id,
+                    background,
+                },
+            },
+        });
+    };
+
+    return { addList, moveList, addCard, moveCard, deleteCard, updateBoardBackground };
 }
