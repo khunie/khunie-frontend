@@ -14,8 +14,8 @@ export const LIST_FRAGMENT = gql`
     }
 `;
 
-export const UPDATE_LIST_CARDS_FRAGMENT = gql`
-    fragment UpdateListCardsFragment on List {
+export const LIST_CARDS_FRAGMENT = gql`
+    fragment ListCardsFragment on List {
         cards {
             id
             title
