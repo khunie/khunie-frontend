@@ -32,8 +32,8 @@ export default function BoardPage() {
         moveList({ list, index });
     };
 
-    const handleAddCard = ({ listId, cardTitle, index }) => {
-        addCard({ listId, cardTitle, index });
+    const handleAddCard = ({ listId, title, index }) => {
+        addCard({ listId, title, index });
     };
 
     const handleMoveCard = ({ id, listId, index, card }) => {

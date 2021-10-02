@@ -1,21 +1,11 @@
 import { gql } from '@apollo/client';
+import { CARD_FRAGMENT } from './fragments';
 
 export const GET_CARD_QUERY = gql`
-    query Query($teamSlug: String!, $boardSlug: String!, $cardId: String!) {
-        getCard(teamSlug: $teamSlug, boardSlug: $boardSlug, cardId: $cardId) {
-            id
-            title
-            description
-            index
-            creator {
-                username
-            }
-            comments {
-                id
-                content
-            }
-            createdAt
-            updatedAt
+    ${CARD_FRAGMENT}
+    query Query($id: String!) {
+        getCard(id: $id) {
+            ...CardFragment
         }
     }
 `;

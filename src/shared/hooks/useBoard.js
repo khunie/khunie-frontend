@@ -4,6 +4,7 @@ import { compare } from 'shared/utils';
 
 export default function useBoard({ teamSlug, boardSlug }) {
     const client = useApolloClient();
+
     const { data, loading, error } = useQuery(GET_BOARD_QUERY, {
         variables: { teamSlug, boardSlug },
         fetchPolicy: 'cache-first',

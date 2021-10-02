@@ -40,7 +40,7 @@ export default function CardDetailsModal({ isVisible, close }) {
         loading: cdLoading,
         error: cdError,
     } = useQuery(GET_CARD_QUERY, {
-        variables: { teamSlug, boardSlug, cardId: router.query.c },
+        variables: { id: router.query.c },
         fetchPolicy: 'network-only',
     });
 
