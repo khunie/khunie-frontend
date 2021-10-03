@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { BOARD_FRAGMENT, BOARD_FRAGMENT_LITE } from './fragments';
+import { BOARD_FRAGMENT_LITE, UPDATE_BOARD_FRAGMENT } from './fragments';
 
 export const CREATE_BOARD_MUTATION = gql`
     ${BOARD_FRAGMENT_LITE}
@@ -11,10 +11,10 @@ export const CREATE_BOARD_MUTATION = gql`
 `;
 
 export const UPDATE_BOARD_MUTATION = gql`
-    ${BOARD_FRAGMENT}
+    ${UPDATE_BOARD_FRAGMENT}
     mutation UpdateBoardMutation($input: UpdateBoardInput!) {
         updateBoard(input: $input) {
-            ...BoardFragment
+            ...UpdateBoardFragment
         }
     }
 `;

@@ -12,6 +12,9 @@ export const CREATE_LIST_MUTATION = gql`
                 description
                 index
             }
+            board {
+                id
+            }
         }
     }
 `;
@@ -27,6 +30,9 @@ export const UPDATE_LIST_MUTATION = gql`
                 title
                 description
                 index
+            }
+            board {
+                id
             }
         }
     }

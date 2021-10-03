@@ -2,6 +2,7 @@ import { useMutation, gql } from '@apollo/client';
 import { toast } from 'react-toastify';
 import { GET_BOARD_QUERY } from 'gql/board/queries';
 import { UPDATE_BOARD_MUTATION } from 'gql/board/mutations';
+import { UPDATE_BOARD_FRAGMENT, BOARD_LISTS_FRAGMENT } from 'gql/board/fragments';
 import { LIST_CARDS_FRAGMENT } from 'gql/list/fragments';
 import { CREATE_LIST_MUTATION, UPDATE_LIST_MUTATION } from 'gql/list/mutations';
 import {
@@ -15,27 +16,12 @@ export default function useBoardActions({ teamSlug, boardSlug }) {
         UPDATE_BOARD_MUTATION,
         {
             update(cache, { data: { updateBoard } }) {
-                const { getBoard } = cache.readQuery({
-                    query: GET_BOARD_QUERY,
-                    variables: {
-                        teamSlug,
-                        boardSlug,
-                    },
-                });
-
-                const { lists } = getBoard;
-
-                cache.writeQuery({
-                    query: GET_BOARD_QUERY,
-                    variables: {
-                        teamSlug,
-                        boardSlug,
-                    },
+                console.log(JSON.stringify(updateBoard, null, 2));
+                cache.writeFragment({
+                    id: `Board:${updateBoard.id}`,
+                    fragment: UPDATE_BOARD_FRAGMENT,
                     data: {
-                        getBoard: {
-                            ...updateBoard,
-                            lists,
-                        },
+                        ...updateBoard,
                     },
                 });
             },
@@ -53,24 +39,16 @@ export default function useBoardActions({ teamSlug, boardSlug }) {
         CREATE_LIST_MUTATION,
         {
             update(cache, { data: { createList } }) {
-                const cachedBoard = cache.readQuery({
-                    query: GET_BOARD_QUERY,
-                    variables: {
-                        teamSlug,
-                        boardSlug,
-                    },
+                const cachedBoard = cache.readFragment({
+                    id: `Board:${createList.board.id}`,
+                    fragment: BOARD_LISTS_FRAGMENT,
                 });
-                cache.writeQuery({
-                    query: GET_BOARD_QUERY,
-                    variables: {
-                        teamSlug,
-                        boardSlug,
-                    },
+
+                cache.writeFragment({
+                    id: `Board:${createList.board.id}`,
+                    fragment: BOARD_LISTS_FRAGMENT,
                     data: {
-                        getBoard: {
-                            ...cachedBoard.getBoard,
-                            lists: [...cachedBoard.getBoard.lists, createList],
-                        },
+                        lists: [...cachedBoard.lists, createList],
                     },
                 });
             },
@@ -144,6 +122,9 @@ export default function useBoardActions({ teamSlug, boardSlug }) {
                     title: listTitle,
                     index,
                     cards: [],
+                    board: {
+                        id: boardId,
+                    },
                 },
             },
         });

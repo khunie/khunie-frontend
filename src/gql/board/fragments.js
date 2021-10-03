@@ -22,8 +22,8 @@ export const BOARD_FRAGMENT = gql`
             name
             slug
         }
-        visibility
         background
+        visibility
         createdAt
     }
 `;
@@ -39,5 +39,32 @@ export const BOARD_FRAGMENT_LITE = gql`
             slug
             name
         }
+    }
+`;
+
+export const BOARD_LISTS_FRAGMENT = gql`
+    fragment BoardListsFragment on Board {
+        lists {
+            id
+            title
+            index
+            cards {
+                id
+                title
+                description
+                index
+            }
+        }
+    }
+`;
+
+export const UPDATE_BOARD_FRAGMENT = gql`
+    fragment UpdateBoardFragment on Board {
+        id
+        title
+        slug
+        description
+        background
+        visibility
     }
 `;
