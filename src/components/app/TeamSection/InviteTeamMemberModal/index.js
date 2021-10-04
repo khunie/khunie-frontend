@@ -46,8 +46,8 @@ export default function InviteTeamMemberModal({ isVisible, teamId, inviteMember,
                     />
                     <SubmitButton
                         type="submit"
-                        disabled={invitee.length === 0}
-                        title={invitee.length === 0 ? 'Invitee cannot be empty' : ''}
+                        disabled={!invitee}
+                        title={!invitee ? 'Invitee cannot be empty' : ''}
                     >
                         {loading ? 'loading' : 'Send Invite'}
                     </SubmitButton>

@@ -30,7 +30,7 @@ export default function AddCardForm({ listId, nextIndex, onAddCardSubmit }) {
     });
 
     useOutsideClick(containerRef, () => {
-        if (cardTitle.trim().length === 0) {
+        if (!cardTitle.trim()) {
             setShowForm(false);
         }
     });
@@ -75,7 +75,7 @@ export default function AddCardForm({ listId, nextIndex, onAddCardSubmit }) {
                     />
                     <ActionRow>
                         <CancelButton icon="times" onClick={handleCancelClick} />
-                        <SubmitButton type="submit" disabled={cardTitle.length === 0}>
+                        <SubmitButton type="submit" disabled={!cardTitle}>
                             Add card
                         </SubmitButton>
                     </ActionRow>

@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { CARD_FRAGMENT_LITE } from './fragments';
+import { CARD_FRAGMENT_LITE, UPDATE_CARD_FRAGMENT } from './fragments';
 
 export const CREATE_CARD_MUTATION = gql`
     ${CARD_FRAGMENT_LITE}
@@ -11,10 +11,22 @@ export const CREATE_CARD_MUTATION = gql`
 `;
 
 export const UPDATE_CARD_MUTATION = gql`
-    ${CARD_FRAGMENT_LITE}
+    ${UPDATE_CARD_FRAGMENT}
     mutation UpdateCardMutation($input: UpdateCardInput!) {
         updateCard(input: $input) {
-            ...CardFragmentLite
+            ...UpdateCardFragment
+        }
+    }
+`;
+
+export const MOVE_CARD_MUTATION = gql`
+    mutation MoveCardMutation($input: UpdateCardInput!) {
+        updateCard(input: $input) {
+            id
+            index
+            list {
+                id
+            }
         }
     }
 `;

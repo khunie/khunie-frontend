@@ -46,14 +46,7 @@ export const BOARD_LISTS_FRAGMENT = gql`
     fragment BoardListsFragment on Board {
         lists {
             id
-            title
             index
-            cards {
-                id
-                title
-                description
-                index
-            }
         }
     }
 `;

@@ -60,8 +60,8 @@ export default function CreateTeamModal({ isVisible, createTeam, close, loading 
 
                     <SubmitButton
                         type="submit"
-                        disabled={teamName.length === 0}
-                        title={teamName.length === 0 ? 'You must enter a Team Name' : ''}
+                        disabled={!teamName}
+                        title={!teamName ? 'You must enter a Team Name' : ''}
                     >
                         {loading ? 'loading' : 'Create Team'}
                     </SubmitButton>

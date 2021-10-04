@@ -10,8 +10,16 @@ export default function BoardPage() {
     const router = useRouter();
     const { teamSlug, boardSlug } = router.query;
     const { data, error, loading } = useBoard({ teamSlug, boardSlug });
-    const { addList, moveList, addCard, moveCard, deleteCard, updateBoardBackground } =
-        useBoardActions({ teamSlug, boardSlug });
+    const {
+        addList,
+        updateList,
+        moveList,
+        addCard,
+        updateCard,
+        moveCard,
+        deleteCard,
+        updateBoardBackground,
+    } = useBoardActions();
     const [cardDetails, setCardDetails] = useState(null);
 
     useEffect(() => {
@@ -21,23 +29,25 @@ export default function BoardPage() {
     const board = data?.getBoard || {};
     const { id: boardId, title, description, team, visibility, background, lists } = board;
 
-    const handleAddList = ({ listTitle }) => {
+    const handleAddList = ({ title }) => {
         const index = lists[lists.length - 1]?.index + 100000 || 0;
-        addList({ boardId, listTitle, index });
+        addList({ boardId, title, index });
     };
 
     const handleMoveList = ({ id, index }) => {
-        const list = board.lists.find(item => item.id === id);
-
-        moveList({ list, index });
+        moveList({ boardId, id, index });
     };
 
     const handleAddCard = ({ listId, title, index }) => {
         addCard({ listId, title, index });
     };
 
-    const handleMoveCard = ({ id, listId, index, card }) => {
-        moveCard({ id, listId, index, card });
+    const handleUpdateCard = ({ id, payload }) => {
+        updateCard({ id, payload });
+    };
+
+    const handleMoveCard = ({ id, listId, index }) => {
+        moveCard({ id, listId, index });
     };
 
     const handleDeleteCard = id => {
@@ -68,9 +78,10 @@ export default function BoardPage() {
                 visibility={visibility}
                 background={background}
                 lists={lists || []}
-                onAddListClick={handleAddList}
+                onAddList={handleAddList}
                 onMoveList={handleMoveList}
-                onAddCardClick={handleAddCard}
+                onAddCard={handleAddCard}
+                onUpdateCard={handleUpdateCard}
                 onMoveCard={handleMoveCard}
                 onDeleteCard={handleDeleteCard}
                 onOpenCard={handleOpenCard}

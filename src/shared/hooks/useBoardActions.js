@@ -1,22 +1,22 @@
 import { useMutation, gql } from '@apollo/client';
 import { toast } from 'react-toastify';
-import { GET_BOARD_QUERY } from 'gql/board/queries';
 import { UPDATE_BOARD_MUTATION } from 'gql/board/mutations';
 import { UPDATE_BOARD_FRAGMENT, BOARD_LISTS_FRAGMENT } from 'gql/board/fragments';
-import { LIST_CARDS_FRAGMENT } from 'gql/list/fragments';
-import { CREATE_LIST_MUTATION, UPDATE_LIST_MUTATION } from 'gql/list/mutations';
+import { LIST_CARDS_FRAGMENT, UPDATE_LIST_FRAGMENT } from 'gql/list/fragments';
+import { CREATE_LIST_MUTATION, UPDATE_LIST_MUTATION, MOVE_LIST_MUTATION } from 'gql/list/mutations';
 import {
     CREATE_CARD_MUTATION,
     UPDATE_CARD_MUTATION,
+    MOVE_CARD_MUTATION,
     DELETE_CARD_MUTATION,
 } from 'gql/card/mutations';
+import { UPDATE_CARD_FRAGMENT } from 'gql/card/fragments';
 
-export default function useBoardActions({ teamSlug, boardSlug }) {
+export default function useBoardActions() {
     const [updateBoardMutation, { data: ubData, loading: ubLoading, error: ubError }] = useMutation(
         UPDATE_BOARD_MUTATION,
         {
             update(cache, { data: { updateBoard } }) {
-                console.log(JSON.stringify(updateBoard, null, 2));
                 cache.writeFragment({
                     id: `Board:${updateBoard.id}`,
                     fragment: UPDATE_BOARD_FRAGMENT,
@@ -33,8 +33,6 @@ export default function useBoardActions({ teamSlug, boardSlug }) {
         }
     );
 
-    // TODO: remove teamSlug and boardSlug, instead change the cache update readQuery to use the returned item to update the cache?
-    // make queries for getList, getCard, getComment and whatnot so that way the update doesnt have to use the full board obj
     const [createListMutation, { data: mData, loading: mLoading, error: mError }] = useMutation(
         CREATE_LIST_MUTATION,
         {
@@ -61,6 +59,53 @@ export default function useBoardActions({ teamSlug, boardSlug }) {
     const [updateListMutation, { data: ulData, loading: ulLoading, error: ulError }] = useMutation(
         UPDATE_LIST_MUTATION,
         {
+            update(cache, { data: { updateList } }) {
+                cache.writeFragment({
+                    id: `List:${updateList.id}`,
+                    fragment: UPDATE_LIST_FRAGMENT,
+                    data: {
+                        ...updateList,
+                    },
+                });
+            },
+            onError: () => {
+                toast.error('Failed to update list');
+            },
+            fetchPolicy: 'no-cache',
+        }
+    );
+
+    const [moveListMutation, { data: mlData, loading: mlLoading, error: mlError }] = useMutation(
+        MOVE_LIST_MUTATION,
+        {
+            update(cache, { data: { updateList } }) {
+                const cachedBoard = cache.readFragment({
+                    id: `Board:${updateList.board.id}`,
+                    fragment: BOARD_LISTS_FRAGMENT,
+                });
+
+                const { lists } = cachedBoard;
+
+                const newLists = [...lists];
+                const oldIndex = newLists.findIndex(item => item.id === updateList.id);
+
+                const newItem = { ...updateList, cards: lists[oldIndex].cards };
+                newLists.splice(oldIndex, 1);
+                let newIndex = newLists.findIndex(item => item.index > newItem.index);
+                newIndex = newIndex === -1 ? lists.length : newIndex;
+                newLists.splice(newIndex, 0, newItem);
+
+                cache.writeFragment({
+                    id: `Board:${updateList.board.id}`,
+                    fragment: BOARD_LISTS_FRAGMENT,
+                    data: {
+                        lists: newLists,
+                    },
+                });
+            },
+            onError: () => {
+                toast.error('Failed to move list');
+            },
             fetchPolicy: 'no-cache',
         }
     );
@@ -88,8 +133,59 @@ export default function useBoardActions({ teamSlug, boardSlug }) {
         }
     );
 
-    const [updateCardMutation, { data: uData, loading: uLoading, error: uError }] =
-        useMutation(UPDATE_CARD_MUTATION);
+    const [updateCardMutation, { data: uData, loading: uLoading, error: uError }] = useMutation(
+        UPDATE_CARD_MUTATION,
+        {
+            update(cache, { data: { updateCard } }) {
+                const cachedCard = cache.readFragment({
+                    id: `Card:${updateCard.id}`,
+                    fragment: UPDATE_CARD_FRAGMENT,
+                });
+
+                cache.writeFragment({
+                    id: `Card:${updateCard.id}`,
+                    fragment: UPDATE_CARD_FRAGMENT,
+                    data: {
+                        ...cachedCard,
+                        ...updateCard,
+                    },
+                });
+            },
+            onError: () => {
+                toast.error('Failed to update card');
+            },
+        }
+    );
+
+    const [moveCardMutation, { data: mcData, loading: mcLoading, error: mcError }] = useMutation(
+        MOVE_CARD_MUTATION,
+        {
+            update(cache, { data: { updateCard } }) {
+                const cachedList = cache.readFragment({
+                    id: `List:${updateCard.list.id}`,
+                    fragment: LIST_CARDS_FRAGMENT,
+                });
+
+                const cards = [...cachedList.cards];
+                const oldIndex = cards.findIndex(item => item.id === updateCard.id);
+                cards.splice(oldIndex, 1);
+                let newIndex = cards.findIndex(item => item.index > updateCard.index);
+                newIndex = newIndex === -1 ? cards.length : newIndex;
+                cards.splice(newIndex, 0, updateCard);
+
+                cache.writeFragment({
+                    id: `List:${updateCard.list.id}`,
+                    fragment: LIST_CARDS_FRAGMENT,
+                    data: {
+                        cards,
+                    },
+                });
+            },
+            onError: () => {
+                toast.error('Failed to move card');
+            },
+        }
+    );
 
     const [deleteCardMutation, { data: dData, loading: dLoading, error: dError }] = useMutation(
         DELETE_CARD_MUTATION,
@@ -108,18 +204,18 @@ export default function useBoardActions({ teamSlug, boardSlug }) {
         }
     );
 
-    const addList = ({ boardId, listTitle, index }) => {
+    const addList = ({ boardId, title, index }) => {
         createListMutation({
             variables: {
                 boardId,
-                title: listTitle,
+                title,
                 index,
             },
             optimisticResponse: {
                 createList: {
                     __typename: 'List',
                     id: `temp-list-${index}`,
-                    title: listTitle,
+                    title,
                     index,
                     cards: [],
                     board: {
@@ -130,56 +226,38 @@ export default function useBoardActions({ teamSlug, boardSlug }) {
         });
     };
 
-    const moveList = ({ list, index }) => {
+    const updateList = ({ id, title, index }) => {
         updateListMutation({
             variables: {
-                input: {
-                    id: list.id,
-                    index,
-                },
-            },
-            update(cache, { data: { updateList } }) {
-                const { getBoard } = cache.readQuery({
-                    query: GET_BOARD_QUERY,
-                    variables: {
-                        teamSlug,
-                        boardSlug,
-                    },
-                });
-
-                const { lists } = getBoard;
-
-                const newLists = [...lists];
-                const oldIndex = newLists.findIndex(item => item.id === updateList.id);
-
-                const newItem = { ...updateList, cards: lists[oldIndex].cards };
-                newLists.splice(oldIndex, 1);
-                let newIndex = newLists.findIndex(item => item.index > newItem.index);
-                newIndex = newIndex === -1 ? lists.length : newIndex;
-                newLists.splice(newIndex, 0, newItem);
-
-                cache.writeQuery({
-                    query: GET_BOARD_QUERY,
-                    variables: {
-                        teamSlug,
-                        boardSlug,
-                    },
-                    data: {
-                        getBoard: {
-                            ...getBoard,
-                            lists: newLists,
-                        },
-                    },
-                });
-            },
-            onError: () => {
-                toast.error('Failed to move list');
+                id,
+                title,
             },
             optimisticResponse: {
                 updateList: {
                     __typename: 'List',
-                    ...list,
+                    id,
+                    title,
+                },
+            },
+        });
+    };
+
+    const moveList = ({ boardId, id, index }) => {
+        moveListMutation({
+            variables: {
+                input: {
+                    id,
                     index,
+                },
+            },
+            optimisticResponse: {
+                updateList: {
+                    __typename: 'List',
+                    id,
+                    index,
+                    board: {
+                        id: boardId,
+                    },
                 },
             },
         });
@@ -207,47 +285,42 @@ export default function useBoardActions({ teamSlug, boardSlug }) {
         });
     };
 
-    const moveCard = ({ id, listId, index, card }) => {
+    const updateCard = ({ id, payload = {} }) => {
+        console.log(JSON.stringify(payload, null, 2));
         updateCardMutation({
+            variables: {
+                input: {
+                    id,
+                    ...payload,
+                },
+            },
+            optimisticResponse: {
+                updateCard: {
+                    __typename: 'Card',
+                    id,
+                    ...payload,
+                },
+            },
+        });
+    };
+
+    const moveCard = ({ listId, id, index }) => {
+        moveCardMutation({
             variables: {
                 input: {
                     id,
                     index,
                 },
             },
-            update(cache, { data: { updateCard } }) {
-                const cachedList = cache.readFragment({
-                    id: `List:${updateCard.list.id}`,
-                    fragment: LIST_CARDS_FRAGMENT,
-                });
-
-                const cards = [...cachedList.cards];
-                const oldIndex = cards.findIndex(item => item.id === updateCard.id);
-                cards.splice(oldIndex, 1);
-                let newIndex = cards.findIndex(item => item.index > updateCard.index);
-                newIndex = newIndex === -1 ? cards.length : newIndex;
-                cards.splice(newIndex, 0, updateCard);
-
-                cache.writeFragment({
-                    id: `List:${updateCard.list.id}`,
-                    fragment: LIST_CARDS_FRAGMENT,
-                    data: {
-                        cards,
-                    },
-                });
-            },
             optimisticResponse: {
                 updateCard: {
-                    ...card,
                     __typename: 'Card',
+                    id,
                     index,
                     list: {
                         id: listId,
                     },
                 },
-            },
-            onError: () => {
-                toast.error('Failed to move card');
             },
         });
     };
@@ -277,5 +350,14 @@ export default function useBoardActions({ teamSlug, boardSlug }) {
         });
     };
 
-    return { addList, moveList, addCard, moveCard, deleteCard, updateBoardBackground };
+    return {
+        addList,
+        updateList,
+        moveList,
+        addCard,
+        updateCard,
+        moveCard,
+        deleteCard,
+        updateBoardBackground,
+    };
 }

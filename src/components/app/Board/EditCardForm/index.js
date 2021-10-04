@@ -14,7 +14,7 @@ import {
     SubmitButton,
 } from './styles';
 
-export default function EditCardForm({ layout, id, title, close, deleteCard }) {
+export default function EditCardForm({ layout, id, title, close, onUpdateCard, deleteCard }) {
     const [newTitle, setNewTitle] = useState(title);
     const [mouseDown, setMouseDown] = useState(false);
     const cardTitleInputRef = useRef(null);
@@ -45,6 +45,9 @@ export default function EditCardForm({ layout, id, title, close, deleteCard }) {
 
     const handleSubmit = e => {
         e.preventDefault();
+        if (newTitle !== title) {
+            onUpdateCard({ id, payload: { title: newTitle } });
+        }
         close();
     };
 
@@ -95,7 +98,7 @@ export default function EditCardForm({ layout, id, title, close, deleteCard }) {
                             paddingtop={sBrowser === 'Firefox' ? 9 : 10}
                         />
                         <ActionRow>
-                            <SubmitButton type="submit" disabled={newTitle.length === 0}>
+                            <SubmitButton type="submit" disabled={!newTitle}>
                                 Save
                             </SubmitButton>
                         </ActionRow>

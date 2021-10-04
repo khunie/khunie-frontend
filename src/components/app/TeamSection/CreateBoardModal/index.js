@@ -61,8 +61,8 @@ export default function CreateBoardModal({ isVisible, teamId, createBoard, close
                     />
                     <SubmitButton
                         type="submit"
-                        disabled={boardTitle.length === 0}
-                        title={boardTitle.length === 0 ? 'You must enter a Board Title' : ''}
+                        disabled={!boardTitle}
+                        title={!boardTitle ? 'You must enter a Board Title' : ''}
                     >
                         {loading ? 'loading' : 'Create Board'}
                     </SubmitButton>

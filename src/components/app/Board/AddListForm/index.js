@@ -36,7 +36,7 @@ export default function AddListForm({ onAddListSubmit }) {
     const handleSubmit = e => {
         e.preventDefault();
         if (listTitle.trim().length > 0) {
-            onAddListSubmit({ listTitle });
+            onAddListSubmit({ title: listTitle });
             setListTitle('');
             listTitleInputRef.current.focus();
         }
@@ -80,7 +80,7 @@ export default function AddListForm({ onAddListSubmit }) {
                     />
                     <ActionRow>
                         <CancelButton icon="times" onClick={handleCancelClick} />
-                        <SubmitButton type="submit" disabled={listTitle.length === 0}>
+                        <SubmitButton type="submit" disabled={!listTitle}>
                             Add list
                         </SubmitButton>
                     </ActionRow>

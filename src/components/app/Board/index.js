@@ -17,9 +17,10 @@ export default function Board({
     visibility,
     background,
     lists,
-    onAddListClick,
+    onAddList,
     onMoveList,
-    onAddCardClick,
+    onAddCard,
+    onUpdateCard,
     onMoveCard,
     onOpenCard,
     onCloseCard,
@@ -87,7 +88,6 @@ export default function Board({
                 id: cardId,
                 listId: destListId,
                 index: newIndex,
-                card: cards.find(card => card.id === cardId),
             });
         } else {
             // move to new list
@@ -147,7 +147,7 @@ export default function Board({
                                             index={list.index}
                                             trueIndex={ix}
                                             cards={list.cards || []}
-                                            onAddCardClick={onAddCardClick}
+                                            onAddCardClick={onAddCard}
                                             onCardEditClick={handleSelectCardForEdit}
                                             onCardClick={openCardDetails}
                                         />
@@ -157,7 +157,7 @@ export default function Board({
                             )}
                         </Droppable>
                     </DragDropContext>
-                    <AddListForm onAddListSubmit={onAddListClick} />
+                    <AddListForm onAddListSubmit={onAddList} />
                 </BoardContent>
             </MainSection>
             <Sidebar
@@ -171,6 +171,7 @@ export default function Board({
                     id={editCard.id}
                     title={editCard.title}
                     close={closeEditCard}
+                    onUpdateCard={onUpdateCard}
                     deleteCard={onDeleteCard}
                 />
             )}

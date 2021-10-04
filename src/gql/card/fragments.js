@@ -32,3 +32,11 @@ export const CARD_FRAGMENT_LITE = gql`
         }
     }
 `;
+
+export const UPDATE_CARD_FRAGMENT = gql`
+    fragment UpdateCardFragment on Card {
+        id
+        title
+        description
+    }
+`;
