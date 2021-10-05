@@ -5,7 +5,6 @@ export const Input = styled.input`
     box-sizing: border-box;
     border-radius: 4px;
     border: 2px solid #dddeeb;
-    font-size: 16px;
     outline: none;
     transition: background-color .2s;
     
@@ -25,4 +24,6 @@ export const Input = styled.input`
         border-color: #6581fc;
         background-color: white;
     }
+
+    ${({ style }) => style && style}
 `;

@@ -24,8 +24,13 @@ export default function List({
                             className="list"
                             isDragging={dragSnapshot.isDragging}
                         >
-                            <ListHeader {...dragProvided.dragHandleProps}>
-                                <ListTitle>{title}</ListTitle>
+                            <ListHeader {...dragProvided.dragHandleProps} tabIndex={-1}>
+                                <ListTitle
+                                    initialValue={title}
+                                    inputStyle={{ fontWeight: 'bold', fontSize: '16px' }}
+                                >
+                                    {title}
+                                </ListTitle>
                             </ListHeader>
                             <ListContent ref={provided.innerRef} {...provided.droppableProps}>
                                 {cards.map((card, ix) => (

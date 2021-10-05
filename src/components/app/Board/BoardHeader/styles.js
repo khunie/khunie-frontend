@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Button, EditableTextInput } from 'components/common';
+import EditableTextField from 'components/common/EditableTextInput';
 
 export const Container = styled.div`
     height: 52px;
@@ -41,4 +42,5 @@ export const BoardHeaderButton = styled(Button)`
 
 export const BoardHeaderField = styled(EditableTextInput)`
     margin-right: 8px;
+    width: 300px;
 `;

@@ -37,7 +37,7 @@ export default function AddCardForm({ listId, nextIndex, onAddCardSubmit }) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        if (cardTitle.trim().length > 0) {
+        if (cardTitle.trim()) {
             onAddCardSubmit({ listId, title: cardTitle, index: nextIndex });
             setCardTitle('');
             cardTitleInputRef.current.focus();

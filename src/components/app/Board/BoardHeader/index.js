@@ -16,7 +16,12 @@ export default function BoardHeader({
     return (
         <Container>
             <LeftSection>
-                <BoardHeaderField title="Board Title" initialValue={title} />
+                <BoardHeaderField
+                    title="Board Title"
+                    initialValue={title}
+                    fieldStyle={{ color: 'white' }}
+                    containerStyle={{ backgroundColor: '#aaa' }}
+                />
                 <BoardHeaderButton title="Team Name">{teamName}</BoardHeaderButton>
                 <BoardHeaderButton title="Board Visibility">{visibility}</BoardHeaderButton>
             </LeftSection>
