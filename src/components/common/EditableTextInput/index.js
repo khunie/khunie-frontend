@@ -42,7 +42,7 @@ export default function EditableTextField({
     const handleSubmit = e => {
         e.preventDefault();
 
-        if (value.trim()) {
+        if (value.trim() && value !== initialValue) {
             onSubmit?.(value);
         }
         setEditing(false);

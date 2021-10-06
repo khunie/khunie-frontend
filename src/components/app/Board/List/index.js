@@ -9,10 +9,15 @@ export default function List({
     index,
     trueIndex,
     cards,
+    onUpdate,
     onAddCardClick,
     onCardEditClick,
     onCardClick,
 }) {
+    const handleUpdate = value => {
+        onUpdate({ id, title: value });
+    };
+
     return (
         <Draggable draggableId={id} index={trueIndex} type="LIST">
             {(dragProvided, dragSnapshot) => (
@@ -27,6 +32,7 @@ export default function List({
                             <ListHeader {...dragProvided.dragHandleProps} tabIndex={-1}>
                                 <ListTitle
                                     initialValue={title}
+                                    onSubmit={handleUpdate}
                                     inputStyle={{ fontWeight: 'bold', fontSize: '16px' }}
                                 >
                                     {title}

@@ -34,6 +34,10 @@ export default function BoardPage() {
         addList({ boardId, title, index });
     };
 
+    const handleUpdateList = ({ id, title }) => {
+        updateList({ id, title });
+    };
+
     const handleMoveList = ({ id, index }) => {
         moveList({ boardId, id, index });
     };
@@ -79,6 +83,7 @@ export default function BoardPage() {
                 background={background}
                 lists={lists || []}
                 onAddList={handleAddList}
+                onUpdateList={handleUpdateList}
                 onMoveList={handleMoveList}
                 onAddCard={handleAddCard}
                 onUpdateCard={handleUpdateCard}

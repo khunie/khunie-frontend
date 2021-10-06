@@ -18,6 +18,7 @@ export default function Board({
     background,
     lists,
     onAddList,
+    onUpdateList,
     onMoveList,
     onAddCard,
     onUpdateCard,
@@ -147,6 +148,7 @@ export default function Board({
                                             index={list.index}
                                             trueIndex={ix}
                                             cards={list.cards || []}
+                                            onUpdate={onUpdateList}
                                             onAddCardClick={onAddCard}
                                             onCardEditClick={handleSelectCardForEdit}
                                             onCardClick={openCardDetails}

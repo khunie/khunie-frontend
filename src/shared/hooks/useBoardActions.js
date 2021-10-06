@@ -226,11 +226,13 @@ export default function useBoardActions() {
         });
     };
 
-    const updateList = ({ id, title, index }) => {
+    const updateList = ({ id, title }) => {
         updateListMutation({
             variables: {
-                id,
-                title,
+                input: {
+                    id,
+                    title,
+                },
             },
             optimisticResponse: {
                 updateList: {
