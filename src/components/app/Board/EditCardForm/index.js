@@ -59,7 +59,11 @@ export default function EditCardForm({ layout, id, title, close, onUpdateCard, d
     const handleKeyPress = e => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+            if (newTitle.trim()) {
+                formRef.current.dispatchEvent(
+                    new Event('submit', { cancelable: true, bubbles: true })
+                );
+            }
         } else if (e.keyCode === 27) {
             e.preventDefault();
             close();
