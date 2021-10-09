@@ -23,9 +23,19 @@ export default function EditableTextField({
     });
 
     useOutsideClick(formRef, () => {
-        formRef?.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-        setEditing(false);
+        submitForm();
     });
+
+    const submitForm = () => {
+        if (value.trim() && value !== initialValue) {
+            formRef?.current.dispatchEvent(
+                new Event('submit', { cancelable: true, bubbles: true })
+            );
+        } else if (!value.trim()) {
+            setValue(initialValue);
+        }
+        setEditing(false);
+    };
 
     const handleFocus = () => {
         setEditing(true);
@@ -36,23 +46,19 @@ export default function EditableTextField({
     };
 
     const handleBlur = () => {
-        setEditing(false);
-    };
-
-    const handleSubmit = e => {
-        e.preventDefault();
-
-        if (value.trim() && value !== initialValue) {
-            onSubmit?.(value);
-        }
-        setEditing(false);
+        submitForm();
     };
 
     const handleKeyPress = e => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+            submitForm();
         }
+    };
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        onSubmit?.(value.replace(/\s+/g, ' ').trim());
     };
 
     return (
