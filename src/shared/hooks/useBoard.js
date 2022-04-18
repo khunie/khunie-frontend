@@ -8,8 +8,7 @@ export default function useBoard({ teamSlug, boardSlug }) {
     const { data, loading, error } = useQuery(GET_BOARD_QUERY, {
         variables: { teamSlug, boardSlug },
         fetchPolicy: 'cache-first',
-        onCompleted: () => {
-            const { getBoard } = data;
+        onCompleted: ({ getBoard }) => {
             const newLists = [];
             getBoard.lists.forEach(list => {
                 const { cards } = list;
