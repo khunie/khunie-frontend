@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Button, EditableTextInput } from 'components/common';
-import EditableTextField from 'components/common/EditableTextInput';
+import { Button, EditableTextField, Icon } from 'components/common';
 
 export const Container = styled.div`
     height: 52px;
@@ -27,20 +26,33 @@ export const BoardHeaderButton = styled(Button)`
     width: auto;
     max-height: 36px;
     height: 36px;
-    color: #333;
+    color: #fff;
     margin-right: 8px;
-    background-color: #eee;
+    background-color: #33333333;
 
     &:hover:enabled {
-        background-color: #e5e5e5;
+        background-color: #44444433;
     }
 
     &:active:enabled {
-        background-color: #e0e0e0;
+        background-color: #55555533;
     }
 `;
 
-export const BoardHeaderField = styled(EditableTextInput)`
+export const BoardHeaderField = styled(EditableTextField)`
     margin-right: 8px;
     width: 300px;
+`;
+
+export const Star = styled(Icon)`
+    font-size: 16px;
+    color: ${({ starred }) => (starred ? '#ffd151' : '#fff')};
+`;
+
+export const StarButton = styled(BoardHeaderButton)`
+    &:hover {
+        ${Star} {
+            color: #ffd151;
+        }
+    }
 `;

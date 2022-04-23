@@ -16,10 +16,10 @@ export const StyledButton = styled.button`
     }
 
     &:active:enabled {
-        background-color: #ddd;
+        background-color: #e5e5e5;
     }
     
     &:focus {
-        box-shadow: 0px 0px 0px 2px #4a5297;
+        box-shadow: 0px 0px 0px 2px #5e8ce0;
     }
 `;

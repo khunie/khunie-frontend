@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { EditableTextInput } from 'components/common';
+import { EditableTextAreaField, IconButton } from 'components/common';
 import { noSelect, containerScrollbar } from 'shared/styles';
 
 export const Container = styled.div`
@@ -25,33 +25,36 @@ export const ListContent = styled.div`
 `;
 
 export const ListHeader = styled.div`
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
     padding: 4px 8px 2px 8px;
 `;
 
-export const ListTitle = styled(EditableTextInput)`
+export const ListTitle = styled(EditableTextAreaField)`
+    flex: 1;
     color: #555;
     font-weight: bold;
     font-family: Roboto;
     word-wrap: break-word;
-    width: 100%;
     font-size: 16px;
 
     ${noSelect}
 `;
 
-/* export const ListHeader = styled.div`
-    padding: 12px;
+export const ListOptionsButton = styled(IconButton)`
+    && {
+        width: 32px;
+        height: 32px;
+        margin-top: 2px;
+        color: #888;
+        background-color: transparent;
+
+        &:hover {
+            background-color: #ddd;
+        }
+    }
 `;
-
-export const ListTitle = styled.h3`
-    color: #555;
-    font-weight: bold;
-    font-family: Roboto;
-    word-wrap: break-word;
-    max-width: 256px;
-
-    ${noSelect}
-`; */
 
 export const ListFooter = styled.div`
     margin-top: -4px;

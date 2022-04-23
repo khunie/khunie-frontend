@@ -52,7 +52,10 @@ export const CloseButton = styled(IconButton)`
     background-color: transparent;
     color: #555;
 
-    ${({ style }) => (style && style)}
+    && {
+        width: 28px;
+        height: 28px;
+    }
 `;
 
 export const ModalBody = styled.div`

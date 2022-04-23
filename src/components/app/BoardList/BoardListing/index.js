@@ -4,7 +4,7 @@ import { BoardLink, Title, TeamName, StarContainer, Star } from './styles';
 export default function BoardListing({ teamHref, team, board, starred, onStarClick, showTeam }) {
     const handleStarClick = e => {
         e.preventDefault();
-        onStarClick?.({ team, board, starred });
+        onStarClick?.({ board, starred });
     };
 
     return (

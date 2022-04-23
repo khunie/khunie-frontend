@@ -1,5 +1,12 @@
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import { Container, ListContent, ListHeader, ListTitle, ListFooter } from './styles';
+import {
+    Container,
+    ListContent,
+    ListHeader,
+    ListTitle,
+    ListFooter,
+    ListOptionsButton,
+} from './styles';
 import Card from './Card';
 import AddCardForm from './AddCardForm';
 
@@ -37,6 +44,11 @@ export default function List({
                                 >
                                     {title}
                                 </ListTitle>
+                                <ListOptionsButton
+                                    icon="ellipsis-h"
+                                    size={16}
+                                    onClick={() => console.log('clicked')}
+                                />
                             </ListHeader>
                             <ListContent ref={provided.innerRef} {...provided.droppableProps}>
                                 {cards.map((card, ix) => (

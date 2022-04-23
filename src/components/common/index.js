@@ -1,7 +1,8 @@
 import Accordion from './Accordion';
 import Avatar from './Avatar';
 import Button from './Button';
-import EditableTextInput from './EditableTextInput';
+import EditableTextAreaField from './EditableTextAreaField';
+import EditableTextField from './EditableTextField';
 import Icon from './Icon';
 import IconButton from './IconButton';
 import Label from './Label';
@@ -16,7 +17,8 @@ export {
     Accordion,
     Avatar,
     Button,
-    EditableTextInput,
+    EditableTextAreaField,
+    EditableTextField,
     Icon,
     IconButton,
     Label,

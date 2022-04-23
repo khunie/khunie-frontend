@@ -17,6 +17,8 @@ export default function Board({
     visibility,
     background,
     lists,
+    starred,
+    onStar,
     onAddList,
     onUpdateList,
     onMoveList,
@@ -30,7 +32,6 @@ export default function Board({
     cardDetails,
 }) {
     const [editCard, setEditCard] = useState(null);
-    const [editList, setEditList] = useState(null);
     const [isModalVisible, setModalVisible] = useState(false);
     const [isRightSidebarVisible, setRightSidebarVisible] = useState(false);
 
@@ -129,6 +130,8 @@ export default function Board({
                     title={title}
                     teamName={teamName}
                     visibility={visibility}
+                    starred={starred}
+                    onStarClick={onStar}
                     isRightSidebarVisible={isRightSidebarVisible}
                     openRightSidebar={() => setRightSidebarVisible(true)}
                 />

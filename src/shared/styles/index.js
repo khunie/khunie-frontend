@@ -46,6 +46,7 @@ export const modalTextArea = css`
     border-radius: 4px;
     line-height: 1.25em;
     transition: background-color 0.2s;
+    font-size: 16px;
 
     ::placeholder {
         color: #999;

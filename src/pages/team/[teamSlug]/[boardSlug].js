@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
+import { useQuery, useReactiveVar } from '@apollo/client';
 import AppLayout from 'components/layout/AppLayout';
 import Board from 'components/app/Board';
 import useBoard from 'shared/hooks/useBoard';
 import useBoardActions from 'shared/hooks/useBoardActions';
+import { userVar } from 'client/cache';
+import { GET_USER_QUERY } from 'gql/user/queries';
+import useUserActions from 'shared/hooks/useUserActions';
 
 export default function BoardPage() {
     const router = useRouter();
@@ -21,6 +24,16 @@ export default function BoardPage() {
         updateBoardBackground,
     } = useBoardActions();
     const [cardDetails, setCardDetails] = useState(null);
+    const username = useReactiveVar(userVar) || '';
+    const {
+        data: uData,
+        loading: uLoading,
+        error: uError,
+    } = useQuery(GET_USER_QUERY, {
+        variables: { username },
+    });
+
+    const { starBoard, unstarBoard } = useUserActions({ username });
 
     useEffect(() => {
         setCardDetails(router.query.c ?? null);
@@ -28,6 +41,7 @@ export default function BoardPage() {
 
     const board = data?.getBoard || {};
     const { id: boardId, title, description, team, visibility, background, lists } = board;
+    const stars = uData?.getUser?.stars || [];
 
     const handleAddList = ({ title }) => {
         const index = lists[lists.length - 1]?.index + 100000 || 0;
@@ -71,6 +85,16 @@ export default function BoardPage() {
         updateBoardBackground({ id: boardId, background });
     };
 
+    const starred = stars?.some(item => item.id === boardId);
+
+    const handleStar = ({ board }) => {
+        if (starred) {
+            unstarBoard({ board });
+        } else {
+            starBoard({ board });
+        }
+    };
+
     return (
         !loading && (
             <Board
@@ -82,6 +106,8 @@ export default function BoardPage() {
                 visibility={visibility}
                 background={background}
                 lists={lists || []}
+                starred={stars?.some(item => item.id === boardId)}
+                onStar={() => handleStar({ board })}
                 onAddList={handleAddList}
                 onUpdateList={handleUpdateList}
                 onMoveList={handleMoveList}
@@ -99,12 +125,3 @@ export default function BoardPage() {
 }
 
 BoardPage.layout = AppLayout;
-
-/* 
-    <pre>{data && JSON.stringify(data, null, 4)}</pre>
-    <pre>{error && JSON.stringify(error, null, 4)}</pre>
-    <pre>{mData && JSON.stringify(mData, null, 4)}</pre>
-    <pre>{mError && JSON.stringify(mError, null, 4)}</pre>
-    <pre>{cData && JSON.stringify(cData, null, 4)}</pre>
-    <pre>{cError && JSON.stringify(cError, null, 4)}</pre>  
-*/

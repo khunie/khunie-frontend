@@ -17,6 +17,7 @@ import StarredBoardSection from 'components/app/Home/StarredBoardSection';
 import CreateTeamModal from 'components/app/Home/CreateTeamModal';
 import InviteTeamMemberModal from 'components/app/TeamSection/InviteTeamMemberModal';
 import CreateBoardModal from 'components/app/TeamSection/CreateBoardModal';
+import useUserActions from 'shared/hooks/useUserActions';
 
 const Container = styled.div`
     margin: 0 auto;
@@ -72,10 +73,7 @@ const CreateTeamButton = styled.button`
 `;
 export default function UserHome() {
     const router = useRouter();
-
     const { username } = router.query;
-    /* const client = useApolloClient();
-    console.log(client); */
 
     const { data, loading, error } = useQuery(GET_USER_QUERY, {
         variables: { username },
@@ -83,6 +81,9 @@ export default function UserHome() {
             console.log(JSON.stringify(data, null, 4));
         },
     });
+
+    const { starBoard, unstarBoard } = useUserActions({ username });
+
     const [createTeamMutation, { data: mData, loading: mLoading, error: mError }] = useMutation(
         CREATE_TEAM_MUTATION,
         {
@@ -157,70 +158,6 @@ export default function UserHome() {
         }
     );
 
-    const [starBoardMutation, { data: sbData, loading: sbLoading, error: sbError }] = useMutation(
-        STAR_BOARD_MUTATION,
-        {
-            update(cache, { data: { starBoard } }) {
-                const cachedUser = cache.readQuery({
-                    query: GET_USER_QUERY,
-                    variables: {
-                        username,
-                    },
-                });
-
-                const { getUser } = cachedUser;
-                const { stars } = getUser;
-                const newStars = [...stars, starBoard];
-
-                cache.writeQuery({
-                    query: GET_USER_QUERY,
-                    data: {
-                        getUser: {
-                            ...getUser,
-                            stars: newStars,
-                        },
-                    },
-                    variables: {
-                        username,
-                    },
-                });
-            },
-            onCompleted() {},
-            onError() {},
-        }
-    );
-
-    const [unstarBoardMutation, { data: usbData, loading: usbLoading, error: usbError }] =
-        useMutation(UNSTAR_BOARD_MUTATION, {
-            update(cache, { data: { unstarBoard } }) {
-                const cachedUser = cache.readQuery({
-                    query: GET_USER_QUERY,
-                    variables: {
-                        username,
-                    },
-                });
-
-                const { getUser } = cachedUser;
-                const { stars } = getUser;
-                const newStars = [...stars].filter(board => board.id !== unstarBoard.id);
-
-                cache.writeQuery({
-                    query: GET_USER_QUERY,
-                    data: {
-                        getUser: {
-                            ...getUser,
-                            stars: newStars,
-                        },
-                    },
-                    variables: {
-                        username,
-                    },
-                });
-            },
-            onCompleted() {},
-            onError() {},
-        });
-
     const [inviteTeamMemberMutation, { data: iData, loading: iLoading, error: iError }] =
         useMutation(INVITE_TEAM_MEMBER_MUTATION, {
             update(cache, { data: { inviteTeamMember } }) {
@@ -254,7 +191,6 @@ export default function UserHome() {
             onError() {},
         });
 
-    // TODO: replace these simple states with a reducer
     const [currentTeamId, setCurrentTeamId] = useState(null);
     const [isCreateTeamModalVisible, setCreateTeamModalVisible] = useState(false);
     const [isCreateBoardModalVisible, setCreateBoardModalVisible] = useState(false);
@@ -287,33 +223,11 @@ export default function UserHome() {
         inviteTeamMemberMutation({ variables: { teamId, input } });
     };
 
-    const handleStar = ({ team, board, starred }) => {
+    const handleStar = ({ board, starred }) => {
         if (starred) {
-            unstarBoardMutation({
-                variables: {
-                    id: board.id,
-                },
-                optimisticResponse: {
-                    unstarBoard: {
-                        __typename: 'Board',
-                        ...board,
-                        team,
-                    },
-                },
-            });
+            unstarBoard({ board });
         } else {
-            starBoardMutation({
-                variables: {
-                    id: board.id,
-                },
-                optimisticResponse: {
-                    starBoard: {
-                        __typename: 'Board',
-                        ...board,
-                        team,
-                    },
-                },
-            });
+            starBoard({ board });
         }
     };
 
@@ -340,6 +254,7 @@ export default function UserHome() {
     return (
         <Container>
             <Sidebar>
+                <div>owned teams</div>
                 {ownedTeams.map(team => (
                     <TeamAccordion
                         key={team.id}
@@ -350,6 +265,7 @@ export default function UserHome() {
                         membersLength={team.members.length}
                     />
                 ))}
+                <div>memberships</div>
                 {memberships.map(
                     membership =>
                         membership.role !== 'OWNER' && (

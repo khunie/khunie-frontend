@@ -7,6 +7,7 @@ export const Input = styled.input`
     border: 2px solid #dddeeb;
     outline: none;
     transition: background-color .2s;
+    font-size: 16px;
     
     ::placeholder {
         color: #999;

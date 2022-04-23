@@ -51,7 +51,7 @@ function Modal({
                             icon="times"
                             onClick={close}
                             style={closeButtonStyle}
-                            size={24}
+                            size={16}
                         />
                     </ModalHeader>
                     <ModalBody>{children}</ModalBody>

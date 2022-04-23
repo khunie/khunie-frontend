@@ -15,7 +15,9 @@ export default function EditableTextField({
     const formRef = useRef(null);
     const [value, setValue] = useState(initialValue || '');
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+        setValue(initialValue);
+    }, [initialValue]);
 
     useEscape(() => {
         setValue(initialValue);
@@ -28,7 +30,7 @@ export default function EditableTextField({
 
     const submitForm = () => {
         if (value.trim() && value !== initialValue) {
-            formRef?.current.dispatchEvent(
+            formRef?.current?.dispatchEvent(
                 new Event('submit', { cancelable: true, bubbles: true })
             );
         } else if (!value.trim()) {
