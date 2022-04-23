@@ -9,9 +9,8 @@ import { GET_USER_QUERY } from 'gql/user/queries';
 import { userVar } from 'client/cache';
 import { useLogout } from 'shared/hooks/auth';
 import { USER_URL } from 'shared/constants';
-import ProfileCard from 'components/common/ProfileCard';
-import IconButton from 'components/common/IconButton';
-import Dropdown, { DropdownMenu, DropdownMenuButton, Divider } from './Dropdown';
+import { Dropdown, IconButton, ProfileCard } from 'components/common';
+import { DropdownMenu, DropdownMenuButton, Divider } from 'components/common/Dropdown/styles';
 import { noSelect } from 'shared/styles';
 
 const NavBar = styled.div`
@@ -181,40 +180,46 @@ export default function Navbar() {
                         />
                     </RightSection>
                 )}
-                {showAddMenu && (
-                    <Dropdown title="Create something" close={() => setShowAddMenu(false)}>
-                        <DropdownMenu>Add Menu</DropdownMenu>
-                    </Dropdown>
-                )}
-                {showNotificationMenu && (
-                    <Dropdown title="Notifications" close={() => setShowNotificationMenu(false)}>
-                        <DropdownMenu>Notifications menu</DropdownMenu>
-                    </Dropdown>
-                )}
-                {showAccountMenu && (
-                    <Dropdown title="Account" close={() => setShowAccountMenu(false)}>
-                        <ProfileCard
-                            username={user?.username}
-                            email={user?.email}
-                            avatar={user?.profile.pic}
-                            onClick={() =>
-                                router.push({
-                                    pathname: '/profile',
-                                })
-                            }
-                        />
-                        <DropdownMenu>
-                            <DropdownMenuButton type="button">Settings</DropdownMenuButton>
-                            <DropdownMenuButton type="button">Help</DropdownMenuButton>
-                        </DropdownMenu>
-                        <Divider />
-                        <DropdownMenu>
-                            <DropdownMenuButton type="button" onClick={logout}>
-                                Log out
-                            </DropdownMenuButton>
-                        </DropdownMenu>
-                    </Dropdown>
-                )}
+                <Dropdown
+                    title="Create something"
+                    isVisible={showAddMenu}
+                    close={() => setShowAddMenu(false)}
+                >
+                    <DropdownMenu>Add Menu</DropdownMenu>
+                </Dropdown>
+                <Dropdown
+                    title="Notifications"
+                    isVisible={showNotificationMenu}
+                    close={() => setShowNotificationMenu(false)}
+                >
+                    <DropdownMenu>Notifications menu</DropdownMenu>
+                </Dropdown>
+                <Dropdown
+                    title="Account"
+                    isVisible={showAccountMenu}
+                    close={() => setShowAccountMenu(false)}
+                >
+                    <ProfileCard
+                        username={user?.username}
+                        email={user?.email}
+                        avatar={user?.profile.pic}
+                        onClick={() =>
+                            router.push({
+                                pathname: '/profile',
+                            })
+                        }
+                    />
+                    <DropdownMenu>
+                        <DropdownMenuButton type="button">Settings</DropdownMenuButton>
+                        <DropdownMenuButton type="button">Help</DropdownMenuButton>
+                    </DropdownMenu>
+                    <Divider />
+                    <DropdownMenu>
+                        <DropdownMenuButton type="button" onClick={logout}>
+                            Log out
+                        </DropdownMenuButton>
+                    </DropdownMenu>
+                </Dropdown>
             </NavContent>
         </NavBar>
     );

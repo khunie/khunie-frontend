@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import {
     Container,
@@ -9,6 +10,7 @@ import {
 } from './styles';
 import Card from './Card';
 import AddCardForm from './AddCardForm';
+import ListOptionsDropdown from './ListOptionsDropdown';
 
 export default function List({
     id,
@@ -21,6 +23,8 @@ export default function List({
     onCardEditClick,
     onCardClick,
 }) {
+    const [showMenu, setShowMenu] = useState(false);
+
     const handleUpdate = value => {
         onUpdate({ id, title: value });
     };
@@ -47,7 +51,11 @@ export default function List({
                                 <ListOptionsButton
                                     icon="ellipsis-h"
                                     size={16}
-                                    onClick={() => console.log('clicked')}
+                                    onClick={() => setShowMenu(true)}
+                                />
+                                <ListOptionsDropdown
+                                    isVisible={showMenu}
+                                    close={() => setShowMenu(false)}
                                 />
                             </ListHeader>
                             <ListContent ref={provided.innerRef} {...provided.droppableProps}>
