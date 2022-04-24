@@ -26,7 +26,7 @@ const DropdownTitle = styled.h3`
     font-weight: bold;
 `;
 
-export default function Dropdown({ close, isVisible, title, children }) {
+export default function Dropdown({ close, isVisible, title, children, className }) {
     const [mouseDown, setMouseDown] = useState(false);
     const containerRef = useRef(null);
 
@@ -51,7 +51,7 @@ export default function Dropdown({ close, isVisible, title, children }) {
 
     return (
         isVisible && (
-            <Container ref={containerRef}>
+            <Container ref={containerRef} className={className}>
                 {title && (
                     <DropdownHeader>
                         <DropdownTitle>{title}</DropdownTitle>

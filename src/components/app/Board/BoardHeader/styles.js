@@ -29,6 +29,11 @@ export const BoardHeaderButton = styled(Button)`
     color: #fff;
     margin-right: 8px;
     background-color: #33333333;
+    outline: none;
+
+    &:focus {
+        box-shadow: 0 0 0 2px #5c9cf0;
+    }
 
     &:hover:enabled {
         background-color: #44444433;
@@ -42,6 +47,10 @@ export const BoardHeaderButton = styled(Button)`
 export const BoardHeaderField = styled(EditableTextField)`
     margin-right: 8px;
     width: 300px;
+    
+    &:hover {
+        background-color: #ffffff22;
+    }
 `;
 
 export const Star = styled(Icon)`

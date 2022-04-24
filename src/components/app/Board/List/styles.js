@@ -25,6 +25,7 @@ export const ListContent = styled.div`
 `;
 
 export const ListHeader = styled.div`
+    position: relative;
     display: flex;
     width: 100%;
     box-sizing: border-box;

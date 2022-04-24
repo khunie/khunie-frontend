@@ -17,6 +17,7 @@
         "@fortawesome/free-solid-svg-icons": "^5.15.3",
         "@fortawesome/react-fontawesome": "^0.1.14",
         "@popperjs/core": "^2.11.5",
+        "@tippyjs/react": "^4.2.6",
         "deepmerge": "^4.2.2",
         "focus-trap-react": "^8.9.2",
         "framer-motion": "^6.3.1",

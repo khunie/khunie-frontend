@@ -11,7 +11,6 @@ const IMAGE_URLS = [
     'https://i.postimg.cc/dvnmk4hk/shenzhen-3.jpg',
     'https://i.postimg.cc/L9KvD5SJ/shenzhen-4.jpg',
     'https://i.postimg.cc/qk9DFQsM/shenzhen-5.jpg',
-    'https://i.postimg.cc/VmBGBXYc/IMG-5265.jpg',
 ];
 
 export default function BackgroundImagePage({ navigation, onImageClick }) {

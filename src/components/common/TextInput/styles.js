@@ -8,6 +8,7 @@ export const Input = styled.input`
     outline: none;
     transition: background-color .2s;
     font-size: 16px;
+    color: #333;
     
     ::placeholder {
         color: #999;

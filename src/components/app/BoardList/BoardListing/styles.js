@@ -14,10 +14,27 @@ export const ButtonStyle = css`
     box-sizing: border-box;
     font-size: 16px;
     font-weight: bold;
+    overflow: hidden;
 
     &:hover:enabled {
         cursor: pointer;
     }
+`;
+
+export const Background = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: ${({ background }) => (background?.color || '#3657e7')};
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    ${({ background }) => (background?.type === 'IMAGE' && css`
+            background-image: url(${background.src});
+        `
+    )}
 `;
 
 export const Title = styled.h4`
@@ -66,19 +83,22 @@ export const Star = styled(Icon)`
 export const BoardLink = styled.a`
     ${ButtonStyle}
     position: relative;
-    background-color: #352092;
     color: white;
     text-decoration: none;
     transition: transform .2s;
     backface-visibility: hidden;
 
+
     &:hover {
-        background-color: #28128d;
         transform: scale(1.025) translateZ(0);
 
         ${StarContainer} {
             opacity: 1;
             transform: ${({ starred }) => (!starred && 'translateX(-32px)')};
+        }
+
+        ${Background} {
+            filter: brightness(.9);
         }
     }
 `;

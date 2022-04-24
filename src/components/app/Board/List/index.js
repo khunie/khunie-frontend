@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import {
     Container,
@@ -24,9 +24,15 @@ export default function List({
     onCardClick,
 }) {
     const [showMenu, setShowMenu] = useState(false);
+    const optionsRef = useRef(null);
 
     const handleUpdate = value => {
         onUpdate({ id, title: value });
+    };
+
+    const handleOptionsClick = () => {
+        setShowMenu(true);
+        optionsRef?.current?.focus();
     };
 
     return (
@@ -51,7 +57,8 @@ export default function List({
                                 <ListOptionsButton
                                     icon="ellipsis-h"
                                     size={16}
-                                    onClick={() => setShowMenu(true)}
+                                    onClick={handleOptionsClick}
+                                    forwardRef={optionsRef}
                                 />
                                 <ListOptionsDropdown
                                     isVisible={showMenu}
