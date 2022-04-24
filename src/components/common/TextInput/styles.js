@@ -26,6 +26,4 @@ export const Input = styled.input`
         border-color: #6581fc;
         background-color: white;
     }
-
-    ${({ style }) => style && style}
 `;

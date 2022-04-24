@@ -88,3 +88,7 @@ export const modalSubmitButton = css`
         box-shadow: 0px 0px 0px 2px #8285a5;
     }
 `;
+
+export const shadowOutline = ({ width = 2, color = '#5c9cf0' }) => css`
+    box-shadow: 0 0 0 ${width}px ${color};
+`;

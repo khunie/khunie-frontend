@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Icon } from 'components/common';
+import { shadowOutline } from 'shared/styles';
 
 export const BoardListItem = styled.li`
 
@@ -15,6 +16,8 @@ export const ButtonStyle = css`
     font-size: 16px;
     font-weight: bold;
     overflow: hidden;
+    outline: none;
+    backface-visibility: hidden;
 
     &:hover:enabled {
         cursor: pointer;
@@ -47,7 +50,8 @@ export const TeamName = styled.p`
     position: absolute;
     bottom: 16px;
     left: 16px;
-    color: #bcb1e4;
+    color: #ffffff;
+    opacity: .8;
     font-weight: normal;
     font-size: 12px;
     width: 120px;
@@ -86,8 +90,6 @@ export const BoardLink = styled.a`
     color: white;
     text-decoration: none;
     transition: transform .2s;
-    backface-visibility: hidden;
-
 
     &:hover {
         transform: scale(1.025) translateZ(0);
@@ -101,6 +103,10 @@ export const BoardLink = styled.a`
             filter: brightness(.9);
         }
     }
+
+    &:focus {
+        ${shadowOutline({ width: 4 })}
+    }
 `;
 
 export const AddBoardButton = styled.button`
@@ -109,8 +115,15 @@ export const AddBoardButton = styled.button`
     background-color: white;
     border: 4px dashed #ccc;
     color: #888;
+    transition: transform .1s;
 
     &:hover:enabled {
         background-color: #f9f9f9;
+    }
+
+    &:focus {
+        border-color: #5c9cf0;
+        color: #5c9cf0;
+        transform: scale(1.01) translateZ(0);
     }
 `;

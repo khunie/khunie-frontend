@@ -1,14 +1,10 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { useQuery, useMutation, useApolloClient } from '@apollo/client';
+import { useState } from 'react';
+import { useQuery, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { GET_USER_QUERY } from 'gql/user/queries';
 import { CREATE_TEAM_MUTATION, INVITE_TEAM_MEMBER_MUTATION } from 'gql/team/mutations';
-import {
-    CREATE_BOARD_MUTATION,
-    STAR_BOARD_MUTATION,
-    UNSTAR_BOARD_MUTATION,
-} from 'gql/board/mutations';
+import { CREATE_BOARD_MUTATION } from 'gql/board/mutations';
 import AppLayout from 'components/layout/AppLayout';
 import TeamSection from 'components/app/TeamSection';
 import Sidebar from 'components/app/Home/Sidebar';
@@ -38,37 +34,34 @@ const MainContent = styled.div`
     }
 `;
 
-const Title = styled.h1`
-    font-size: 32px;
-    font-weight: bold;
-`;
+const MainSection = styled.section``;
 
 const MainSectionHeader = styled.div`
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     margin-bottom: 4px;
 `;
 
 const MainSectionTitle = styled.h2`
     font-weight: bold;
-    font-size: 16px;
-    text-indent: 8px;
-    color: #6f87bd;
-    text-transform: uppercase;
-    margin-right: 8px;
-    height: 16px;
+    font-size: 20px;
+    padding: 4px 8px;
+    color: #5170b8;
 `;
 
 const CreateTeamButton = styled.button`
+    display: flex;
     font-size: 16px;
     font-weight: bold;
     background-color: transparent;
-    text-transform: uppercase;
-    color: #6f87bd;
-    margin-left: 4px;
+    color: white;
+    margin-left: auto;
+    padding: 8px 24px;
+    background-color: #e332e9;
+    border-radius: 4px;
 
     &:hover {
-        background-color: #eee;
+        background-color: #cf2ad4;
     }
 `;
 export default function UserHome() {
@@ -284,35 +277,40 @@ export default function UserHome() {
                 {stars.length > 0 && (
                     <StarredBoardSection boards={stars} onStarClick={handleStar} />
                 )}
-                <MainSectionHeader>
-                    <CreateTeamButton
-                        title="Click to create a new Team"
-                        onClick={handleAddTeamClick}
-                    >
-                        Owned Teams +
-                    </CreateTeamButton>
-                </MainSectionHeader>
-                {ownedTeams.map(team => (
-                    <TeamSection
-                        key={team.id}
-                        id={team.id}
-                        name={team.name}
-                        slug={team.slug}
-                        avatar={team.pic}
-                        userRole="OWNER"
-                        userStars={stars}
-                        boards={team.boards}
-                        members={team.members}
-                        onAddBoardClick={openCreateBoardModal}
-                        onInviteClick={openInviteModal}
-                        onStarClick={handleStar}
-                    />
-                ))}
+                <MainSection title="Owned Teams">
+                    <MainSectionHeader>
+                        <MainSectionTitle>Owned Teams</MainSectionTitle>
+                        <CreateTeamButton
+                            title="Click to create a new Team"
+                            onClick={handleAddTeamClick}
+                        >
+                            + Create a new Team
+                        </CreateTeamButton>
+                    </MainSectionHeader>
+                    {ownedTeams.map(team => (
+                        <TeamSection
+                            key={team.id}
+                            id={team.id}
+                            name={team.name}
+                            slug={team.slug}
+                            avatar={team.pic}
+                            userRole="OWNER"
+                            userStars={stars}
+                            boards={team.boards}
+                            members={team.members}
+                            onAddBoardClick={openCreateBoardModal}
+                            onInviteClick={openInviteModal}
+                            onStarClick={handleStar}
+                        />
+                    ))}
+                </MainSection>
                 {memberships?.filter(membership => membership.role !== 'OWNER').length > 0 && (
-                    <>
-                        <MainSectionTitle title="These are teams that you are a member of and do not own">
-                            Membership Teams
-                        </MainSectionTitle>
+                    <MainSection title="Memberships">
+                        <MainSectionHeader>
+                            <MainSectionTitle title="These are teams that you are a member of and do not own">
+                                Membership Teams
+                            </MainSectionTitle>
+                        </MainSectionHeader>
                         {memberships.map(
                             membership =>
                                 membership.role !== 'OWNER' && (
@@ -330,7 +328,7 @@ export default function UserHome() {
                                     />
                                 )
                         )}
-                    </>
+                    </MainSection>
                 )}
             </MainContent>
             <CreateTeamModal
