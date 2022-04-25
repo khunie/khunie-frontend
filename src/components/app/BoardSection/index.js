@@ -2,7 +2,11 @@ import styled from 'styled-components';
 
 export const Container = styled.section`
     padding: 32px 8px;
-    border-top: 1px solid #eee;
+
+    &:not(:first-of-type) {
+        border-top: 1px solid #eee;
+    }
+
     @media (max-width: 600px) {
         padding: 8px;
     }
@@ -41,7 +45,7 @@ export const HeaderRight = styled.div`
 `;
 
 export const Title = styled.h3`
-    font-size: 24px;
+    font-size: 18px;
     font-weight: bold;
     font-family: Roboto;
 `;

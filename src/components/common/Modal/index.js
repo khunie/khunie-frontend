@@ -12,10 +12,13 @@ function Modal({
     padding,
     titleStyle,
     containerStyle,
-    closeButtonStyle,
+    closeStyle,
+    closeHoverStyle,
+    closeActiveStyle,
 }) {
     const [mouseDown, setMouseDown] = useState(false);
     const containerRef = useRef(null);
+    const closeRef = useRef(null);
 
     useEffect(() => {
         if (isVisible) {
@@ -50,8 +53,13 @@ function Modal({
                             type="button"
                             icon="times"
                             onClick={close}
-                            style={closeButtonStyle}
+                            buttonStyle={closeStyle}
+                            hoverStyle={closeHoverStyle}
+                            activeStyle={closeActiveStyle}
                             size={16}
+                            tabIndex={-1}
+                            forwardRef={closeRef}
+                            onFocus={() => closeRef.current.blur()}
                         />
                     </ModalHeader>
                     <ModalBody>{children}</ModalBody>

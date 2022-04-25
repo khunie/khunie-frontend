@@ -89,6 +89,6 @@ export const modalSubmitButton = css`
     }
 `;
 
-export const shadowOutline = ({ width = 2, color = '#5c9cf0' }) => css`
-    box-shadow: 0 0 0 ${width}px ${color};
+export const shadowOutline = props => css`
+    box-shadow: 0 0 0 ${props?.width || 2}px ${props?.color || '#5c9cf0'};
 `;

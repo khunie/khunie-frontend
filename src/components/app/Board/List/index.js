@@ -60,11 +60,11 @@ export default function List({
                                     onClick={handleOptionsClick}
                                     forwardRef={optionsRef}
                                 />
-                                <ListOptionsDropdown
-                                    isVisible={showMenu}
-                                    close={() => setShowMenu(false)}
-                                />
                             </ListHeader>
+                            <ListOptionsDropdown
+                                isVisible={showMenu}
+                                close={() => setShowMenu(false)}
+                            />
                             <ListContent ref={provided.innerRef} {...provided.droppableProps}>
                                 {cards.map((card, ix) => (
                                     <Card

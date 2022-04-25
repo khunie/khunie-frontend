@@ -51,10 +51,28 @@ export const ModalHeader = styled.div`
 export const CloseButton = styled(IconButton)`
     background-color: transparent;
     color: #555;
+    z-index: 9999;
+    ${({ buttonStyle }) => buttonStyle && buttonStyle};
 
     && {
         width: 28px;
         height: 28px;
+
+        &:hover:enabled {
+            color: #222;
+            background-color: transparent;
+            ${({ hoverStyle }) => hoverStyle && hoverStyle};
+        }
+        
+        &:active:enabled {
+            color: #111;
+            background-color: transparent;
+            ${({ activeStyle }) => activeStyle && activeStyle};
+        }
+
+        &:focus:not(:active) {
+            box-shadow: none;
+        } 
     }
 `;
 

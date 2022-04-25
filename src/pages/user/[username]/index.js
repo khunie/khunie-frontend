@@ -14,6 +14,8 @@ import CreateTeamModal from 'components/app/Home/CreateTeamModal';
 import InviteTeamMemberModal from 'components/app/TeamSection/InviteTeamMemberModal';
 import CreateBoardModal from 'components/app/TeamSection/CreateBoardModal';
 import useUserActions from 'shared/hooks/useUserActions';
+import { shadowOutline } from 'shared/styles';
+import { EmptyStatePlaceholder } from 'components/common';
 
 const Container = styled.div`
     margin: 0 auto;
@@ -34,12 +36,13 @@ const MainContent = styled.div`
     }
 `;
 
-const MainSection = styled.section``;
+const MainSection = styled.div``;
 
 const MainSectionHeader = styled.div`
     display: flex;
     align-items: flex-end;
-    margin-bottom: 4px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #eee;
 `;
 
 const MainSectionTitle = styled.h2`
@@ -56,12 +59,19 @@ const CreateTeamButton = styled.button`
     background-color: transparent;
     color: white;
     margin-left: auto;
+    margin-right: 8px;
     padding: 8px 24px;
     background-color: #e332e9;
     border-radius: 4px;
+    outline: none;
 
     &:hover {
         background-color: #cf2ad4;
+        ${shadowOutline()}
+    }
+
+    &:focus {
+        ${shadowOutline()}
     }
 `;
 export default function UserHome() {
@@ -277,7 +287,7 @@ export default function UserHome() {
                 {stars.length > 0 && (
                     <StarredBoardSection boards={stars} onStarClick={handleStar} />
                 )}
-                <MainSection title="Owned Teams">
+                <MainSection>
                     <MainSectionHeader>
                         <MainSectionTitle>Owned Teams</MainSectionTitle>
                         <CreateTeamButton
@@ -287,25 +297,33 @@ export default function UserHome() {
                             + Create a new Team
                         </CreateTeamButton>
                     </MainSectionHeader>
-                    {ownedTeams.map(team => (
-                        <TeamSection
-                            key={team.id}
-                            id={team.id}
-                            name={team.name}
-                            slug={team.slug}
-                            avatar={team.pic}
-                            userRole="OWNER"
-                            userStars={stars}
-                            boards={team.boards}
-                            members={team.members}
-                            onAddBoardClick={openCreateBoardModal}
-                            onInviteClick={openInviteModal}
-                            onStarClick={handleStar}
+                    {ownedTeams.length > 0 ? (
+                        ownedTeams.map(team => (
+                            <TeamSection
+                                key={team.id}
+                                id={team.id}
+                                name={team.name}
+                                slug={team.slug}
+                                avatar={team.pic}
+                                userRole="OWNER"
+                                userStars={stars}
+                                boards={team.boards}
+                                members={team.members}
+                                onAddBoardClick={openCreateBoardModal}
+                                onInviteClick={openInviteModal}
+                                onStarClick={handleStar}
+                            />
+                        ))
+                    ) : (
+                        <EmptyStatePlaceholder
+                            image="/img/noun/project.png"
+                            title="You currently don't own any teams"
+                            subtitle="Create one to start organizing your to-dos!"
                         />
-                    ))}
+                    )}
                 </MainSection>
                 {memberships?.filter(membership => membership.role !== 'OWNER').length > 0 && (
-                    <MainSection title="Memberships">
+                    <MainSection>
                         <MainSectionHeader>
                             <MainSectionTitle title="These are teams that you are a member of and do not own">
                                 Membership Teams

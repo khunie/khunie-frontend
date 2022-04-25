@@ -105,7 +105,7 @@ export const BoardLink = styled.a`
     }
 
     &:focus {
-        ${shadowOutline({ width: 4 })}
+        ${shadowOutline({ width: 3 })}
     }
 `;
 
@@ -119,6 +119,7 @@ export const AddBoardButton = styled.button`
 
     &:hover:enabled {
         background-color: #f9f9f9;
+        transform: scale(1.01) translateZ(0);
     }
 
     &:focus {

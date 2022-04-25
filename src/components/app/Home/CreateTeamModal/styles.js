@@ -3,7 +3,18 @@ import { Button, TextArea } from 'components/common';
 import { modalTextArea, modalSubmitButton } from 'shared/styles';
 
 export const ModalBody = styled.div`
+    position: relative;
     width: 800px;
+`;
+
+export const Decoration = styled.div`
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    background: linear-gradient(70deg, #eb84ff, #ff78d7, #ffb656);
+    border-radius: 0 4px 4px 0;
 `;
 
 export const Subheading = styled.h4`

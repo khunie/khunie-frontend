@@ -4,6 +4,7 @@ import Button from './Button';
 import Dropdown from './Dropdown';
 import EditableTextAreaField from './EditableTextAreaField';
 import EditableTextField from './EditableTextField';
+import EmptyStatePlaceholder from './EmptyStatePlaceholder';
 import Icon from './Icon';
 import IconButton from './IconButton';
 import Label from './Label';
@@ -21,6 +22,7 @@ export {
     Dropdown,
     EditableTextAreaField,
     EditableTextField,
+    EmptyStatePlaceholder,
     Icon,
     IconButton,
     Label,

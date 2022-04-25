@@ -8,7 +8,7 @@ export default function Button({
     children,
     subtitle,
     center,
-    type,
+    type = 'button',
     icon,
     iconName,
     iconMinWidth,
@@ -21,7 +21,10 @@ export default function Button({
     rightIconColor,
     rightIconStyle,
     rightIconMinWidth,
-    titleMaxWidth,
+    titleStyle,
+    subtitleStyle,
+    contentContainerStyle,
+    className,
     ...rest
 }) {
     const renderLeftIcon = () => {
@@ -58,18 +61,23 @@ export default function Button({
         <StyledButton
             ref={forwardRef}
             disabled={disabled || loading}
-            type={type || 'button'}
+            type={type}
             hasIcon={!!icon}
+            className={className}
             {...rest}
         >
             {loading ? (
                 'Loading'
             ) : (
-                <Content center={center || (!icon && !iconName)} hasSubtitle={!!subtitle}>
+                <Content
+                    center={center || (!icon && !iconName)}
+                    hasSubtitle={!!subtitle}
+                    style={contentContainerStyle}
+                >
                     {renderLeftIcon()}
                     <TitleContainer>
-                        <Title $maxWidth={titleMaxWidth}>{children}</Title>
-                        {subtitle && <Subtitle>{subtitle}</Subtitle>}
+                        <Title style={titleStyle}>{children}</Title>
+                        {subtitle && <Subtitle style={subtitleStyle}>{subtitle}</Subtitle>}
                     </TitleContainer>
                     {renderRightIcon()}
                 </Content>

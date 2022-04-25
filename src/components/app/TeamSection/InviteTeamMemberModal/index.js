@@ -26,7 +26,7 @@ export default function InviteTeamMemberModal({ isVisible, teamId, inviteMember,
             title="Invite a Team Member"
             containerStyle={{ padding: '36px 48px' }}
             titleStyle={{ color: '#6b69ee' }}
-            closeButtonStyle={{ position: 'absolute', top: '8px', right: '8px' }}
+            closeStyle={{ position: 'absolute', top: '8px', right: '8px' }}
         >
             <ModalBody>
                 <Form onSubmit={handleSubmit}>

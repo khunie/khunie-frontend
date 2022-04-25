@@ -5,6 +5,7 @@ import { noSelect, containerScrollbar } from 'shared/styles';
 export const Container = styled.div`
     border-radius: 6px;
     display: flex;
+    position: relative;
     flex: 0 0 280px;
     flex-direction: column;
     align-self: flex-start;

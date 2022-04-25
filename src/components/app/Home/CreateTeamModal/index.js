@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Label, Modal, TextInput } from 'components/common';
-import { ModalBody, Subheading, Form, DescriptionInput, SubmitButton } from './styles';
+import { ModalBody, Decoration, Subheading, Form, DescriptionInput, SubmitButton } from './styles';
 
 export default function CreateTeamModal({ isVisible, createTeam, close, loading }) {
     const [teamName, setTeamName] = useState('');
@@ -28,7 +28,9 @@ export default function CreateTeamModal({ isVisible, createTeam, close, loading 
             title="Let's create your Team"
             containerStyle={{ padding: '64px 96px' }}
             titleStyle={{ color: '#6b69ee' }}
-            closeButtonStyle={{ position: 'absolute', top: '32px', right: '32px' }}
+            closeStyle={{ position: 'absolute', top: '32px', right: '32px', color: '#fdddbf' }}
+            closeHoverStyle={{ color: '#ffecda' }}
+            closeActiveStyle={{ color: '#ffffff' }}
         >
             <ModalBody>
                 <Form onSubmit={handleTeamSubmit}>
@@ -51,7 +53,9 @@ export default function CreateTeamModal({ isVisible, createTeam, close, loading 
                         id="team-description"
                         name="team-description"
                         value={teamDescription}
-                        placeholder="You can enter a short description if you want to let your other team members know what it's all about!"
+                        placeholder={`You can enter a short description if you want to let your other team members know what ${
+                            teamName || 'it'
+                        } is all about!`}
                         onChange={e => setTeamDescription(e.target.value)}
                         maxLength={500}
                         autoCorrect="off"
@@ -67,6 +71,7 @@ export default function CreateTeamModal({ isVisible, createTeam, close, loading 
                     </SubmitButton>
                 </Form>
             </ModalBody>
+            <Decoration />
         </Modal>
     );
 }

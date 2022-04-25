@@ -28,7 +28,7 @@ export default function CreateBoardModal({ isVisible, teamId, createBoard, close
             title="Let's create your Board"
             containerStyle={{ padding: '48px 64px' }}
             titleStyle={{ color: '#6b69ee' }}
-            closeButtonStyle={{ position: 'absolute', top: '16px', right: '16px' }}
+            closeStyle={{ position: 'absolute', top: '16px', right: '16px' }}
         >
             <ModalBody>
                 <Form onSubmit={handleTeamSubmit}>

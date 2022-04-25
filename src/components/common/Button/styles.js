@@ -1,3 +1,4 @@
+import { shadowOutline } from 'shared/styles';
 import styled from 'styled-components';
 
 export const StyledButton = styled.button`
@@ -27,7 +28,7 @@ export const StyledButton = styled.button`
     }
 
     &:focus {
-        box-shadow: 0px 0px 0px 2px #4b4c55;
+        ${shadowOutline()}
     }
 `;
 
