@@ -14,8 +14,7 @@ import CreateTeamModal from 'components/app/Home/CreateTeamModal';
 import InviteTeamMemberModal from 'components/app/TeamSection/InviteTeamMemberModal';
 import CreateBoardModal from 'components/app/TeamSection/CreateBoardModal';
 import useUserActions from 'shared/hooks/useUserActions';
-import { shadowOutline } from 'shared/styles';
-import { EmptyStatePlaceholder } from 'components/common';
+import { Button, EmptyStatePlaceholder } from 'components/common';
 
 const Container = styled.div`
     margin: 0 auto;
@@ -52,7 +51,7 @@ const MainSectionTitle = styled.h2`
     color: #5170b8;
 `;
 
-const CreateTeamButton = styled.button`
+const CreateTeamButton = styled(Button)`
     display: flex;
     font-size: 16px;
     font-weight: bold;
@@ -65,13 +64,25 @@ const CreateTeamButton = styled.button`
     border-radius: 4px;
     outline: none;
 
-    &:hover {
+    &&:hover {
         background-color: #cf2ad4;
-        ${shadowOutline()}
     }
 
-    &:focus {
-        ${shadowOutline()}
+    &&:active {
+        background-color: #c623cc;
+    }
+`;
+
+const PlaceholderTeamButton = styled(CreateTeamButton)`
+    margin: 0;
+    background: linear-gradient(45deg, #fb8aff, #fdb352);
+
+    &&:hover {
+        background: linear-gradient(45deg, #e332e9, #e332e9);
+    }
+
+    &&:active {
+        background: linear-gradient(45deg, #e332e9, #e332e9);
     }
 `;
 export default function UserHome() {
@@ -291,11 +302,10 @@ export default function UserHome() {
                     <MainSectionHeader>
                         <MainSectionTitle>Owned Teams</MainSectionTitle>
                         <CreateTeamButton
-                            title="Click to create a new Team"
+                            title="+ Create a new Team"
                             onClick={handleAddTeamClick}
-                        >
-                            + Create a new Team
-                        </CreateTeamButton>
+                            tooltip="Click to create a new Team"
+                        />
                     </MainSectionHeader>
                     {ownedTeams.length > 0 ? (
                         ownedTeams.map(team => (
@@ -319,6 +329,12 @@ export default function UserHome() {
                             image="/img/noun/project.png"
                             title="You currently don't own any teams"
                             subtitle="Create one to start organizing your to-dos!"
+                            action={() => (
+                                <PlaceholderTeamButton
+                                    title="+ Create a new Team"
+                                    onClick={handleAddTeamClick}
+                                />
+                            )}
                         />
                     )}
                 </MainSection>

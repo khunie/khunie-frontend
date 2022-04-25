@@ -26,8 +26,8 @@ export default function BoardHeader({
                     fieldStyle={{ color: 'white', fontSize: 20 }}
                     inputStyle={{ fontSize: 20 }}
                 />
-                <BoardHeaderButton title="Team Name">{teamName}</BoardHeaderButton>
-                <BoardHeaderButton title="Board Visibility">{visibility}</BoardHeaderButton>
+                <BoardHeaderButton title={teamName} tooltip="Team Name" />
+                <BoardHeaderButton title={visibility} tooltip="Board Visibility" />
                 <StarButton
                     title={`Click to ${starred ? 'unstar' : 'star'} this board`}
                     onClick={onStarClick}
@@ -36,11 +36,13 @@ export default function BoardHeader({
                 </StarButton>
             </LeftSection>
             <RightSection>
-                <BoardHeaderButton>{teamName}</BoardHeaderButton>
+                <BoardHeaderButton title={teamName} />
                 {!isRightSidebarVisible && (
-                    <BoardHeaderButton iconName="ellipsis-h" onClick={openRightSidebar}>
-                        Show Menu
-                    </BoardHeaderButton>
+                    <BoardHeaderButton
+                        title="Show Menu"
+                        iconName="ellipsis-h"
+                        onClick={openRightSidebar}
+                    />
                 )}
             </RightSection>
         </Container>

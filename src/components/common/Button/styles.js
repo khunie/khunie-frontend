@@ -5,8 +5,7 @@ export const StyledButton = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100px;
-    padding: 8px;
+    padding: 8px 16px;
     box-sizing: border-box;
     border-radius: 4px;
     background-color: #453794;
@@ -17,6 +16,7 @@ export const StyledButton = styled.button`
 
     &:hover:enabled {
         background-color: #3c2e8b;
+        ${shadowOutline()}
     }
 
     &:active {
@@ -45,7 +45,6 @@ export const TitleContainer = styled.div`
 `;
 
 export const Title = styled.span`
-    max-width: ${({ $maxWidth }) => ($maxWidth && `${$maxWidth}px`)};
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

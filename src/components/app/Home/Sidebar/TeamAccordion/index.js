@@ -9,26 +9,29 @@ export default function TeamAccordion({ name, avatar, userRole, boardsLength, me
             id={name}
             renderButton={({ isOpen, handleClick }) => (
                 <SidebarButton
+                    title={name}
                     onClick={handleClick}
                     icon={() => <StyledTeamAvatar src={avatar} name={name} />}
                     rightIconName={isOpen ? 'chevron-up' : 'chevron-down'}
-                    titleMaxWidth={150}
-                    title={name}
-                >
-                    {name}
-                </SidebarButton>
+                    titleStyle={{ maxWidth: 150 }}
+                    tooltip={name}
+                />
             )}
         >
-            <DropdownButton iconName="list-alt" iconMinWidth={30} iconSize={16}>
-                Boards ({boardsLength})
-            </DropdownButton>
-            <DropdownButton iconName="users" iconMinWidth={30} iconSize={16}>
-                Members ({membersLength})
-            </DropdownButton>
+            <DropdownButton
+                title={`Boards (${boardsLength})`}
+                iconName="list-alt"
+                iconMinWidth={30}
+                iconSize={16}
+            />
+            <DropdownButton
+                title={`Members (${membersLength})`}
+                iconName="users"
+                iconMinWidth={30}
+                iconSize={16}
+            />
             {ADMIN_ROLES.includes(userRole) && (
-                <DropdownButton iconName="cog" iconMinWidth={30} iconSize={16}>
-                    Settings
-                </DropdownButton>
+                <DropdownButton title="Settings" iconName="cog" iconMinWidth={30} iconSize={16} />
             )}
         </Accordion>
     );

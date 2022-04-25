@@ -75,15 +75,11 @@ export default function AddCardForm({ listId, nextIndex, onAddCardSubmit }) {
                     />
                     <ActionRow>
                         <CancelButton icon="times" onClick={handleCancelClick} />
-                        <SubmitButton type="submit" disabled={!cardTitle}>
-                            Add card
-                        </SubmitButton>
+                        <SubmitButton title="Add card" type="submit" disabled={!cardTitle} />
                     </ActionRow>
                 </Form>
             ) : (
-                <AddCardButton type="button" onClick={handleAddCardClick}>
-                    + Add a card
-                </AddCardButton>
+                <AddCardButton title="+ Add a card" onClick={handleAddCardClick} />
             )}
         </Container>
     );

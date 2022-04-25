@@ -60,12 +60,12 @@ export default function CreateBoardModal({ isVisible, teamId, createBoard, close
                         spellCheck={false}
                     />
                     <SubmitButton
+                        title="Create Board"
+                        loading={loading}
                         type="submit"
                         disabled={!boardTitle}
-                        title={!boardTitle ? 'You must enter a Board Title' : ''}
-                    >
-                        {loading ? 'loading' : 'Create Board'}
-                    </SubmitButton>
+                        tooltip={!boardTitle ? 'You must enter a Board Title' : ''}
+                    />
                 </Form>
             </ModalBody>
         </Modal>

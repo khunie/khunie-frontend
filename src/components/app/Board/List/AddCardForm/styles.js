@@ -17,12 +17,12 @@ export const CardTitleInput = styled(TextArea)`
     min-height: 64px;
 
     &:focus {
-        border: 2px solid #4458b3;
+        border: 2px solid #5c9cf0;
         padding: 8px;
     }
 `;
 
-export const AddCardButton = styled.button`
+export const AddCardButton = styled(Button)`
     width: 264px;
     height: 36px;
     border-radius: 4px;
@@ -34,12 +34,16 @@ export const AddCardButton = styled.button`
     outline: none;
     background-color: transparent;
 
-    &:hover {
+    &:hover:enabled {
         background-color: #ddd;
     }
 
-    &:focus {
-        box-shadow: 0px 0px 0px 2px #4a5297;
+    &:hover:enabled:not(:focus) {
+        box-shadow: none;
+    }
+
+    &:active {
+        background-color: #ddd;
     }
 `;
 

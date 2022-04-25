@@ -102,17 +102,18 @@ export default function EditCardForm({ layout, id, title, close, onUpdateCard, d
                             paddingtop={sBrowser === 'Firefox' ? 9 : 10}
                         />
                         <ActionRow>
-                            <SubmitButton type="submit" disabled={!newTitle}>
-                                Save
-                            </SubmitButton>
+                            <SubmitButton title="Save" type="submit" disabled={!newTitle} />
                         </ActionRow>
                     </Form>
                 </FormWrapper>
                 <PopMenu ref={setPopperElement} style={styles.popper} {...attributes.popper}>
-                    <MenuButton iconName={['fab', 'github']}>Open Card Details</MenuButton>
-                    <MenuButton iconName="times" negative onClick={handleDeleteClick}>
-                        Delete Card
-                    </MenuButton>
+                    <MenuButton title="Open Card Details" iconName={['fab', 'github']} />
+                    <MenuButton
+                        title="Delete Card"
+                        iconName="times"
+                        negative
+                        onClick={handleDeleteClick}
+                    />
                 </PopMenu>
             </Container>
         </EditingOverlay>

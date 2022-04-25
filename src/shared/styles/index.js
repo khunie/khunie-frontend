@@ -61,7 +61,7 @@ export const modalTextArea = css`
     }
 
     &:focus {
-        border-color: #6581fc;
+        border-color: #5c9cf0;
     }
 `;
 

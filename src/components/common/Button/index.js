@@ -5,7 +5,7 @@ export default function Button({
     forwardRef,
     disabled,
     loading,
-    children,
+    title,
     subtitle,
     center,
     type = 'button',
@@ -25,6 +25,7 @@ export default function Button({
     subtitleStyle,
     contentContainerStyle,
     className,
+    tooltip,
     ...rest
 }) {
     const renderLeftIcon = () => {
@@ -64,6 +65,7 @@ export default function Button({
             type={type}
             hasIcon={!!icon}
             className={className}
+            title={tooltip}
             {...rest}
         >
             {loading ? (
@@ -76,7 +78,7 @@ export default function Button({
                 >
                     {renderLeftIcon()}
                     <TitleContainer>
-                        <Title style={titleStyle}>{children}</Title>
+                        <Title style={titleStyle}>{title}</Title>
                         {subtitle && <Subtitle style={subtitleStyle}>{subtitle}</Subtitle>}
                     </TitleContainer>
                     {renderRightIcon()}

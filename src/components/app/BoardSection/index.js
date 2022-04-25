@@ -1,3 +1,4 @@
+import { Button } from 'components/common';
 import styled from 'styled-components';
 
 export const Container = styled.section`
@@ -18,13 +19,19 @@ export const Header = styled.div`
     word-wrap: break-word;
 `;
 
-export const HeaderButton = styled.button`
+export const HeaderButton = styled(Button)`
     padding: 8px 16px;
     border-radius: 4px;
     font-weight: bold;
+    background-color: #eee;
+    color: #333;
 
-    &:hover {
+    &:hover:enabled {
         background-color: #e9e9e9;
+    }
+
+    &&:active {
+        background-color: #e0e0e0;
     }
 `;
 

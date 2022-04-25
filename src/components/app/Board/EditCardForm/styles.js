@@ -41,7 +41,7 @@ export const MenuButton = styled(Button)`
     justify-content: flex-start;
     background-color: #eee;
     width: auto;
-    padding: 10px 16px;
+    padding: 8px 16px;
     border-radius: 4px;
     margin-bottom: 8px;
     font-weight: bold;

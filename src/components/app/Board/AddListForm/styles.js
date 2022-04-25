@@ -36,12 +36,12 @@ export const ListTitleInput = styled(TextArea)`
     width: 270px;
 
     &:focus {
-        border: 2px solid #4458b3;
+        border: 2px solid #5c9cf0;
         padding: 8px;
     }
 `;
 
-export const AddListButton = styled.button`
+export const AddListButton = styled(Button)`
     height: 48px;
     padding: 8px;
     width: 280px;
@@ -53,12 +53,12 @@ export const AddListButton = styled.button`
     outline: none;
     background-color: transparent;
 
-    &:hover {
+    &:hover:enabled {
         background-color: #88888833; // #cccccc22 looks good on colored bgs
     }
 
-    &:focus {
-        box-shadow: 0px 0px 0px 2px #4a5297;
+    &:active {
+        background-color: #88888833;
     }
 `;
 

@@ -80,15 +80,11 @@ export default function AddListForm({ onAddListSubmit }) {
                     />
                     <ActionRow>
                         <CancelButton icon="times" onClick={handleCancelClick} />
-                        <SubmitButton type="submit" disabled={!listTitle}>
-                            Add list
-                        </SubmitButton>
+                        <SubmitButton title="Add list" type="submit" disabled={!listTitle} />
                     </ActionRow>
                 </Form>
             ) : (
-                <AddListButton type="button" onClick={handleAddListClick}>
-                    + Add a list
-                </AddListButton>
+                <AddListButton title="+ Add a list" onClick={handleAddListClick} />
             )}
         </Container>
     );

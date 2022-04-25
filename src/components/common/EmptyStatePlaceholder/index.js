@@ -1,3 +1,4 @@
+import Button from '../Button';
 import { Container, Image, Subtitle, Title } from './styles';
 
 export default function EmptyStatePlaceholder({
@@ -14,10 +15,12 @@ export default function EmptyStatePlaceholder({
     onActionClick,
 }) {
     return (
-        <Container style={containerStyle}>
+        <Container style={containerStyle} onClick={() => onContainerClick?.()}>
             <Image src={image} style={imageStyle} />
             <Title style={titleStyle}>{title}</Title>
             <Subtitle style={subtitleStyle}>{subtitle}</Subtitle>
+            {action && action()}
+            {!action && onActionClick && <Button title={actionTitle} onClick={onActionClick} />}
         </Container>
     );
 }

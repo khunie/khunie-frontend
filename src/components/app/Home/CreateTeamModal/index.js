@@ -61,14 +61,13 @@ export default function CreateTeamModal({ isVisible, createTeam, close, loading 
                         autoCorrect="off"
                         spellCheck={false}
                     />
-
                     <SubmitButton
+                        title="Create Team"
+                        loading={loading}
                         type="submit"
                         disabled={!teamName}
-                        title={!teamName ? 'You must enter a Team Name' : ''}
-                    >
-                        {loading ? 'loading' : 'Create Team'}
-                    </SubmitButton>
+                        tooltip={!teamName ? 'You must enter a Team Name' : ''}
+                    />
                 </Form>
             </ModalBody>
             <Decoration />

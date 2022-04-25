@@ -45,12 +45,12 @@ export default function InviteTeamMemberModal({ isVisible, teamId, inviteMember,
                         spellCheck={false}
                     />
                     <SubmitButton
+                        title="Send Invite"
                         type="submit"
                         disabled={!invitee}
-                        title={!invitee ? 'Invitee cannot be empty' : ''}
-                    >
-                        {loading ? 'loading' : 'Send Invite'}
-                    </SubmitButton>
+                        tooltip={!invitee ? 'Invitee cannot be empty' : ''}
+                        loading={loading}
+                    />
                 </Form>
             </ModalBody>
         </Modal>

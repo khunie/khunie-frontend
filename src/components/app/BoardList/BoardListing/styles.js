@@ -8,6 +8,7 @@ export const BoardListItem = styled.li`
 
 export const ButtonStyle = css`
     display: block;
+    position: relative;
     height: 110px;
     padding: 16px;
     border: transparent;
@@ -17,7 +18,6 @@ export const ButtonStyle = css`
     font-weight: bold;
     overflow: hidden;
     outline: none;
-    backface-visibility: hidden;
 
     &:hover:enabled {
         cursor: pointer;
@@ -33,6 +33,7 @@ export const Background = styled.div`
     background: ${({ background }) => (background?.color || '#3657e7')};
     background-size: cover;
     background-repeat: no-repeat;
+    z-index: -1;
 
     ${({ background }) => (background?.type === 'IMAGE' && css`
             background-image: url(${background.src});
@@ -42,8 +43,6 @@ export const Background = styled.div`
 
 export const Title = styled.h4`
     word-wrap: break-word;
-    -webkit-font-smoothing: subpixel-antialiased;
-    transform: translateZ(0);
 `;
 
 export const TeamName = styled.p`
@@ -59,7 +58,6 @@ export const TeamName = styled.p`
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-font-smoothing: subpixel-antialiased;
-    transform: translateZ(0);
 `;
 
 export const StarContainer = styled.div`
@@ -70,9 +68,10 @@ export const StarContainer = styled.div`
     opacity: ${({ starred }) => (starred ? 1 : 0)};
     color: ${({ starred }) => (starred ? '#ffd151' : 'white')};
     transform: ${({ starred }) => (starred && 'translateX(-32px)')};
-    
+    filter: drop-shadow(0 0 3px #888);    
+
     &:hover {
-        color: ${({ starred }) => (starred ? '#f5bb1d' : '#d5d0f5')};
+        color: ${({ starred }) => (starred ? '#f5bb1d' : '#ffffffcc')};
     }
 `;
 
@@ -86,7 +85,6 @@ export const Star = styled(Icon)`
 
 export const BoardLink = styled.a`
     ${ButtonStyle}
-    position: relative;
     color: white;
     text-decoration: none;
     transition: transform .2s;
@@ -112,13 +110,13 @@ export const BoardLink = styled.a`
 export const AddBoardButton = styled.button`
     ${ButtonStyle}
     width: 100%;
-    background-color: white;
+    background-color: transparent;
     border: 4px dashed #ccc;
     color: #888;
     transition: transform .1s;
 
     &:hover:enabled {
-        background-color: #f9f9f9;
+        background-color: #00000008;
         transform: scale(1.01) translateZ(0);
     }
 
