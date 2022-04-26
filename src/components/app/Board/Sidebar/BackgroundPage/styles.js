@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { noSelect } from 'shared/styles';
+import { noSelect, shadowOutline } from 'shared/styles';
 
 export const Container = styled.div`
     position: relative;
@@ -29,6 +29,7 @@ export const ImageButton = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
+    outline: none;
 
     &:hover { 
         ${Image} {
@@ -40,6 +41,10 @@ export const ImageButton = styled.button`
         ${Image} {
             filter: saturate(.92) brightness(1.15);
         }
+    }
+
+    &:focus {
+        ${shadowOutline({ width: 4 })}
     }
 `;
 
@@ -58,6 +63,7 @@ export const ColorButton = styled.button`
     color: white;
     font-weight: bold;
     font-size: 18px;
+    outline: none;
 
     &:hover { 
         background-color: #513ab6;
@@ -65,5 +71,9 @@ export const ColorButton = styled.button`
 
     &:active { 
         background-color: #5b44c0;
+    }
+
+    &:focus {
+        ${shadowOutline({ width: 4 })}
     }
 `;

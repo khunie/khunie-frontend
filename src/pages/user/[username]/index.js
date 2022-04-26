@@ -52,24 +52,20 @@ const MainSectionTitle = styled.h2`
 `;
 
 const CreateTeamButton = styled(Button)`
-    display: flex;
-    font-size: 16px;
-    font-weight: bold;
-    background-color: transparent;
-    color: white;
     margin-left: auto;
     margin-right: 8px;
     padding: 8px 24px;
-    background-color: #e332e9;
     border-radius: 4px;
-    outline: none;
+    && {
+        background-color: #e332e9;
 
-    &&:hover {
-        background-color: #cf2ad4;
-    }
+        &&:hover {
+            background-color: #cf2ad4;
+        }
 
-    &&:active {
-        background-color: #c623cc;
+        &&:active {
+            background-color: #c623cc;
+        }
     }
 `;
 

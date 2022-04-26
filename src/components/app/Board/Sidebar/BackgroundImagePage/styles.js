@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { TextInput } from 'components/common';
+import { shadowOutline } from 'shared/styles';
 
 export const Container = styled.div`
     position: relative;
     flex: 1;
     width: 100%;
     padding: 8px;
-
 `;
 
 export const SearchInput = styled(TextInput)`
@@ -22,23 +22,32 @@ export const Content = styled.div`
     row-gap: 8px;
 `;
 
-export const ImageButton = styled.button`
-    border: none;
-    padding: 0;
-    border-radius: 4px;
-    overflow: hidden;      
-`;
-
 export const Image = styled.img`
     width: 100%;
     height: 100px;
     display: block;
-    
+`;
+
+export const ImageButton = styled.button`
+    border: none;
+    padding: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    outline: none;
+
     &:hover { 
-        filter: saturate(.95) brightness(1.1);
+        ${Image} {
+            filter: saturate(.95) brightness(1.1);
+        }
     }
 
     &:active { 
-        filter: saturate(.92) brightness(1.15);
+        ${Image} {
+            filter: saturate(.92) brightness(1.15);
+        }
     }
+    
+    &:focus {
+        ${shadowOutline({ width: 4 })}
+    }    
 `;

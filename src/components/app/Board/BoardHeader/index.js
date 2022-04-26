@@ -4,7 +4,6 @@ import {
     RightSection,
     BoardHeaderButton,
     BoardHeaderField,
-    Star,
     StarButton,
 } from './styles';
 
@@ -29,11 +28,11 @@ export default function BoardHeader({
                 <BoardHeaderButton title={teamName} tooltip="Team Name" />
                 <BoardHeaderButton title={visibility} tooltip="Board Visibility" />
                 <StarButton
-                    title={`Click to ${starred ? 'unstar' : 'star'} this board`}
                     onClick={onStarClick}
-                >
-                    <Star icon={[starred ? 'fas' : 'far', 'star']} starred={starred} />
-                </StarButton>
+                    icon={[starred ? 'fas' : 'far', 'star']}
+                    starred={starred}
+                    tooltip={`Click to ${starred ? 'unstar' : 'star'} this board`}
+                />
             </LeftSection>
             <RightSection>
                 <BoardHeaderButton title={teamName} />
