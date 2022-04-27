@@ -1,8 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { Label, Modal, TextInput } from 'components/common';
-import { ModalBody, Subheading, Form, DescriptionInput, SubmitButton } from './styles';
+import { ModalBody, Subheading, Form, TeamName, DescriptionInput, SubmitButton } from './styles';
 
-export default function CreateBoardModal({ isVisible, teamId, createBoard, close, loading }) {
+export default function CreateBoardModal({
+    isVisible,
+    teamName,
+    teamId,
+    createBoard,
+    close,
+    loading,
+}) {
     const [boardTitle, setBoardTitle] = useState('');
     const [boardDescription, setBoardDescription] = useState('');
     const titleInputRef = useRef(null);
@@ -35,6 +42,8 @@ export default function CreateBoardModal({ isVisible, teamId, createBoard, close
                     <Subheading>
                         A board is a place to organize lists and tasks for whatever you need
                     </Subheading>
+                    <Label>Team</Label>
+                    <TeamName>{teamName}</TeamName>
                     <Label htmlFor="board-title">Board Title</Label>
                     <TextInput
                         id="board-title"

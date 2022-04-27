@@ -11,7 +11,7 @@ import { useLogout } from 'shared/hooks/auth';
 import { USER_URL } from 'shared/constants';
 import { Dropdown, IconButton, ProfileCard } from 'components/common';
 import { DropdownMenu, DropdownMenuButton, Divider } from 'components/common/Dropdown/styles';
-import { noSelect } from 'shared/styles';
+import { noSelect, shadowOutline } from 'shared/styles';
 
 const NavBar = styled.div`
     width: 100%;
@@ -61,6 +61,7 @@ const NavAnchor = styled.a`
 `;
 
 const LogoContainer = styled.div`
+    padding: 6px;
     transition: all 0.15s;
     ${noSelect}
 
@@ -77,22 +78,27 @@ const LogoContainer = styled.div`
 const Logo = styled.img`
     width: 36px;
     height: 36px;
-    padding: 6px;
+    border-radius: 3px;
 `;
 
 const LogoOverlay = styled.img`
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 6px;
+    left: 6px;
     width: 36px;
     height: 36px;
-    padding: 6px;
     transition: opacity 0.75s;
     opacity: ${({ show }) => (show ? 1 : 0)};
 `;
 
 const Anchor = styled.a`
-    max-width: 36px;
+    outline: none;
+
+    &:focus {
+        ${Logo} {
+            ${shadowOutline({ width: 3, color: '#814be6' })}
+        }
+    }
 `;
 
 const NavButton = styled(IconButton)`

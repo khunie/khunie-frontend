@@ -54,7 +54,11 @@ export function useLogin() {
         });
     };
 
-    return { login, loading, error };
+    const resetError = () => {
+        setError(null);
+    };
+
+    return { login, loading, error, reset: resetError };
 }
 
 export function useSignup() {

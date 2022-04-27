@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useLogin } from 'shared/hooks/auth';
 import AuthLayout from 'components/layout/AuthLayout';
 import { TextInput, Button } from 'components/common';
+import { toast } from 'react-toastify';
 
 const LoginForm = styled.form`
     max-width: 360px;
@@ -12,22 +13,29 @@ const LoginForm = styled.form`
 
 const FormInput = styled(TextInput)`
     width: 100%;
-    height: 50px;
     margin-bottom: 8px;
+    padding: 10px 12px;
+    font-size: 18px;
 `;
 
 const SubmitButton = styled(Button)`
     width: 100%;
-    height: 50px;
-    font-size: 16px;
+    padding: 10px 12px;
+    font-size: 18px;
     margin-top: 8px;
     margin-bottom: 16px;
 `;
 export default function Login() {
-    const { login, loading, error } = useLogin();
+    const { login, loading, error, reset } = useLogin();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    useEffect(() => {
+        if (error) {
+            toast.error('Login failed');
+        }
+    }, [error]);
 
     const handleChangeEmail = e => {
         setEmail(e.target.value);
@@ -39,7 +47,7 @@ export default function Login() {
 
     const handleSubmit = async e => {
         e.preventDefault();
-
+        reset();
         login({ email, password });
     };
 
@@ -63,9 +71,12 @@ export default function Login() {
                 minLength={1}
                 required
             />
-            <SubmitButton type="submit" disabled={email.length < 1 || password.length < 1}>
-                {loading ? 'LOADING' : 'Log in'}
-            </SubmitButton>
+            <SubmitButton
+                title="Log in"
+                type="submit"
+                disabled={email.length < 1 || password.length < 1}
+                loading={loading}
+            />
             <div>{error && error}</div>
         </LoginForm>
     );

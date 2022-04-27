@@ -55,7 +55,6 @@ const CreateTeamButton = styled(Button)`
     margin-left: auto;
     margin-right: 8px;
     padding: 8px 24px;
-    border-radius: 4px;
     && {
         background-color: #e332e9;
 
@@ -69,16 +68,21 @@ const CreateTeamButton = styled(Button)`
     }
 `;
 
-const PlaceholderTeamButton = styled(CreateTeamButton)`
-    margin: 0;
-    background: linear-gradient(45deg, #fb8aff, #fdb352);
+const PlaceholderTeamButton = styled(Button)`
+    margin-top: 8px;
+    padding: 12px 24px;
+    font-size: 18px;
 
-    &&:hover {
-        background: linear-gradient(45deg, #e332e9, #e332e9);
-    }
+    && {
+        background-color: #e332e9;
 
-    &&:active {
-        background: linear-gradient(45deg, #e332e9, #e332e9);
+        &&:hover {
+            background-color: #cf2ad4;
+        }
+
+        &&:active {
+            background-color: #c623cc;
+        }
     }
 `;
 export default function UserHome() {
@@ -201,7 +205,7 @@ export default function UserHome() {
             onError() {},
         });
 
-    const [currentTeamId, setCurrentTeamId] = useState(null);
+    const [currentTeam, setCurrentTeam] = useState(null);
     const [isCreateTeamModalVisible, setCreateTeamModalVisible] = useState(false);
     const [isCreateBoardModalVisible, setCreateBoardModalVisible] = useState(false);
     const [isInviteModalVisible, setInviteModalVisible] = useState(false);
@@ -241,24 +245,24 @@ export default function UserHome() {
         }
     };
 
-    const openCreateBoardModal = teamId => {
+    const openCreateBoardModal = ({ teamId, teamName }) => {
         setCreateBoardModalVisible(true);
-        setCurrentTeamId(teamId);
+        setCurrentTeam({ teamId, teamName });
     };
 
     const closeCreateBoardModal = () => {
         setCreateBoardModalVisible(false);
-        setCurrentTeamId(null);
+        setCurrentTeam(null);
     };
 
-    const openInviteModal = teamId => {
+    const openInviteModal = ({ teamId, teamName }) => {
         setInviteModalVisible(true);
-        setCurrentTeamId(teamId);
+        setCurrentTeam({ teamId, teamName });
     };
 
     const closeInviteModal = () => {
         setInviteModalVisible(false);
-        setCurrentTeamId(null);
+        setCurrentTeam(null);
     };
 
     return (
@@ -323,11 +327,11 @@ export default function UserHome() {
                     ) : (
                         <EmptyStatePlaceholder
                             image="/img/noun/project.png"
-                            title="You currently don't own any teams"
+                            title="You currently don't own any Teams"
                             subtitle="Create one to start organizing your to-dos!"
                             action={() => (
                                 <PlaceholderTeamButton
-                                    title="+ Create a new Team"
+                                    title="Create your first Team"
                                     onClick={handleAddTeamClick}
                                 />
                             )}
@@ -337,7 +341,7 @@ export default function UserHome() {
                 {memberships?.filter(membership => membership.role !== 'OWNER').length > 0 && (
                     <MainSection>
                         <MainSectionHeader>
-                            <MainSectionTitle title="These are teams that you are a member of and do not own">
+                            <MainSectionTitle title="These are Teams that you are a member of and do not own">
                                 Membership Teams
                             </MainSectionTitle>
                         </MainSectionHeader>
@@ -370,14 +374,16 @@ export default function UserHome() {
             <CreateBoardModal
                 isVisible={isCreateBoardModalVisible}
                 close={closeCreateBoardModal}
-                teamId={currentTeamId}
+                teamId={currentTeam?.teamId}
+                teamName={currentTeam?.teamName}
                 loading={bLoading}
                 createBoard={createBoard}
             />
             <InviteTeamMemberModal
                 isVisible={isInviteModalVisible}
                 close={closeInviteModal}
-                teamId={currentTeamId}
+                teamId={currentTeam?.teamId}
+                teamName={currentTeam?.teamId}
                 loading={iLoading}
                 error={iError}
                 inviteMember={inviteMember}
