@@ -18,6 +18,7 @@ export const Container = styled.div`
 `;
 
 export const ListContent = styled.div`
+    overflow-x: hidden;
     overflow-y: auto;
     padding: 2px 4px 2px 8px;
     margin-right: 4px;

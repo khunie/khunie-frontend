@@ -39,6 +39,6 @@ export const CardContent = styled.div`
 export const CardTitle = styled.h4`
     font-size: 16px;
     word-wrap: break-word;
-    max-width: 240px;
+    max-width: 244px;
     width: 100%;
 `;
