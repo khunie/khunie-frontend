@@ -13,6 +13,7 @@ const TextArea = styled(TextareaAutosize)`
     font-size: 16px;
     line-height: 16px;
     font-family: Roboto;
+    overflow: hidden;
 
     &:focus {
         outline: none;

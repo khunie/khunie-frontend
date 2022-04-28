@@ -9,7 +9,11 @@ import {
 } from 'components/app/BoardSection';
 import { StyledIcon } from './styles';
 
-export default function StarredBoardSection({ boards, onStarClick }) {
+export default function StarredBoardSection({ stars, onStarClick }) {
+    if (stars?.length === 0) {
+        return null;
+    }
+
     return (
         <Container>
             <Header>
@@ -20,7 +24,7 @@ export default function StarredBoardSection({ boards, onStarClick }) {
                     </Title>
                 </HeaderLeft>
             </Header>
-            <BoardList boards={boards} userStars={boards} onStarClick={onStarClick} showTeam />
+            <BoardList boards={stars} userStars={stars} onStarClick={onStarClick} showTeam />
         </Container>
     );
 }

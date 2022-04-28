@@ -8,7 +8,6 @@ import { CREATE_BOARD_MUTATION } from 'gql/board/mutations';
 import AppLayout from 'components/layout/AppLayout';
 import TeamSection from 'components/app/TeamSection';
 import Sidebar from 'components/app/Home/Sidebar';
-import TeamAccordion from 'components/app/Home/Sidebar/TeamAccordion';
 import StarredBoardSection from 'components/app/Home/StarredBoardSection';
 import CreateTeamModal from 'components/app/Home/CreateTeamModal';
 import InviteTeamMemberModal from 'components/app/TeamSection/InviteTeamMemberModal';
@@ -267,104 +266,80 @@ export default function UserHome() {
 
     return (
         <Container>
-            <Sidebar>
-                <div>owned teams</div>
-                {ownedTeams.map(team => (
-                    <TeamAccordion
-                        key={team.id}
-                        name={team.name}
-                        avatar={team.pic}
-                        userRole="OWNER"
-                        boardsLength={team.boards.length}
-                        membersLength={team.members.length}
-                    />
-                ))}
-                <div>memberships</div>
-                {memberships.map(
-                    membership =>
-                        membership.role !== 'OWNER' && (
-                            <TeamAccordion
-                                key={membership.team.id}
-                                name={membership.team.name}
-                                avatar={membership.team.pic}
-                                userRole={membership.role}
-                                boardsLength={membership.team.boards.length}
-                                membersLength={membership.team.members.length}
-                            />
-                        )
-                )}
-            </Sidebar>
-            <MainContent>
-                {stars.length > 0 && (
-                    <StarredBoardSection boards={stars} onStarClick={handleStar} />
-                )}
-                <MainSection>
-                    <MainSectionHeader>
-                        <MainSectionTitle>Owned Teams</MainSectionTitle>
-                        <CreateTeamButton
-                            title="+ Create a new Team"
-                            onClick={handleAddTeamClick}
-                            tooltip="Click to create a new Team"
-                        />
-                    </MainSectionHeader>
-                    {ownedTeams.length > 0 ? (
-                        ownedTeams.map(team => (
-                            <TeamSection
-                                key={team.id}
-                                id={team.id}
-                                name={team.name}
-                                slug={team.slug}
-                                avatar={team.pic}
-                                userRole="OWNER"
-                                userStars={stars}
-                                boards={team.boards}
-                                members={team.members}
-                                onAddBoardClick={openCreateBoardModal}
-                                onInviteClick={openInviteModal}
-                                onStarClick={handleStar}
-                            />
-                        ))
-                    ) : (
-                        <EmptyStatePlaceholder
-                            image="/img/noun/project.png"
-                            title="You currently don't own any Teams"
-                            subtitle="Create one to start organizing your to-dos!"
-                            action={() => (
-                                <PlaceholderTeamButton
-                                    title="Create your first Team"
-                                    onClick={handleAddTeamClick}
-                                />
-                            )}
-                        />
-                    )}
-                </MainSection>
-                {memberships?.filter(membership => membership.role !== 'OWNER').length > 0 && (
+            <Sidebar ownedTeams={ownedTeams} memberships={memberships} />
+            {loading ? (
+                <MainContent>hi</MainContent>
+            ) : (
+                <MainContent>
+                    <StarredBoardSection stars={stars} onStarClick={handleStar} />
                     <MainSection>
                         <MainSectionHeader>
-                            <MainSectionTitle title="These are Teams that you are a member of and do not own">
-                                Membership Teams
-                            </MainSectionTitle>
+                            <MainSectionTitle>Owned Teams</MainSectionTitle>
+                            <CreateTeamButton
+                                title="+ Create a new Team"
+                                onClick={handleAddTeamClick}
+                                tooltip="Click to create a new Team"
+                            />
                         </MainSectionHeader>
-                        {memberships.map(
-                            membership =>
-                                membership.role !== 'OWNER' && (
-                                    <TeamSection
-                                        key={membership.team.id}
-                                        id={membership.team.id}
-                                        name={membership.team.name}
-                                        slug={membership.team.slug}
-                                        avatar={membership.team.pic}
-                                        userRole={membership.role}
-                                        userStars={stars}
-                                        boards={membership.team.boards}
-                                        members={membership.team.members}
-                                        onStarClick={handleStar}
+                        {ownedTeams.length > 0 ? (
+                            ownedTeams.map(team => (
+                                <TeamSection
+                                    key={team.id}
+                                    id={team.id}
+                                    name={team.name}
+                                    slug={team.slug}
+                                    avatar={team.pic}
+                                    userRole="OWNER"
+                                    userStars={stars}
+                                    boards={team.boards}
+                                    members={team.members}
+                                    onAddBoardClick={openCreateBoardModal}
+                                    onInviteClick={openInviteModal}
+                                    onStarClick={handleStar}
+                                />
+                            ))
+                        ) : (
+                            <EmptyStatePlaceholder
+                                image="/img/noun/project.png"
+                                title="You currently don't own any Teams"
+                                subtitle="Create one to start organizing your to-dos!"
+                                action={() => (
+                                    <PlaceholderTeamButton
+                                        title="Create your first Team"
+                                        onClick={handleAddTeamClick}
                                     />
-                                )
+                                )}
+                            />
                         )}
                     </MainSection>
-                )}
-            </MainContent>
+                    {memberships?.filter(membership => membership.role !== 'OWNER').length > 0 && (
+                        <MainSection>
+                            <MainSectionHeader>
+                                <MainSectionTitle title="These are Teams that you are a member of and do not own">
+                                    Membership Teams
+                                </MainSectionTitle>
+                            </MainSectionHeader>
+                            {memberships.map(
+                                membership =>
+                                    membership.role !== 'OWNER' && (
+                                        <TeamSection
+                                            key={membership.team.id}
+                                            id={membership.team.id}
+                                            name={membership.team.name}
+                                            slug={membership.team.slug}
+                                            avatar={membership.team.pic}
+                                            userRole={membership.role}
+                                            userStars={stars}
+                                            boards={membership.team.boards}
+                                            members={membership.team.members}
+                                            onStarClick={handleStar}
+                                        />
+                                    )
+                            )}
+                        </MainSection>
+                    )}
+                </MainContent>
+            )}
             <CreateTeamModal
                 isVisible={isCreateTeamModalVisible}
                 close={() => setCreateTeamModalVisible(false)}
