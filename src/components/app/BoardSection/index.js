@@ -16,7 +16,6 @@ export const Container = styled.section`
 export const Header = styled.div`
     display: flex;
     width: 100%;
-    word-wrap: break-word;
 `;
 
 export const HeaderButton = styled(Button)`
@@ -39,20 +38,24 @@ export const HeaderLeft = styled.div`
     display: flex;
     align-items: center;
     padding-left: 8px;
+    min-width: 0;
 `;
 
 export const HeaderRight = styled.div`
     display: flex;
     align-items: center;
     margin-left: auto;
+    padding-left: 8px;
 
     ${HeaderButton} {
         margin-right: 8px;
     }
 `;
 
-export const Title = styled.h3`
+export const Title = styled.span`
     font-size: 18px;
     font-weight: bold;
     font-family: Roboto;
+    word-wrap: break-word;
+    min-width: 0;
 `;
