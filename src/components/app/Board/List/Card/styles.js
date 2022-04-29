@@ -37,8 +37,9 @@ export const CardContent = styled.div`
 `;
 
 export const CardTitle = styled.h4`
-    font-size: 16px;
+    font-size: 15px;
     word-wrap: break-word;
     max-width: 244px;
     width: 100%;
+    line-height: 1.4;
 `;

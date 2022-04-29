@@ -10,8 +10,8 @@ const TextArea = styled(TextareaAutosize)`
     min-height: 120px;
     box-sizing: border-box;
     resize: none;
-    font-size: 16px;
-    line-height: 16px;
+    font-size: 15px;
+    line-height: 1.4;
     font-family: Roboto;
     overflow: hidden;
 

@@ -29,7 +29,7 @@ export default function BoardList({
                 <BoardListItem>
                     <AddBoardButton
                         type="button"
-                        onClick={() => onAddBoardClick({ teamId: team.id, teamName: team.name })}
+                        onClick={() => onAddBoardClick({ teamId: team.id })}
                     >
                         Add Board
                     </AddBoardButton>

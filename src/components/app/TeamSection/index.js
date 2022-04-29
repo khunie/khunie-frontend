@@ -35,7 +35,7 @@ export default function TeamSection({
                     {ADMIN_ROLES.includes(userRole) && (
                         <HeaderButton
                             title="+ Member"
-                            onClick={() => onInviteClick({ teamId: id, teamName: name })}
+                            onClick={() => onInviteClick({ teamId: id })}
                         />
                     )}
                     <HeaderButton title={`Members (${members.length})`} />

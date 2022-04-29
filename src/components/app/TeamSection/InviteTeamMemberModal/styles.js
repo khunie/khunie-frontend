@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Button, TextArea } from 'components/common';
-import { modalTextArea, modalSubmitButton } from 'shared/styles';
+import { Button } from 'components/common';
+import { modalSubmitButton } from 'shared/styles';
 
 export const ModalBody = styled.div`
 `;

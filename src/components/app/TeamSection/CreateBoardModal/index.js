@@ -1,22 +1,24 @@
 import { useState, useEffect, useRef } from 'react';
-import { Label, Modal, TextInput } from 'components/common';
-import { ModalBody, Subheading, Form, TeamName, DescriptionInput, SubmitButton } from './styles';
+import { Label, Modal, TeamAvatar, TextInput } from 'components/common';
+import {
+    ModalBody,
+    Subheading,
+    Form,
+    TeamRow,
+    TeamName,
+    DescriptionInput,
+    SubmitButton,
+    TeamAvatarContainer,
+} from './styles';
 
-export default function CreateBoardModal({
-    isVisible,
-    teamName,
-    teamId,
-    createBoard,
-    close,
-    loading,
-}) {
+export default function CreateBoardModal({ isVisible, team, createBoard, close, loading }) {
     const [boardTitle, setBoardTitle] = useState('');
     const [boardDescription, setBoardDescription] = useState('');
     const titleInputRef = useRef(null);
 
     const handleTeamSubmit = e => {
         e.preventDefault();
-        createBoard({ teamId, title: boardTitle, description: boardDescription });
+        createBoard({ teamId: team.id, title: boardTitle, description: boardDescription });
     };
 
     useEffect(() => {
@@ -43,7 +45,16 @@ export default function CreateBoardModal({
                         A board is a place to organize lists and tasks for whatever you need
                     </Subheading>
                     <Label>Team</Label>
-                    <TeamName>{teamName}</TeamName>
+                    <TeamRow>
+                        <TeamAvatar
+                            src={team?.avatar}
+                            name={team?.name}
+                            width={32}
+                            height={32}
+                            style={{ marginRight: 8 }}
+                        />
+                        <TeamName>{team?.name}</TeamName>
+                    </TeamRow>
                     <Label htmlFor="board-title">Board Title</Label>
                     <TextInput
                         id="board-title"

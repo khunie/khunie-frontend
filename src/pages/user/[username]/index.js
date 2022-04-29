@@ -15,6 +15,8 @@ import CreateBoardModal from 'components/app/TeamSection/CreateBoardModal';
 import useUserActions from 'shared/hooks/useUserActions';
 import { Button, EmptyStatePlaceholder } from 'components/common';
 
+const ADMIN_ROLES = ['OWNER', 'ADMIN'];
+
 const Container = styled.div`
     margin: 0 auto;
     display: flex;
@@ -244,9 +246,15 @@ export default function UserHome() {
         }
     };
 
-    const openCreateBoardModal = ({ teamId, teamName }) => {
+    const getAdminMemberships = () => {
+        return memberships?.filter(membership => ADMIN_ROLES.includes(membership.role));
+    };
+
+    const openCreateBoardModal = ({ teamId }) => {
+        const adminMemberships = getAdminMemberships();
+        const team = adminMemberships.find(membership => membership.team.id === teamId)?.team;
         setCreateBoardModalVisible(true);
-        setCurrentTeam({ teamId, teamName });
+        setCurrentTeam(team);
     };
 
     const closeCreateBoardModal = () => {
@@ -254,9 +262,11 @@ export default function UserHome() {
         setCurrentTeam(null);
     };
 
-    const openInviteModal = ({ teamId, teamName }) => {
+    const openInviteModal = ({ teamId }) => {
+        const adminMemberships = getAdminMemberships();
+        const team = adminMemberships.find(membership => membership.team.id === teamId)?.team;
         setInviteModalVisible(true);
-        setCurrentTeam({ teamId, teamName });
+        setCurrentTeam(team);
     };
 
     const closeInviteModal = () => {
@@ -349,16 +359,14 @@ export default function UserHome() {
             <CreateBoardModal
                 isVisible={isCreateBoardModalVisible}
                 close={closeCreateBoardModal}
-                teamId={currentTeam?.teamId}
-                teamName={currentTeam?.teamName}
+                team={currentTeam}
                 loading={bLoading}
                 createBoard={createBoard}
             />
             <InviteTeamMemberModal
                 isVisible={isInviteModalVisible}
                 close={closeInviteModal}
-                teamId={currentTeam?.teamId}
-                teamName={currentTeam?.teamId}
+                team={currentTeam}
                 loading={iLoading}
                 error={iError}
                 inviteMember={inviteMember}

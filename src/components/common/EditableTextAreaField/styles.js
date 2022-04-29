@@ -23,6 +23,8 @@ export const Input = styled(TextArea)`
     font-family: Arial;
     padding: 8px;
     padding-bottom: 5px;
+    font-size: 16px;
+    line-height: 16px;
 
     ${({ firefox }) => (firefox && css`
         padding-top: 7px;

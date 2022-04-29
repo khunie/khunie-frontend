@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
-import { Label, Modal, TextInput } from 'components/common';
+import { Label, Modal, TeamAvatar, TextInput } from 'components/common';
 import { ModalBody, Subheading, Form, SubmitButton } from './styles';
+import { TeamName, TeamRow } from '../CreateBoardModal/styles';
 
-export default function InviteTeamMemberModal({ isVisible, teamId, inviteMember, close, loading }) {
+export default function InviteTeamMemberModal({ isVisible, team, inviteMember, close, loading }) {
     const [invitee, setInvitee] = useState('');
     const inputRef = useRef(null);
 
     const handleSubmit = e => {
         e.preventDefault();
-        inviteMember({ teamId, input: invitee });
+        inviteMember({ teamId: team?.id, input: invitee });
     };
 
     useEffect(() => {
@@ -31,6 +32,17 @@ export default function InviteTeamMemberModal({ isVisible, teamId, inviteMember,
             <ModalBody>
                 <Form onSubmit={handleSubmit}>
                     <Subheading>Members can edit any boards within a given team</Subheading>
+                    <Label>Team</Label>
+                    <TeamRow>
+                        <TeamAvatar
+                            src={team?.avatar}
+                            name={team?.name}
+                            width={32}
+                            height={32}
+                            style={{ marginRight: 8 }}
+                        />
+                        <TeamName>{team?.name}</TeamName>
+                    </TeamRow>
                     <Label htmlFor="invitee">Email or Username</Label>
                     <TextInput
                         id="invitee"

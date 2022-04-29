@@ -13,14 +13,21 @@ export const Subheading = styled.h4`
     color: #888;
 `;
 
-export const TeamName = styled.span`
-    font-size: 24px;
-    color: #de46e4;
-    font-weight: bold;
-    padding: 8px 0;
+export const TeamRow = styled.div`
+    display: flex;
+    align-items: center;
     margin-bottom: 16px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #ddd;
+    padding: 8px 0;
+`;
+
+export const TeamName = styled.span`
+    flex: 1;
+    font-size: 20px;
+    color: #333;
+    font-weight: bold;
     word-wrap: break-word;
+    max-width: calc(100% - 40px);
 `;
 
 export const Form = styled.form`
