@@ -49,7 +49,7 @@ export default function Button({
             return (
                 <Icon
                     icon={rightIconName}
-                    style={{ marginLeft: 'auto', ...rightIconStyle }}
+                    style={{ paddingLeft: 8, marginLeft: 'auto', ...rightIconStyle }}
                     size={rightIconSize || 14}
                     color={rightIconColor}
                     minWidth={rightIconMinWidth || 20}

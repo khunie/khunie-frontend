@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import { Container, Content } from './styles';
 
 export default function Accordion({ id, renderButton, children }) {
-    const [isOpen, setOpened] = useState(
-        typeof window !== 'undefined' ? JSON.parse(localStorage.getItem(id)) ?? false : false
-    );
+    const [isOpen, setOpened] = useState(false);
+
+    useEffect(() => {
+        setOpened(JSON.parse(localStorage.getItem(id)) ?? false);
+    }, []);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {

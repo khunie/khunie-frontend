@@ -5,6 +5,7 @@ import {
     BoardHeaderButton,
     BoardHeaderField,
     StarButton,
+    BoardHeaderButtonWrapper,
 } from './styles';
 
 export default function BoardHeader({
@@ -25,23 +26,33 @@ export default function BoardHeader({
                     fieldStyle={{ color: 'white', fontSize: 20 }}
                     inputStyle={{ fontSize: 20 }}
                 />
-                <BoardHeaderButton title={teamName} tooltip="Team Name" />
-                <BoardHeaderButton title={visibility} tooltip="Board Visibility" />
-                <StarButton
-                    onClick={onStarClick}
-                    icon={[starred ? 'fas' : 'far', 'star']}
-                    starred={starred}
-                    tooltip={`Click to ${starred ? 'unstar' : 'star'} this board`}
-                />
+                <BoardHeaderButtonWrapper>
+                    <BoardHeaderButton title={teamName} tooltip="Team Name" />
+                </BoardHeaderButtonWrapper>
+                <BoardHeaderButtonWrapper>
+                    <BoardHeaderButton title={visibility} tooltip="Board Visibility" />
+                </BoardHeaderButtonWrapper>
+                <BoardHeaderButtonWrapper>
+                    <StarButton
+                        onClick={onStarClick}
+                        icon={[starred ? 'fas' : 'far', 'star']}
+                        starred={starred}
+                        tooltip={`Click to ${starred ? 'unstar' : 'star'} this board`}
+                    />
+                </BoardHeaderButtonWrapper>
             </LeftSection>
             <RightSection>
-                <BoardHeaderButton title={teamName} />
+                <BoardHeaderButtonWrapper>
+                    <BoardHeaderButton title={teamName} />
+                </BoardHeaderButtonWrapper>
                 {!isRightSidebarVisible && (
-                    <BoardHeaderButton
-                        title="Show Menu"
-                        iconName="ellipsis-h"
-                        onClick={openRightSidebar}
-                    />
+                    <BoardHeaderButtonWrapper>
+                        <BoardHeaderButton
+                            title="Show Menu"
+                            iconName="ellipsis-h"
+                            onClick={openRightSidebar}
+                        />
+                    </BoardHeaderButtonWrapper>
                 )}
             </RightSection>
         </Container>

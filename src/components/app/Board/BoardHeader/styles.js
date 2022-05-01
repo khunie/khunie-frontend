@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Button, EditableTextField, Icon, IconButton } from 'components/common';
+import styled from 'styled-components';
+import { Button, EditableTextField, IconButton } from 'components/common';
 import { shadowOutline } from 'shared/styles';
 
 export const Container = styled.div`
@@ -10,8 +10,12 @@ export const Container = styled.div`
     align-items: center;
 `;
 
+export const BoardHeaderButtonWrapper = styled.div`
+    padding: 0 8px;
+    border-left: 1px solid #ffffff55;
+`;
+
 export const LeftSection = styled.div`
-    flex: 1;
     display: flex;
     align-items: center;
 `;
@@ -21,6 +25,12 @@ export const RightSection = styled.div`
     margin-right: -8px;
     display: flex;
     align-items: center;
+
+    ${BoardHeaderButtonWrapper} {
+        &:first-of-type {
+            border-left: none;
+        }
+    }
 `;
 
 export const BoardHeaderButton = styled(Button)`
@@ -28,7 +38,6 @@ export const BoardHeaderButton = styled(Button)`
     max-height: 36px;
     height: 36px;
     color: #fff;
-    margin-right: 8px;
     background-color: #33333333;
     outline: none;
 
