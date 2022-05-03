@@ -14,29 +14,26 @@ export const Content = styled.div`
 `;
 
 export const SidebarAccordion = styled(Accordion)`
-    margin: 8px 0;
 `;
 
 export const SidebarButton = styled(Button)`
     width: 100%;
-    padding: 12px 16px;
-    background-color: transparent;
+    padding: 12px;
+    margin: 4px 0;
+    background-color: ${({ isOpen, $backgroundColor }) => (isOpen ? $backgroundColor ?? '#f8f8f8' : 'transparent')};
+    border-left-width: 12px;
+    border-left-style: solid;
+    border-color: ${({ isOpen, $borderColor }) => (isOpen ? $borderColor ?? '#2ba04e' : '#ccc')};
     color: #333;
-    border-left: 12px solid transparent;
-    border-color: ${({ isOpen, $borderColor }) => (isOpen ? $borderColor : '#ccc')};
 
     &:hover:enabled {
-        background-color: #f8f8f8;
+        background-color: ${({ $backgroundColor }) => $backgroundColor ?? '#f8f8f8'};
         box-shadow: none;
-    }
-
-    &:active {
-        background-color: transparent;
     }
 
     &:focus {
         border-color: ${({ $borderColor }) => $borderColor};
-        background-color: #f8f8f8;
+        background-color: ${({ $backgroundColor }) => $backgroundColor ?? '#f8f8f8'};
         box-shadow: none;
     }
 `;

@@ -1,22 +1,28 @@
 import styled, { css } from 'styled-components';
-import { Button, TeamAvatar } from 'components/common';
+import { Accordion, Button, TeamAvatar } from 'components/common';
+
+export const StyledAccordion = styled(Accordion)`
+    &:not(:first-of-type) {
+        border-top: 1px solid #f5f5f5;
+    }
+`;
 
 export const TeamButton = styled(Button)`
     justify-content: flex-start;
     width: 100%;
-    padding: 10px 8px;
+    padding: 10px 12px;
     margin: 8px 0;
     font-weight: bold;
     color: #3a2e66;
     text-align: left;
-    background-color: hsl(253, 100%, 98.5%);
+    background-color: transparent;
 
     &:hover:enabled {
-        background-color: hsl(253, 99%, 97.5%);
+        background-color: transparent;
     }
 
     &:active:enabled {
-        background-color: hsl(253, 98%, 96.5%);
+        background-color: transparent;
     }
 `;
 

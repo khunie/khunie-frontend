@@ -10,8 +10,6 @@ export const StyledIcon = styled(FontAwesomeIcon)`
         css`
             min-width: ${$minWidth}px;
         `}
-
-    ${({ style }) => style && style}
 `;
 
 export default StyledIcon;

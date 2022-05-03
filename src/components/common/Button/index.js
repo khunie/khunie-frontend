@@ -37,7 +37,7 @@ export default function Button({
                     size={iconSize}
                     color={iconColor}
                     minWidth={iconMinWidth || 20}
-                    style={{ marginRight: '4px', ...iconStyle }}
+                    style={{ marginRight: 4, ...iconStyle }}
                 />
             );
         return null;

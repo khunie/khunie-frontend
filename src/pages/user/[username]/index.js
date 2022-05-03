@@ -18,10 +18,10 @@ import { Button, EmptyStatePlaceholder } from 'components/common';
 const ADMIN_ROLES = ['OWNER', 'ADMIN'];
 
 const Container = styled.div`
-    margin: 0 auto;
     display: flex;
     align-items: flex-start;
     max-width: 1280px;
+    margin: 0 auto;
 `;
 
 const MainContent = styled.div`
@@ -29,7 +29,6 @@ const MainContent = styled.div`
     padding: 16px;
     margin-top: 32px;
     box-sizing: border-box;
-    flex: 1;
 
     @media (max-width: 600px) {
         padding: 0px;

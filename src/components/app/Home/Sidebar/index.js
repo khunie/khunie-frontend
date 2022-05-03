@@ -13,6 +13,7 @@ export default function Sidebar({ ownedTeams, memberships }) {
                             onClick={handleClick}
                             rightIconName={isOpen ? 'chevron-up' : 'chevron-down'}
                             rightIconStyle={isOpen && { color: '#e26cff' }}
+                            $backgroundColor="#faf1fc"
                             $borderColor="#e26cff"
                             isOpen={isOpen}
                         />
@@ -37,6 +38,7 @@ export default function Sidebar({ ownedTeams, memberships }) {
                             onClick={handleClick}
                             rightIconName={isOpen ? 'chevron-up' : 'chevron-down'}
                             rightIconStyle={isOpen && { color: '#a56dff' }}
+                            $backgroundColor="#f6f2fd"
                             $borderColor="#a56dff"
                             isOpen={isOpen}
                         />
