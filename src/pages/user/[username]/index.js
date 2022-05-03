@@ -276,9 +276,9 @@ export default function UserHome() {
 
     return (
         <Container>
-            <Sidebar ownedTeams={ownedTeams} memberships={memberships} />
+            {!loading && <Sidebar ownedTeams={ownedTeams} memberships={memberships} />}
             {loading ? (
-                <MainContent>hi</MainContent>
+                <MainContent>loading</MainContent>
             ) : (
                 <MainContent>
                     <StarredBoardSection stars={stars} onStarClick={handleStar} />

@@ -1,19 +1,20 @@
-import { Accordion, Button } from 'components/common';
 import TeamAccordion from './TeamAccordion';
-import { Container, Content } from './styles';
+import { Container, Content, SidebarAccordion, SidebarButton } from './styles';
 
 export default function Sidebar({ ownedTeams, memberships }) {
     return (
         <Container offsetTop={80}>
             <Content>
-                <Accordion
+                <SidebarAccordion
                     id="ownedTeamsAccordion"
                     renderButton={({ isOpen, handleClick }) => (
-                        <Button
+                        <SidebarButton
                             title="Owned Teams"
                             onClick={handleClick}
                             rightIconName={isOpen ? 'chevron-up' : 'chevron-down'}
-                            style={{ width: '100%', padding: 8 }}
+                            rightIconStyle={isOpen && { color: '#e26cff' }}
+                            $borderColor="#e26cff"
+                            isOpen={isOpen}
                         />
                     )}
                 >
@@ -27,16 +28,17 @@ export default function Sidebar({ ownedTeams, memberships }) {
                             membersLength={team.members.length}
                         />
                     ))}
-                </Accordion>
-
-                <Accordion
+                </SidebarAccordion>
+                <SidebarAccordion
                     id="membershipsAccordion"
                     renderButton={({ isOpen, handleClick }) => (
-                        <Button
+                        <SidebarButton
                             title="Memberships"
                             onClick={handleClick}
                             rightIconName={isOpen ? 'chevron-up' : 'chevron-down'}
-                            style={{ width: '100%', padding: 8 }}
+                            rightIconStyle={isOpen && { color: '#a56dff' }}
+                            $borderColor="#a56dff"
+                            isOpen={isOpen}
                         />
                     )}
                 >
@@ -53,7 +55,7 @@ export default function Sidebar({ ownedTeams, memberships }) {
                                 />
                             )
                     )}
-                </Accordion>
+                </SidebarAccordion>
             </Content>
         </Container>
     );

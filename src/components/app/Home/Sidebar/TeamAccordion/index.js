@@ -1,14 +1,14 @@
 import { Accordion } from 'components/common';
-import { SidebarButton, DropdownButton, StyledTeamAvatar } from './styles';
+import { TeamButton, DropdownButton, StyledTeamAvatar } from './styles';
 
 const ADMIN_ROLES = ['OWNER', 'ADMIN'];
 
 export default function TeamAccordion({ name, avatar, userRole, boardsLength, membersLength }) {
     return (
         <Accordion
-            id={name}
+            id={`${name}-accordion`}
             renderButton={({ isOpen, handleClick }) => (
-                <SidebarButton
+                <TeamButton
                     title={name}
                     onClick={handleClick}
                     icon={() => <StyledTeamAvatar src={avatar} name={name} />}
@@ -17,6 +17,7 @@ export default function TeamAccordion({ name, avatar, userRole, boardsLength, me
                     tooltip={name}
                 />
             )}
+            style={{ paddingLeft: 12 }}
         >
             <DropdownButton
                 title={`Boards (${boardsLength})`}

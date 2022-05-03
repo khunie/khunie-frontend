@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Content } from './styles';
 
-export default function Accordion({ id, renderButton, children }) {
+export default function Accordion({ id, renderButton, children, className, style, contentStyle }) {
     const [isOpen, setOpened] = useState(false);
 
     useEffect(() => {
@@ -19,9 +19,9 @@ export default function Accordion({ id, renderButton, children }) {
     };
 
     return (
-        <Container>
+        <Container className={className} style={style}>
             {renderButton({ isOpen, handleClick })}
-            {isOpen && <Content>{children}</Content>}
+            {isOpen && <Content contentStyle={contentStyle}>{children}</Content>}
         </Container>
     );
 }

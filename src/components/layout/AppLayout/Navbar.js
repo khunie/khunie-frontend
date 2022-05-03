@@ -12,6 +12,7 @@ import { USER_URL } from 'shared/constants';
 import { Dropdown, IconButton, ProfileCard } from 'components/common';
 import { DropdownMenu, DropdownMenuButton, Divider } from 'components/common/Dropdown/styles';
 import { noSelect, shadowOutline } from 'shared/styles';
+import { css } from 'styled-components';
 
 const NavBar = styled.div`
     width: 100%;
@@ -89,14 +90,19 @@ const LogoOverlay = styled.img`
     height: 36px;
     transition: opacity 0.75s;
     opacity: ${({ show }) => (show ? 1 : 0)};
+    border-radius: 3px;
 `;
 
 const Anchor = styled.a`
     outline: none;
 
     &:focus {
-        ${Logo} {
+        ${LogoOverlay} {
             ${shadowOutline({ width: 3, color: '#814be6' })}
+        }
+
+        ${Logo} {
+            ${shadowOutline({ width: 3 })}
         }
     }
 `;

@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { Button, TeamAvatar } from 'components/common';
 
-export const SidebarButton = styled(Button)`
+export const TeamButton = styled(Button)`
     justify-content: flex-start;
     width: 100%;
     padding: 10px 8px;
