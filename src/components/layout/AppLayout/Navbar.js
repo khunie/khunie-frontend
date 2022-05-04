@@ -174,31 +174,29 @@ export default function Navbar() {
                     </Link>
                 </LeftSection>
                 {user ? (
-                    <>
-                        <RightSection>
-                            <TextInput />
-                            <NavButton
-                                icon="plus"
-                                size={16}
-                                onClick={() => setShowAddMenu(!showAddMenu)}
-                                isBoard={isBoard}
-                                forwardRef={addRef}
-                            />
-                            <NavButton
-                                icon="bell"
-                                size={16}
-                                onClick={() => setShowNotificationMenu(!showNotificationMenu)}
-                                isBoard={isBoard}
-                                forwardRef={notificationsRef}
-                            />
-                            <NavButton
-                                icon="user"
-                                size={16}
-                                onClick={() => setShowAccountMenu(!showAccountMenu)}
-                                isBoard={isBoard}
-                                forwardRef={accountRef}
-                            />
-                        </RightSection>
+                    <RightSection>
+                        <TextInput />
+                        <NavButton
+                            icon="plus"
+                            size={16}
+                            onClick={() => setShowAddMenu(!showAddMenu)}
+                            isBoard={isBoard}
+                            forwardRef={addRef}
+                        />
+                        <NavButton
+                            icon="bell"
+                            size={16}
+                            onClick={() => setShowNotificationMenu(!showNotificationMenu)}
+                            isBoard={isBoard}
+                            forwardRef={notificationsRef}
+                        />
+                        <NavButton
+                            icon="user"
+                            size={16}
+                            onClick={() => setShowAccountMenu(!showAccountMenu)}
+                            isBoard={isBoard}
+                            forwardRef={accountRef}
+                        />
                         <Dropdown
                             title="Create something"
                             isVisible={showAddMenu}
@@ -242,11 +240,13 @@ export default function Navbar() {
                                 </DropdownMenuButton>
                             </DropdownMenu>
                         </Dropdown>
-                    </>
+                    </RightSection>
                 ) : (
-                    <Link href="/login">
-                        <NavAnchor>Login</NavAnchor>
-                    </Link>
+                    !uLoading && (
+                        <Link href="/login">
+                            <NavAnchor>Login</NavAnchor>
+                        </Link>
+                    )
                 )}
             </NavContent>
         </NavBar>

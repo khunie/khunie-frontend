@@ -89,11 +89,12 @@ const PlaceholderTeamButton = styled(Button)`
 export default function UserHome() {
     const router = useRouter();
     const { username } = router.query;
+    const [loading, setLoading] = useState(true); // currently necessary as the user useQuery loading is incorrectly flickering as false before completion
 
-    const { data, loading, error } = useQuery(GET_USER_QUERY, {
+    const { data, error } = useQuery(GET_USER_QUERY, {
         variables: { username },
         onCompleted: () => {
-            console.log(JSON.stringify(data, null, 4));
+            setLoading(false);
         },
     });
 
