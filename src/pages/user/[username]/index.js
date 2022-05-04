@@ -25,6 +25,7 @@ const Container = styled.div`
 `;
 
 const MainContent = styled.div`
+    flex: 1;
     min-width: 300px;
     padding: 16px;
     margin-top: 32px;

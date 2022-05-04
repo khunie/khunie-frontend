@@ -1,5 +1,5 @@
 /* eslint-disable no-confusing-arrow */
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Link from 'next/link';
@@ -9,7 +9,7 @@ import { GET_USER_QUERY } from 'gql/user/queries';
 import { userVar } from 'client/cache';
 import { useLogout } from 'shared/hooks/auth';
 import { USER_URL } from 'shared/constants';
-import { Dropdown, IconButton, ProfileCard } from 'components/common';
+import { Dropdown, IconButton, ProfileCard, TextInput } from 'components/common';
 import { DropdownMenu, DropdownMenuButton, Divider } from 'components/common/Dropdown/styles';
 import { noSelect, shadowOutline } from 'shared/styles';
 import { css } from 'styled-components';
@@ -140,6 +140,9 @@ export default function Navbar() {
     const [showAddMenu, setShowAddMenu] = useState(false);
     const [showNotificationMenu, setShowNotificationMenu] = useState(false);
     const [showAccountMenu, setShowAccountMenu] = useState(false);
+    const addRef = useRef(null);
+    const notificationsRef = useRef(null);
+    const accountRef = useRef(null);
 
     const { getUser: user } = uData || {};
 
@@ -170,68 +173,81 @@ export default function Navbar() {
                         </Anchor>
                     </Link>
                 </LeftSection>
-                {user && (
-                    <RightSection>
-                        <NavButton
-                            icon="plus"
-                            size={16}
-                            onClick={() => setShowAddMenu(!showAddMenu)}
-                            isBoard={isBoard}
-                        />
-                        <NavButton
-                            icon="bell"
-                            size={16}
-                            onClick={() => setShowNotificationMenu(!showAddMenu)}
-                            isBoard={isBoard}
-                        />
-                        <NavButton
-                            icon="user"
-                            size={16}
-                            onClick={() => setShowAccountMenu(!showAccountMenu)}
-                            isBoard={isBoard}
-                        />
-                    </RightSection>
+                {user ? (
+                    <>
+                        <RightSection>
+                            <TextInput />
+                            <NavButton
+                                icon="plus"
+                                size={16}
+                                onClick={() => setShowAddMenu(!showAddMenu)}
+                                isBoard={isBoard}
+                                forwardRef={addRef}
+                            />
+                            <NavButton
+                                icon="bell"
+                                size={16}
+                                onClick={() => setShowNotificationMenu(!showNotificationMenu)}
+                                isBoard={isBoard}
+                                forwardRef={notificationsRef}
+                            />
+                            <NavButton
+                                icon="user"
+                                size={16}
+                                onClick={() => setShowAccountMenu(!showAccountMenu)}
+                                isBoard={isBoard}
+                                forwardRef={accountRef}
+                            />
+                        </RightSection>
+                        <Dropdown
+                            title="Create something"
+                            isVisible={showAddMenu}
+                            close={() => setShowAddMenu(false)}
+                            callerRef={addRef}
+                        >
+                            <DropdownMenu>Add Menu</DropdownMenu>
+                        </Dropdown>
+                        <Dropdown
+                            title="Notifications"
+                            isVisible={showNotificationMenu}
+                            close={() => setShowNotificationMenu(false)}
+                            callerRef={notificationsRef}
+                        >
+                            <DropdownMenu>Notifications menu</DropdownMenu>
+                        </Dropdown>
+                        <Dropdown
+                            title="Account"
+                            isVisible={showAccountMenu}
+                            close={() => setShowAccountMenu(false)}
+                            callerRef={accountRef}
+                        >
+                            <ProfileCard
+                                username={user?.username}
+                                email={user?.email}
+                                avatar={user?.profile.pic}
+                                onClick={() =>
+                                    router.push({
+                                        pathname: '/profile',
+                                    })
+                                }
+                            />
+                            <DropdownMenu>
+                                <DropdownMenuButton type="button">Settings</DropdownMenuButton>
+                                <DropdownMenuButton type="button">Help</DropdownMenuButton>
+                            </DropdownMenu>
+                            <Divider />
+                            <DropdownMenu>
+                                <DropdownMenuButton type="button" onClick={logout}>
+                                    Log out
+                                </DropdownMenuButton>
+                            </DropdownMenu>
+                        </Dropdown>
+                    </>
+                ) : (
+                    <Link href="/login">
+                        <NavAnchor>Login</NavAnchor>
+                    </Link>
                 )}
-                <Dropdown
-                    title="Create something"
-                    isVisible={showAddMenu}
-                    close={() => setShowAddMenu(false)}
-                >
-                    <DropdownMenu>Add Menu</DropdownMenu>
-                </Dropdown>
-                <Dropdown
-                    title="Notifications"
-                    isVisible={showNotificationMenu}
-                    close={() => setShowNotificationMenu(false)}
-                >
-                    <DropdownMenu>Notifications menu</DropdownMenu>
-                </Dropdown>
-                <Dropdown
-                    title="Account"
-                    isVisible={showAccountMenu}
-                    close={() => setShowAccountMenu(false)}
-                >
-                    <ProfileCard
-                        username={user?.username}
-                        email={user?.email}
-                        avatar={user?.profile.pic}
-                        onClick={() =>
-                            router.push({
-                                pathname: '/profile',
-                            })
-                        }
-                    />
-                    <DropdownMenu>
-                        <DropdownMenuButton type="button">Settings</DropdownMenuButton>
-                        <DropdownMenuButton type="button">Help</DropdownMenuButton>
-                    </DropdownMenu>
-                    <Divider />
-                    <DropdownMenu>
-                        <DropdownMenuButton type="button" onClick={logout}>
-                            Log out
-                        </DropdownMenuButton>
-                    </DropdownMenu>
-                </Dropdown>
             </NavContent>
         </NavBar>
     );

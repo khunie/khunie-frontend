@@ -5,6 +5,7 @@ export const Container = styled(Dropdown)`
     && {
         width: 300px;
         height: 600px;
+        top: 44px;
         left: calc(100% - 40px);
         right: auto;
         background-color: white;

@@ -30,8 +30,12 @@ export default function List({
         onUpdate({ id, title: value });
     };
 
-    const handleOptionsClick = () => {
-        setShowMenu(true);
+    const handleOptionsClick = e => {
+        if (e.defaultPrevented) {
+            return;
+        }
+
+        setShowMenu(!showMenu);
         optionsRef?.current?.focus();
     };
 
@@ -64,6 +68,7 @@ export default function List({
                             <ListOptionsDropdown
                                 isVisible={showMenu}
                                 close={() => setShowMenu(false)}
+                                callerRef={optionsRef}
                             />
                             <ListContent ref={provided.innerRef} {...provided.droppableProps}>
                                 {cards.map((card, ix) => (

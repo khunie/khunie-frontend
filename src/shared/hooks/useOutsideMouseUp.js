@@ -6,11 +6,12 @@ import { useEffect } from 'react';
 export default function useOutsideMouseUp(
     ref,
     callback = () => console.log('outside mouseup'),
-    onInside = () => {}
+    onInside = () => {},
+    ignore
 ) {
     useEffect(() => {
         function handleMouseUp(event) {
-            if (ref.current && !ref.current.contains(event.target)) {
+            if (!ref.current?.contains(event.target) && !ignore?.current?.contains(event.target)) {
                 callback(event);
             } else {
                 onInside(event);

@@ -26,7 +26,7 @@ const DropdownTitle = styled.h3`
     font-weight: bold;
 `;
 
-export default function Dropdown({ close, isVisible, title, children, className }) {
+export default function Dropdown({ close, isVisible, title, children, className, callerRef }) {
     const [mouseDown, setMouseDown] = useState(false);
     const containerRef = useRef(null);
 
@@ -46,7 +46,8 @@ export default function Dropdown({ close, isVisible, title, children, className 
         },
         () => {
             setMouseDown(false);
-        }
+        },
+        callerRef
     );
 
     return (
