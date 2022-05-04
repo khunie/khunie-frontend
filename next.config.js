@@ -3,4 +3,7 @@ module.exports = {
     eslint: {
         ignoreDuringBuilds: true,
     },
+    experimental: {
+        scrollRestoration: true,
+    },
 };
