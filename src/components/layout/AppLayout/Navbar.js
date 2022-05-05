@@ -12,7 +12,6 @@ import { USER_URL } from 'shared/constants';
 import { Dropdown, IconButton, ProfileCard, TextInput } from 'components/common';
 import { DropdownMenu, DropdownMenuButton, Divider } from 'components/common/Dropdown/styles';
 import { noSelect, shadowOutline } from 'shared/styles';
-import { css } from 'styled-components';
 
 const NavBar = styled.div`
     width: 100%;
@@ -96,7 +95,7 @@ const LogoOverlay = styled.img`
 const Anchor = styled.a`
     outline: none;
 
-    &:focus {
+    &:focus-visible {
         ${LogoOverlay} {
             ${shadowOutline({ width: 3, color: '#814be6' })}
         }
@@ -123,6 +122,29 @@ const NavButton = styled(IconButton)`
 
     &:active:enabled {
         background-color: #7642f0;
+    }
+`;
+
+const SearchInput = styled(TextInput)`
+    font-size: 15px;
+    padding: 7px;
+    ::placeholder {
+        color: #999;
+    }
+
+    &:placeholder-shown:not(:focus) {
+        background-color: #5d529155;
+        color: #ccc;
+        border-color: #8b7dbe;
+    }
+
+    &:hover:enabled:not(:focus) {
+        background-color: #f0f0f0;
+    }
+
+    &:focus {
+        border-color: #5c9cf0;
+        background-color: white;
     }
 `;
 
@@ -175,13 +197,14 @@ export default function Navbar() {
                 </LeftSection>
                 {user ? (
                     <RightSection>
-                        <TextInput />
+                        <SearchInput placeholder="Search" />
                         <NavButton
                             icon="plus"
                             size={16}
                             onClick={() => setShowAddMenu(!showAddMenu)}
                             isBoard={isBoard}
                             forwardRef={addRef}
+                            style={{ marginLeft: 8 }}
                         />
                         <NavButton
                             icon="bell"

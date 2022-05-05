@@ -19,7 +19,7 @@ export const StyledButton = styled.button`
         background-color: #e5e5e5;
     }
     
-    &:focus {
+    &:focus-visible {
         box-shadow: 0px 0px 0px 2px #5e8ce0;
     }
 `;

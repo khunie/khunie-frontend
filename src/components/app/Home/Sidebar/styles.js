@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import StickyBox from 'react-sticky-box';
 import { Accordion, Button } from 'components/common';
+import { shadowOutline } from 'shared/styles';
 
 export const Container = styled(StickyBox)`
     flex: 0 0 280px;
@@ -28,12 +29,18 @@ export const SidebarButton = styled(Button)`
 
     &:hover:enabled {
         background-color: ${({ $backgroundColor }) => $backgroundColor ?? '#f8f8f8'};
+    }
+
+    &:hover:enabled:not(:focus-visible) {
         box-shadow: none;
     }
 
     &:focus {
-        border-color: ${({ $borderColor }) => $borderColor};
         background-color: ${({ $backgroundColor }) => $backgroundColor ?? '#f8f8f8'};
         box-shadow: none;
+    }
+
+    &:focus-visible {
+        ${shadowOutline()}
     }
 `;
