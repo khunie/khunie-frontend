@@ -5,9 +5,8 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
-        "export": "next export",
         "start": "next start",
-        "deploy": "next build && next export && netlify deploy --prod"
+        "deploy": "next build" // change to vercel 
     },
     "dependencies": {
         "@apollo/client": "^3.4.17",
