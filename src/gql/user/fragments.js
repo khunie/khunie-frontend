@@ -16,6 +16,7 @@ export const USER_FRAGMENT = gql`
             id
             name
             slug
+            url
             pic
             members {
                 user {
@@ -26,6 +27,7 @@ export const USER_FRAGMENT = gql`
                 id
                 title
                 slug
+                url
                 background
             }
         }
@@ -34,6 +36,7 @@ export const USER_FRAGMENT = gql`
                 id
                 name
                 slug
+                url
                 pic
                 members {
                     user {
@@ -44,6 +47,7 @@ export const USER_FRAGMENT = gql`
                     id
                     title
                     slug
+                    url
                     background
                 }
             }
@@ -53,10 +57,12 @@ export const USER_FRAGMENT = gql`
             id
             title
             slug
+            url
             background
             team {
                 id
                 slug
+                url
                 name
             }
         }

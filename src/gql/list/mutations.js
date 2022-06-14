@@ -10,6 +10,7 @@ export const CREATE_LIST_MUTATION = gql`
             cards {
                 id
                 title
+                url
                 description
                 index
             }

@@ -4,6 +4,7 @@ export const CARD_FRAGMENT = gql`
     fragment CardFragment on Card {
         id
         title
+        url
         description
         index
         creator {
@@ -25,6 +26,7 @@ export const CARD_FRAGMENT_LITE = gql`
     fragment CardFragmentLite on Card {
         id
         title
+        url
         description
         index
         list {

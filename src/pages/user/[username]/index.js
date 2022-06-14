@@ -111,15 +111,18 @@ export default function UserHome() {
                     },
                 });
 
-                const { ownedTeams } = getUser;
+                const { ownedTeams, memberships } = getUser;
+                console.log(JSON.stringify(createTeam, null, 2));
 
                 const newTeams = [...ownedTeams, createTeam];
+                const newMemberships = [...memberships, { team: createTeam, role: 'OWNER' }];
                 cache.writeQuery({
                     query: GET_USER_QUERY,
                     data: {
                         getUser: {
                             ...getUser,
                             ownedTeams: newTeams,
+                            memberships: newMemberships,
                         },
                     },
                     variables: {

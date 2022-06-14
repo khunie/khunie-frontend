@@ -6,6 +6,7 @@ export const CREATE_TEAM_MUTATION = gql`
             id
             name
             slug
+            url
             pic
             members {
                 user {
@@ -16,6 +17,7 @@ export const CREATE_TEAM_MUTATION = gql`
                 id
                 title
                 slug
+                url
                 background
             }
         }

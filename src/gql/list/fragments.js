@@ -8,6 +8,7 @@ export const LIST_FRAGMENT = gql`
         cards {
             id
             title
+            url
             description
             index
         }
@@ -19,6 +20,7 @@ export const LIST_CARDS_FRAGMENT = gql`
         cards {
             id
             index
+            url
         }
     }
 `;

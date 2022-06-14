@@ -6,7 +6,7 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "deploy": "next build" // change to vercel 
+        "deploy": "next build"
     },
     "dependencies": {
         "@apollo/client": "^3.4.17",

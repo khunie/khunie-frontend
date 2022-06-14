@@ -5,6 +5,7 @@ export const BOARD_FRAGMENT = gql`
         id
         title
         slug
+        url
         description
         lists {
             id
@@ -13,6 +14,7 @@ export const BOARD_FRAGMENT = gql`
             cards {
                 id
                 title
+                url
                 description
                 index
             }
@@ -21,6 +23,7 @@ export const BOARD_FRAGMENT = gql`
             id
             name
             slug
+            url
         }
         background
         visibility
@@ -33,10 +36,12 @@ export const BOARD_FRAGMENT_LITE = gql`
         id
         title
         slug
+        url
         background
         team {
             id
             slug
+            url
             name
         }
     }
@@ -56,6 +61,7 @@ export const UPDATE_BOARD_FRAGMENT = gql`
         id
         title
         slug
+        url
         description
         background
         visibility
