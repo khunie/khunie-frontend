@@ -37,8 +37,14 @@ export const HeaderButton = styled(Button)`
 export const HeaderLeft = styled.div`
     display: flex;
     align-items: center;
-    padding-left: 8px;
+    padding: 4px 8px;
     min-width: 0;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #eee;
+    }
 `;
 
 export const HeaderRight = styled.div`

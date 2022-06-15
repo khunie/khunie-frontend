@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import FocusTrap from 'focus-trap-react';
 import useEscape from 'shared/hooks/useEscape';
-import useOutsideClick from 'shared/hooks/useOutsideClick';
 import { Overlay, Container, ModalHeader, ModalTitle, ModalBody, CloseButton } from './styles';
 
 function Modal({
@@ -12,6 +11,7 @@ function Modal({
     padding,
     titleStyle,
     containerStyle,
+    showClose = true,
     closeStyle,
     closeHoverStyle,
     closeActiveStyle,
@@ -30,37 +30,58 @@ function Modal({
 
     useEscape(() => close());
 
-    useOutsideClick(containerRef, () => {
+    /*  useOutsideClick(containerRef, () => {
         setMouseDown(true);
-    });
+    }); */
 
-    const handleMouseUp = e => {
+    const handleOverlayMouseDown = e => {
+        setMouseDown(true);
+    };
+
+    const handleOverlayMouseUp = e => {
         if (mouseDown) {
             setMouseDown(false);
             close();
         }
     };
 
+    const handleMouseDown = e => {
+        e.stopPropagation();
+    };
+
+    const handleMouseUp = e => {
+        e.stopPropagation();
+        setMouseDown(false);
+    };
+
     if (!isVisible) return null;
 
     return (
-        <Overlay onMouseUp={handleMouseUp}>
+        <Overlay onMouseUp={handleOverlayMouseUp} onMouseDown={handleOverlayMouseDown}>
             <FocusTrap>
-                <Container ref={containerRef} padding={padding} style={containerStyle}>
+                <Container
+                    ref={containerRef}
+                    padding={padding}
+                    style={containerStyle}
+                    onMouseDown={handleMouseDown}
+                    onMouseUp={handleMouseUp}
+                >
                     <ModalHeader>
                         <ModalTitle style={titleStyle}>{title}</ModalTitle>
-                        <CloseButton
-                            type="button"
-                            icon="times"
-                            onClick={close}
-                            buttonStyle={closeStyle}
-                            hoverStyle={closeHoverStyle}
-                            activeStyle={closeActiveStyle}
-                            size={16}
-                            tabIndex={-1}
-                            forwardRef={closeRef}
-                            onFocus={() => closeRef.current.blur()}
-                        />
+                        {showClose && (
+                            <CloseButton
+                                type="button"
+                                icon="times"
+                                onClick={close}
+                                buttonStyle={closeStyle}
+                                hoverStyle={closeHoverStyle}
+                                activeStyle={closeActiveStyle}
+                                size={16}
+                                tabIndex={-1}
+                                forwardRef={closeRef}
+                                onFocus={() => closeRef.current.blur()}
+                            />
+                        )}
                     </ModalHeader>
                     <ModalBody>{children}</ModalBody>
                 </Container>

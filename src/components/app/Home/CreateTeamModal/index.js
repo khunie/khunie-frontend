@@ -40,7 +40,7 @@ export default function CreateTeamModal({ isVisible, createTeam, close, loading 
                         id="team-name"
                         name="team-name"
                         value={teamName}
-                        placeholder="e.g. Kopa"
+                        placeholder="e.g. Khunie"
                         onChange={e => setTeamName(e.target.value)}
                         maxLength={35}
                         forwardRef={nameInputRef}

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useQuery, useApolloClient } from '@apollo/client';
 import { GET_BOARD_QUERY } from 'gql/board/queries';
 import { compare } from 'shared/utils';
@@ -5,7 +6,13 @@ import { compare } from 'shared/utils';
 export default function useBoard({ teamSlug, boardSlug }) {
     const client = useApolloClient();
 
-    const { data, loading, error } = useQuery(GET_BOARD_QUERY, {
+    const [loading, setLoading] = useState(true);
+
+    const {
+        data,
+        loading: qLoading,
+        error,
+    } = useQuery(GET_BOARD_QUERY, {
         variables: { teamSlug, boardSlug },
         fetchPolicy: 'cache-first',
         onCompleted: ({ getBoard }) => {
@@ -35,6 +42,8 @@ export default function useBoard({ teamSlug, boardSlug }) {
                     },
                 },
             });
+
+            setLoading(false);
         },
     });
 

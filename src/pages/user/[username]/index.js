@@ -207,7 +207,9 @@ export default function UserHome() {
             onCompleted() {
                 closeInviteModal();
             },
-            onError() {},
+            onError() {
+                console.log('error inviting member, not found');
+            },
         });
 
     const [currentTeam, setCurrentTeam] = useState(null);
@@ -257,8 +259,10 @@ export default function UserHome() {
     const openCreateBoardModal = ({ teamId }) => {
         const adminMemberships = getAdminMemberships();
         const team = adminMemberships.find(membership => membership.team.id === teamId)?.team;
-        setCreateBoardModalVisible(true);
-        setCurrentTeam(team);
+        if (team) {
+            setCreateBoardModalVisible(true);
+            setCurrentTeam(team);
+        }
     };
 
     const closeCreateBoardModal = () => {
@@ -269,8 +273,10 @@ export default function UserHome() {
     const openInviteModal = ({ teamId }) => {
         const adminMemberships = getAdminMemberships();
         const team = adminMemberships.find(membership => membership.team.id === teamId)?.team;
-        setInviteModalVisible(true);
-        setCurrentTeam(team);
+        if (team) {
+            setInviteModalVisible(true);
+            setCurrentTeam(team);
+        }
     };
 
     const closeInviteModal = () => {

@@ -60,7 +60,7 @@ export default function CreateBoardModal({ isVisible, team, createBoard, close, 
                         id="board-title"
                         name="board-title"
                         value={boardTitle}
-                        placeholder="e.g. Kopa's to-dos"
+                        placeholder={`e.g. ${team?.name || 'Khunie'}'s to-dos`}
                         onChange={e => setBoardTitle(e.target.value)}
                         maxLength={35}
                         forwardRef={titleInputRef}

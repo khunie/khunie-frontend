@@ -277,6 +277,7 @@ export default function useBoardActions() {
                     __typename: 'Card',
                     id: `temp-card-${index}`,
                     title,
+                    url: '',
                     description: '',
                     index,
                     list: {

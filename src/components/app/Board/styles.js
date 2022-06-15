@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import ScrollContainer from 'react-indiana-drag-scroll';
 
 export const Container = styled.div`
-    background-color: ${({ background }) => (background?.color || '#3657e7')};
+    background-color: ${({ background }) => (background?.color || 'white')};
     background-size: cover;
     background-repeat: no-repeat;
     transition: background-color .5s;

@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { useMutation } from '@apollo/client';
 import Link from 'next/link';
 import styled from 'styled-components';
 import Head from 'next/head';
-import { SIGNUP_MUTATION } from 'gql/user/mutations';
 import AuthLayout from 'components/layout/AuthLayout';
 import { useSignup } from 'shared/hooks/auth';
 
