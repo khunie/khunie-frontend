@@ -1,11 +1,18 @@
-import styled from 'styled-components';
-import { noSelect } from 'shared/styles';
+import styled, { css } from 'styled-components';
+import { noSelect, shadowOutline } from 'shared/styles';
 
-export const Container = styled.div`
+export const Container = styled.button`
     padding: 16px;
+    background-color: transparent;
+    width: 100%;
+    outline: none;
 
     &:hover {
         cursor: ${({ hover }) => (hover && 'pointer')};
+    }
+
+    &:focus-visible {
+        ${shadowOutline()}
     }
 `;
 

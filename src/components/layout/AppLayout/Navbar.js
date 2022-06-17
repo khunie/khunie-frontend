@@ -125,6 +125,36 @@ const NavButton = styled(IconButton)`
     }
 `;
 
+export const ProfilePicture = styled.img`
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    ${noSelect}
+`;
+
+const NavProfileButton = styled.button`
+    width: 36px;
+    height: 36px;
+    margin: 0 4px;
+    padding: 0;
+    border-radius: 3px;
+    background-color: transparent;
+    outline: none;
+
+    &:hover:enabled,
+    &:active:enabled {
+        ${ProfilePicture} {
+            filter: brightness(0.95);
+        }
+    }
+
+    &:focus-visible {
+        ${ProfilePicture} {
+            ${shadowOutline()}
+        }
+    }
+`;
+
 const SearchInput = styled(TextInput)`
     font-size: 15px;
     padding: 7px;
@@ -213,13 +243,12 @@ export default function Navbar() {
                             isBoard={isBoard}
                             forwardRef={notificationsRef}
                         />
-                        <NavButton
-                            icon="user"
-                            size={16}
+                        <NavProfileButton
                             onClick={() => setShowAccountMenu(!showAccountMenu)}
-                            isBoard={isBoard}
-                            forwardRef={accountRef}
-                        />
+                            ref={accountRef}
+                        >
+                            <ProfilePicture src={user?.profile.pic || '/img/test-pro-pic.png'} />
+                        </NavProfileButton>
                         <Dropdown
                             title="Create something"
                             isVisible={showAddMenu}
