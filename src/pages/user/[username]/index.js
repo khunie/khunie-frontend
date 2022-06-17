@@ -286,7 +286,13 @@ export default function UserHome() {
 
     return (
         <Container>
-            {!loading && <Sidebar ownedTeams={ownedTeams} memberships={memberships} />}
+            {!loading && (
+                <Sidebar
+                    user={data?.getUser ?? {}}
+                    ownedTeams={ownedTeams}
+                    memberships={memberships}
+                />
+            )}
             {loading ? (
                 <MainContent>loading</MainContent>
             ) : (

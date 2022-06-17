@@ -1,10 +1,23 @@
+import { useRouter } from 'next/router';
+import { ProfileCard } from 'components/common';
 import TeamAccordion from './TeamAccordion';
 import { Container, Content, SidebarAccordion, SidebarButton } from './styles';
 
-export default function Sidebar({ ownedTeams, memberships }) {
+export default function Sidebar({ user, ownedTeams, memberships }) {
+    const router = useRouter();
+
     return (
         <Container offsetTop={80}>
             <Content>
+                <ProfileCard
+                    username={user?.username}
+                    avatar={user?.profile.pic}
+                    onClick={() =>
+                        router.push({
+                            pathname: '/profile',
+                        })
+                    }
+                />
                 <SidebarAccordion
                     id="ownedTeamsAccordion"
                     renderButton={({ isOpen, handleClick }) => (

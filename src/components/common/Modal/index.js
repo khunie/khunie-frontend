@@ -30,10 +30,6 @@ function Modal({
 
     useEscape(() => close());
 
-    /*  useOutsideClick(containerRef, () => {
-        setMouseDown(true);
-    }); */
-
     const handleOverlayMouseDown = e => {
         setMouseDown(true);
     };
