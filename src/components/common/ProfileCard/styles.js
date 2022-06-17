@@ -4,6 +4,7 @@ import { noSelect, shadowOutline } from 'shared/styles';
 export const Container = styled.button`
     padding: 16px;
     background-color: transparent;
+    text-align: left;
     width: 100%;
     outline: none;
 
